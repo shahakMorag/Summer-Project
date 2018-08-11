@@ -23,9 +23,9 @@ def rgb_sha(rgb):
 
 
 def rgb2tomato(rgb):
-    A = np.array([[1,0,0],
-                  [0,0,0],
-                  [0,1,1]])
+    A = np.array([[1,1,1],
+                  [1,1,1],
+                  [1,1,1]])
 
     return rgb_transform(A, rgb)
 
@@ -61,11 +61,6 @@ def random_color_space(image):
 # change_color_space(im, rgb2uyv).save("tomato_in_yuv_colorspace.jpg")
 
 change_color_space(im, rgb2tomato).show()
-random_color_space(im).show()
-random_color_space(im).show()
-random_color_space(im).show()
-random_color_space(im).show()
-random_color_space(im).show()
 random_color_space(im).show()
 
 # change_color_space(im, rgb_sha).save("tomato_in_random_colorspace.jpg")
