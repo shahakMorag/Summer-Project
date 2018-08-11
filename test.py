@@ -4,6 +4,7 @@ import random
 
 im1 = Image.open("test.png")
 im2 = Image.open("test2.jpg")
+im3 = Image.open("red.png")
 
 size = 500, 500
 
@@ -40,5 +41,15 @@ im2 = im2.resize(size, Image.ANTIALIAS)
 
 #print(im1.getbbox()) #output (0, 0, 500, 500)
 
+#print(im1.histogram())
+
+'''r, g, b, a = im1.split()
+
+blanck = Image.fromarray(np.zeros(size), mode="L")
+
+Image.merge('RGBA', (r, blanck, blanck, a)).show()
+Image.merge('RGBA', (blanck, g, blanck, a)).show()
+Image.merge('RGBA', (blanck, blanck, b, a)).show()
+'''
 
 
