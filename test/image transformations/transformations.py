@@ -2,7 +2,7 @@ from PIL import Image, ImageChops, ImageFilter
 import numpy as np
 import math
 
-im = Image.open("Tomato.jpg")
+im = Image.open("eyal.png")
 
 
 def float_to_short(f):
@@ -60,7 +60,7 @@ def random_color_space(image):
 
 # change_color_space(im, rgb2uyv).save("tomato_in_yuv_colorspace.jpg")
 
-change_color_space(im, rgb2tomato).show()
+#change_color_space(im, rgb2tomato).show()
 random_color_space(im).show()
 
 # change_color_space(im, rgb_sha).save("tomato_in_random_colorspace.jpg")
