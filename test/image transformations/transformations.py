@@ -4,7 +4,6 @@ import math
 
 im = Image.open("eyal.png")
 
-
 def float_to_short(f):
     return math.ceil(f) % 256
 
@@ -53,6 +52,7 @@ def add_tuples(a, b):
 
 
 def random_color_space(image):
+    image = image.convert("RGB")
     A = np.random.exponential(1/4, (3, 3))
     b = np.random.rand(3)
     return change_color_space(image, lambda x: add_tuples(rgb_transform(A, x), b))

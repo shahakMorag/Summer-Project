@@ -1,11 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="2cd7f46f-3415-49e1-8f2e-93651268f467" name="Default" comment="half way markdown">
+    <list default="true" id="2cd7f46f-3415-49e1-8f2e-93651268f467" name="Default" comment="eyal bug">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/PIL tests/crop_test.py" beforeDir="false" afterPath="$PROJECT_DIR$/test/PIL tests/crop_test.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/image transformations/transformations.py" beforeDir="false" afterPath="$PROJECT_DIR$/test/image transformations/transformations.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -14,7 +11,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="CoverageDataManager">
-    <SUITE FILE_PATH="coverage/Summer_Project$transformations.coverage" NAME="transformations Coverage Results" MODIFIED="1534017343624" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/test/image transformations" />
+    <SUITE FILE_PATH="coverage/Summer_Project$transformations.coverage" NAME="transformations Coverage Results" MODIFIED="1534018439750" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/test/image transformations" />
     <SUITE FILE_PATH="coverage/Summer_Project$crop_test__1_.coverage" NAME="crop_test (1) Coverage Results" MODIFIED="1534017319197" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/test/PIL tests" />
     <SUITE FILE_PATH="coverage/Summer_Project$crop_test.coverage" NAME="crop_test Coverage Results" MODIFIED="1534005906124" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Summer_Project$test.coverage" NAME="test Coverage Results" MODIFIED="1534005063433" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
@@ -41,13 +38,13 @@
           <entry key="dummy" value="2" />
           <entry key="md" value="2093" />
           <entry key="py" value="2412" />
-          <entry key="txt" value="168" />
+          <entry key="txt" value="176" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="Markdown" value="2086" />
-          <entry key="PLAIN_TEXT" value="170" />
+          <entry key="PLAIN_TEXT" value="178" />
           <entry key="Python" value="2419" />
         </counts>
       </usages-collector>
@@ -65,8 +62,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/test/image transformations/transformations.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="147">
-              <caret line="57" column="29" selection-start-line="57" selection-start-column="11" selection-end-line="57" selection-end-column="29" />
+            <state relative-caret-position="300">
+              <caret line="66" lean-forward="true" selection-start-line="66" selection-end-line="66" />
               <folding>
                 <element signature="e#0#46#0" expanded="true" />
                 <marker date="1534017319187" expanded="true" signature="131:164" ph="..." />
@@ -470,12 +467,18 @@
       <option name="project" value="LOCAL" />
       <updated>1534015270166</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="eyal bug">
+      <created>1534017410831</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1534017410831</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4976415" visible="true" weight="0.1633888" />
       <window_info id="Structure" order="1" sideWeight="0.5023585" side_tool="true" weight="0.1633888" />
@@ -515,7 +518,8 @@
     <MESSAGE value="color space transformation with random matrices" />
     <MESSAGE value="editing markdown" />
     <MESSAGE value="half way markdown" />
-    <option name="LAST_COMMIT_MESSAGE" value="half way markdown" />
+    <MESSAGE value="eyal bug" />
+    <option name="LAST_COMMIT_MESSAGE" value="eyal bug" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/eitan_test.py" />
@@ -600,8 +604,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/test/image transformations/transformations.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="147">
-          <caret line="57" column="29" selection-start-line="57" selection-start-column="11" selection-end-line="57" selection-end-column="29" />
+        <state relative-caret-position="300">
+          <caret line="66" lean-forward="true" selection-start-line="66" selection-end-line="66" />
           <folding>
             <element signature="e#0#46#0" expanded="true" />
             <marker date="1534017319187" expanded="true" signature="131:164" ph="..." />
