@@ -9,7 +9,7 @@ Today we learned how to use `PIL` library in Python in order to edit and work wi
 
 We covered various type of transformations of photos, colors and shapes.
 
-###PIL Features
+### PIL Features
 ![sharpened tomato](test\image transformations\Edge_Enhance_Tomato.jpg)
 
 
@@ -61,7 +61,7 @@ the parameters used are crop width and height of 150 and stride of 120:
 ![crop2](test/PIL%20tests/Crop2.jpg)
 ![crop3](test/PIL%20tests/Crop3.jpg)
 
-###Color Spaces And Random Ones
+### Color Spaces And Random Ones
 We have experimented different types of color spaces transformations.
 
 We wrote code that transform color space:
@@ -126,6 +126,7 @@ Here is the picture after transformation ( the tomatoes gets different colors fr
 
 > We should be careful with using this method because wild distributions and parameter can lead to wild images
 for instance:
+
 ![wild tomato](test/image%20transformations/wild_tomato.jpeg) 
 ![wild tomato 2](test/image%20transformations/wild_tomato2.jpeg) 
 
