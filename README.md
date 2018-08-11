@@ -24,7 +24,7 @@ image.filter(ImageFilter.EDGE_ENHANCE_MORE)
 
 We also tried invert photos: 
 
-![inverted tomato](test/image transformations/inverted_Tomato.jpg)
+![inverted tomato](test/image transformations/Inverted_Tomato.jpg)
 
 with this code:
 ```python
