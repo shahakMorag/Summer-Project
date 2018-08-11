@@ -10,7 +10,7 @@ Today we learned how to use `PIL` library in Python in order to edit and work wi
 We covered various type of transformations of photos, colors and shapes.
 
 ### PIL Features
-![sharpened tomato](test\image transformations\Edge_Enhance_Tomato.jpg)
+![sharpened tomato](test/image transformations/Edge_Enhance_Tomato.jpg)
 
 
 An example of sharpening photo in order to facilitate the learning the tomato. 
@@ -24,7 +24,7 @@ image.filter(ImageFilter.EDGE_ENHANCE_MORE)
 
 We also tried invert photos: 
 
-![inverted tomato](test\image transformations\inverted_Tomato.jpg)
+![inverted tomato](test/image transformations/inverted_Tomato.jpg)
 
 with this code:
 ```python
