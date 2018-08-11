@@ -105,14 +105,29 @@ Here is photo of the result:
 ![YUV Tomato](test/image%20transformations/tomato_in_yuv_colorspace.jpg)
 
  Later we came up with the idea of make a random color space transformation.
- We hope that using it will improve the results of the learning.
+ We hope that using it will improve the results of the learning.  We tried several distributions.
+ Here is the code with exponential distribution:
  
  ```python
 def random_color_space(image):
-    A = np.random.exponential(1/4, (3, 3))
+    image = image.convert("RGB")
+    A = np.random.exponential(1/7, (3, 3))
     b = np.random.rand(3)
     return change_color_space(image, lambda x: add_tuples(rgb_transform(A, x), b))
 ```
  
- We tried several distributions:
+Here is picture before transformation:
+
+![eyal](test/image%20transformations/eyal.png)
+
+Here is the picture after transformation ( the tomatoes gets different colors from the rest of the picture):
+
+![eyal after transformation](test/image%20transformations/eyal%20transformation.png)
+
+> We should be careful with using this method because wild distributions and parameter can lead to wild images
+for instance:
+![wild tomato](test/image%20transformations/wild_tomato.jpeg) 
+![wild tomato 2](test/image%20transformations/wild_tomato2.jpeg) 
+
+
   

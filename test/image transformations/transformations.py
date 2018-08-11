@@ -53,7 +53,7 @@ def add_tuples(a, b):
 
 def random_color_space(image):
     image = image.convert("RGB")
-    A = np.random.exponential(1/4, (3, 3))
+    A = np.random.exponential(1/7, (3, 3))
     b = np.random.rand(3)
     return change_color_space(image, lambda x: add_tuples(rgb_transform(A, x), b))
 
@@ -61,6 +61,10 @@ def random_color_space(image):
 # change_color_space(im, rgb2uyv).save("tomato_in_yuv_colorspace.jpg")
 
 #change_color_space(im, rgb2tomato).show()
+random_color_space(im).show()
+random_color_space(im).show()
+random_color_space(im).show()
+random_color_space(im).show()
 random_color_space(im).show()
 
 # change_color_space(im, rgb_sha).save("tomato_in_random_colorspace.jpg")
