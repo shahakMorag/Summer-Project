@@ -1,10 +1,11 @@
-from PIL import Image, ImageFilter, ImageChops
+from PIL import Image, ImageFilter, ImageChops, ImageOps
 import numpy as np
 import random
 
 im1 = Image.open("test.png")
 im2 = Image.open("test2.jpg")
 im3 = Image.open("red.png")
+dice = Image.open("dices.png")
 
 size = 500, 500
 
@@ -47,11 +48,15 @@ r, g, b, a = im1.split()
 
 blanck = Image.fromarray(np.zeros(size), mode="L")
 
+
 Image.merge('RGBA', (r, blanck, blanck, a)).show()
 Image.merge('RGBA', (blanck, g, blanck, a)).show()
 Image.merge('RGBA', (blanck, blanck, b, a)).show()
 Image.merge('RGBA', (blanck, blanck, im1.getchannel('B'), a)).show()
 '''
+
+#ImageOps.colorize(im1.getchannel("R"), (0,0,0), (255,0,0)).show()
+
 
 
 '''
@@ -64,4 +69,11 @@ im1.transpose(Image.FLIP_LEFT_RIGHT).transform((500 + int(round(xshift)), 500), 
 '''
 
 #ImageChops.invert(im1).show()
-ImageChops.multiply(im1, im2).show()
+#ImageChops.multiply(im2, dice).show()
+#ImageChops.screen(im1, im2).show()
+
+#ImageOps.grayscale(im1).show()
+
+ImageOps.crop(im1, 100).show()
+
+print(im1.size)
