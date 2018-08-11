@@ -124,8 +124,8 @@ Here is the picture after transformation ( the tomatoes gets different colors fr
 
 ![eyal after transformation](test/image%20transformations/eyal%20transformation.png)
 
-> We should be careful with using this method because wild distributions and parameter can lead to wild images
-for instance:
+> We should be careful with using this method because wild distributions and
+ parameter can lead to wild images for instance:
 
 ![wild tomato](test/image%20transformations/wild_tomato.jpeg) 
 ![wild tomato 2](test/image%20transformations/wild_tomato2.jpeg) 
