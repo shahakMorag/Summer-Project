@@ -1,4 +1,4 @@
-from PIL import Image, ImageFilter
+from PIL import Image, ImageFilter, ImageChops
 import numpy as np
 import random
 
@@ -42,14 +42,26 @@ im2 = im2.resize(size, Image.ANTIALIAS)
 #print(im1.getbbox()) #output (0, 0, 500, 500)
 
 #print(im1.histogram())
-
-'''r, g, b, a = im1.split()
+'''
+r, g, b, a = im1.split()
 
 blanck = Image.fromarray(np.zeros(size), mode="L")
 
 Image.merge('RGBA', (r, blanck, blanck, a)).show()
 Image.merge('RGBA', (blanck, g, blanck, a)).show()
 Image.merge('RGBA', (blanck, blanck, b, a)).show()
+Image.merge('RGBA', (blanck, blanck, im1.getchannel('B'), a)).show()
 '''
 
 
+'''
+m = -0.2
+xshift = abs(m) * 500
+im1.transform((500 + int(round(xshift)), 500), Image.AFFINE, (1, m, -xshift if m > 0 else 0, 0, 1, 0), Image.BICUBIC).show()
+im1.transpose(Image.FLIP_LEFT_RIGHT).transform((500 + int(round(xshift)), 500), Image.AFFINE, (1, m, -xshift if m > 0 else 0, 0, 1, 0), Image.BICUBIC).show()
+
+
+'''
+
+#ImageChops.invert(im1).show()
+ImageChops.multiply(im1, im2).show()
