@@ -133,6 +133,7 @@ Here is the picture after transformation ( the tomatoes gets different colors fr
 
 ## Second Day
 
+### Transformations
 We will start working on Affine transformations to pictures.
 First we the image to the center of all image that it won't cut after transformation.
 For example this image:
@@ -152,4 +153,8 @@ Here are some examples:
 ![first affine transformation](test/image%20transformations/Tomato_third_affine.jpg) 
 
 We came up with the idea of refining the transformation from yesterday by making several transformation for every category.
-  
+
+### Neural Network
+Finally we started building the neural network.
+
+![neural network](https://icdn5.digitaltrends.com/image/artificial_neural_network_1-791x388.jpg)
