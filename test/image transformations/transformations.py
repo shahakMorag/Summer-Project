@@ -92,6 +92,6 @@ def affine_transformation3(image):
     return ImageOps.crop(n_image.transform(n_image.size, Image.AFFINE, (-0.8, .2,205,0.4,-0.5,140)), 64)
 
 
-affine_transformation1(im)#.resize((128, 128)).show()
-affine_transformation2(im)#.resize((128, 128)).show()
-affine_transformation3(im).show()#.resize((128, 128)).show()
+affine_transformation1(im).save('Tomato_first_affine.jpg')
+affine_transformation2(im).save('Tomato_second_affine.jpg')
+affine_transformation3(im).save('Tomato_third_affine.jpg')

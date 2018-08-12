@@ -141,7 +141,14 @@ For example this image:
 
 here is the picture after the change:
 
-![middle eyal](test/image%20transformations/eyal_moved.jpg) 
+![middle eyal](test/image%20transformations/eyal_moved.jpg)
+
+We created 3 different affine transformations on images in order to make more diversed data set for the training.
+
+Here are some examples:
+![first affine transformation](test/image%20transformations/Tomato_first_affine.jpg) 
+![first affine transformation](test/image%20transformations/Tomato_second_affine.jpg) 
+![first affine transformation](test/image%20transformations/Tomato_third_affine.jpg) 
 
 We came up with the idea of refining the transformation from yesterday by making several transformation for every category.
   
