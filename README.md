@@ -189,6 +189,8 @@ here we can the result from today:
 
 ![today's result]()
 
+
+#### Augmentation
 We added augmentation to our neural network with the following lines:
 
 ```python
