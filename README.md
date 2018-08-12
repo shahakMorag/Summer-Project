@@ -183,7 +183,7 @@ NN = regression(NN, optimizer='adam', learning_rate=0.01, loss='categorical_cros
 
 We can see that we have shallow neural network with only one convolution part and one hidden layer.
 
-This architecture is because our laptop's cpu is slower then the gpu's in the lab and we have only this for now.
+>This architecture is shallow because our laptop's cpu is slower then the gpu's in the lab and we have only this for now.
 
 here we can the result from today:
 
