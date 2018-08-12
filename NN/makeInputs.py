@@ -2,7 +2,7 @@ from PIL import Image
 import glob
 import numpy
 
-limit = 1000
+limit = 10
 path = "F:\Tomato_Classification_Project\Tomato_Classification_Project\Patches\Patches"
 
 def get_pictures(dir, limit):

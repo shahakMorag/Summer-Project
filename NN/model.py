@@ -49,5 +49,4 @@ def custom_network():
     NN = fully_connected(NN, 5, activation='softmax')
 
     NN = regression(NN, optimizer='adam', learning_rate=0.01, loss='categorical_crossentropy', name='targets')
-    return tflearn.DNN(NN)
-
+    return tflearn.DNN(NN, tensorboard_verbose=3)
