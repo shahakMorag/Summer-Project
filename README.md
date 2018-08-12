@@ -159,5 +159,35 @@ Finally we started building the neural network.
 
 ![neural network](https://icdn5.digitaltrends.com/image/artificial_neural_network_1-791x388.jpg)
 
+We created a neural network with the following architecture:
+```python
+from tflearn.layers.conv import conv_2d, max_pool_2d
+from tflearn.layers.core import input_data, dropout, fully_connected
+from tflearn.layers.estimator import regression
+from tflearn.layers.normalization import batch_normalization
+
+NN = input_data(shape=[None, 128, 128, 3],
+                # data_preprocessing=img_prep,
+                name='input')
+
+NN = conv_2d(NN, 32, 2, activation='relu')
+NN = max_pool_2d(NN, 2)
+NN = batch_normalization(NN)
+
+NN = fully_connected(NN, 128, activation='relu', weights_init='xavier', bias_init='xavier')
+NN = dropout(NN, 0.5)
+
+NN = fully_connected(NN, 5, activation='softmax')
+
+NN = regression(NN, optimizer='adam', learning_rate=0.01, loss='categorical_crossentropy', name='targets')
+``` 
+
+We can see that we have shallow neural network with only one convolution part and one hidden layer.
+
+This architecture is because our laptop's cpu is slower then the gpu's in the lab and we have only this for now.
+
+
+
 ### Preprocessing
 We came up with the idea of generating data sets using external softwares, e.g. Matlab, since we will do it only once.
+
