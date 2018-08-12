@@ -28,11 +28,15 @@ def custom_network():
     NN = max_pool_2d(NN, 2)
     NN = batch_normalization(NN)
 
-    NN = residual_block(NN, 5, 16)
-    NN = residual_block(NN, 1, 32, downsample=True)
-    NN = residual_block(NN, 5 - 1, 32)
-    NN = residual_block(NN, 1, 64, downsample=True)
-    NN = batch_normalization(NN)
+    NN = tflearn.conv_2d(NN, 16, 3, regularizer='L2', weight_decay=0.0001)
+    NN = tflearn.residual_block(NN, 5, 16)
+    NN = tflearn.residual_block(NN, 1, 32, downsample=True)
+    NN = tflearn.residual_block(NN, 5 - 1, 32)
+    NN = tflearn.residual_block(NN, 1, 64, downsample=True)
+    NN = tflearn.residual_block(NN, 5 - 1, 64)
+    NN = tflearn.batch_normalization(NN)
+    NN = tflearn.activation(NN, 'relu')
+    NN = tflearn.global_avg_pool(NN)
 
     '''
     NN = conv_2d(NN, 64, 2, activation='relu')
