@@ -199,6 +199,8 @@ img_aug.add_random_flip_leftright()
 img_aug.add_random_rotation(max_angle=25.)
 ```
 
+In order to improve our network results.
+
 ### Preprocessing
 We came up with the idea of generating data sets using external softwares, e.g. Matlab, since we will do it only once.
 
