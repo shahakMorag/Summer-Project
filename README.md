@@ -185,9 +185,9 @@ We can see that we have shallow neural network with only one convolution part an
 
 >This architecture is shallow because our laptop's cpu is slower then the gpu's in the lab and we have only this for now.
 
-here we can the result from today:
+Here we can the result from today (71.63% accuracy):
 
-![today's result]()
+![today's result](NN/firstDayResult.png)
 
 
 #### Augmentation
@@ -206,3 +206,10 @@ In order to improve our network results.
 ### Preprocessing
 We came up with the idea of generating data sets using external softwares, e.g. Matlab, since we will do it only once.
 
+### Model Ensemble And Our Idea
+Model ensemble is the idea of training several neural networks of the same 
+architecture with different initialization at training time and at testing time use the median of their result.
+#### Our Idea
+Train several neural networks of different architecture and train
+a network that receive as input all the rest of the architecture's out and
+and the result is the classification.
