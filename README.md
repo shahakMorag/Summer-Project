@@ -158,3 +158,6 @@ We came up with the idea of refining the transformation from yesterday by making
 Finally we started building the neural network.
 
 ![neural network](https://icdn5.digitaltrends.com/image/artificial_neural_network_1-791x388.jpg)
+
+### Preprocessing
+We came up with the idea of generating data sets using external softwares, e.g. Matlab, since we will do it only once.
