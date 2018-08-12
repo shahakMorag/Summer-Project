@@ -2,7 +2,7 @@ import tflearn
 from tflearn import ImageAugmentation
 from tflearn.data_preprocessing import ImagePreprocessing
 
-from tflearn.layers.conv import conv_2d, max_pool_2d
+from tflearn.layers.conv import conv_2d, max_pool_2d, residual_block
 from tflearn.layers.core import input_data, dropout, fully_connected
 from tflearn.layers.estimator import regression
 from tflearn.layers.normalization import batch_normalization
@@ -24,10 +24,17 @@ def custom_network():
     NN = max_pool_2d(NN, 2)
     NN = batch_normalization(NN)
 
-    '''NN = conv_2d(NN, 64, 2, activation='relu')
+    NN = conv_2d(NN, 64, 2, activation='relu')
     NN = max_pool_2d(NN, 2)
     NN = batch_normalization(NN)
 
+    NN = residual_block(NN, 5, 16)
+    NN = residual_block(NN, 1, 32, downsample=True)
+    NN = residual_block(NN, 5 - 1, 32)
+    NN = residual_block(NN, 1, 64, downsample=True)
+    NN = batch_normalization(NN)
+
+    '''
     NN = conv_2d(NN, 64, 2, activation='relu')
     NN = max_pool_2d(NN, 2)
     NN = batch_normalization(NN)'''
