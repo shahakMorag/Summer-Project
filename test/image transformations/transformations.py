@@ -1,8 +1,11 @@
-from PIL import Image, ImageChops, ImageFilter
+from PIL import Image, ImageChops, ImageFilter, ImageTransform, ImageOps
 import numpy as np
 import math
 
-im = Image.open("eyal.png")
+
+im = Image.open("Tomato.jpg")
+im = im.resize((128, 128))
+
 
 def float_to_short(f):
     return math.ceil(f) % 256
@@ -61,10 +64,34 @@ def random_color_space(image):
 # change_color_space(im, rgb2uyv).save("tomato_in_yuv_colorspace.jpg")
 
 #change_color_space(im, rgb2tomato).show()
+'''random_color_space(im).show()
 random_color_space(im).show()
 random_color_space(im).show()
 random_color_space(im).show()
-random_color_space(im).show()
-random_color_space(im).show()
+random_color_space(im).show()'''
 
 # change_color_space(im, rgb_sha).save("tomato_in_random_colorspace.jpg")
+
+
+def move_to_middle(image):
+    n_image = image.convert('RGB')
+    return n_image.transform((n_image.size[0] * 2, n_image.size[1] * 2), Image.AFFINE,(1,0,-n_image.size[0]/2,0,1,-n_image.size[1]/2))
+
+def affine_transformation1(image):
+    n_image = move_to_middle(image)
+    return ImageOps.crop(n_image.transform(n_image.size, Image.AFFINE, (-0.75, 0.25,192,0.05,0.8,10)), 64)
+
+
+def affine_transformation2(image):
+    n_image = move_to_middle(image)
+    return ImageOps.crop(n_image.transform(n_image.size, Image.AFFINE, (0.9, -0.1,25,-0.1,0.5,80)), 64)
+
+
+def affine_transformation3(image):
+    n_image = move_to_middle(image)
+    return ImageOps.crop(n_image.transform(n_image.size, Image.AFFINE, (-0.8, .2,205,0.4,-0.5,140)), 64)
+
+
+affine_transformation1(im)#.resize((128, 128)).show()
+affine_transformation2(im)#.resize((128, 128)).show()
+affine_transformation3(im).show()#.resize((128, 128)).show()

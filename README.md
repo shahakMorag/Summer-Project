@@ -131,4 +131,17 @@ Here is the picture after transformation ( the tomatoes gets different colors fr
 ![wild tomato 2](test/image%20transformations/wild_tomato2.jpeg) 
 
 
+## Second Day
+
+We will start working on Affine transformations to pictures.
+First we the image to the center of all image that it won't cut after transformation.
+For example this image:
+
+![eyal cutted](test/image%20transformations/eyal_cuted.jpg) 
+
+here is the picture after the change:
+
+![middle eyal](test/image%20transformations/eyal_moved.jpg) 
+
+We came up with the idea of refining the transformation from yesterday by making several transformation for every category.
   
