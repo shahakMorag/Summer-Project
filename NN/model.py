@@ -20,15 +20,15 @@ def custom_network():
     NN = max_pool_2d(NN, 2)
     NN = batch_normalization(NN)
 
-    NN = conv_2d(NN, 64, 2, activation='relu')
+    '''NN = conv_2d(NN, 64, 2, activation='relu')
     NN = max_pool_2d(NN, 2)
     NN = batch_normalization(NN)
 
     NN = conv_2d(NN, 64, 2, activation='relu')
     NN = max_pool_2d(NN, 2)
-    NN = batch_normalization(NN)
+    NN = batch_normalization(NN)'''
 
-    NN = fully_connected(NN, 1024, activation='relu', weights_init='xavier', bias_init='xavier')
+    NN = fully_connected(NN, 128, activation='relu', weights_init='xavier', bias_init='xavier')
     NN = dropout(NN, 0.5)
 
     NN = fully_connected(NN, 5, activation='softmax')

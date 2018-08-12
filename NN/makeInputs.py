@@ -2,7 +2,7 @@ from PIL import Image
 import glob
 import numpy
 
-limit = 100
+limit = 1000
 
 
 def get_pictures(dir, limit):
