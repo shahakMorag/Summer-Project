@@ -146,6 +146,7 @@ here is the picture after the change:
 We created 3 different affine transformations on images in order to make more diversed data set for the training.
 
 Here are some examples:
+
 ![first affine transformation](test/image%20transformations/Tomato_first_affine.jpg) 
 ![first affine transformation](test/image%20transformations/Tomato_second_affine.jpg) 
 ![first affine transformation](test/image%20transformations/Tomato_third_affine.jpg) 
