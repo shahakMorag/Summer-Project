@@ -8,13 +8,12 @@ from tflearn.layers.normalization import batch_normalization
 
 
 def custom_network():
-
-    img_prep = ImagePreprocessing()
+    '''img_prep = ImagePreprocessing()
     img_prep.add_featurewise_zero_center()
-    img_prep.add_featurewise_stdnorm()
+    img_prep.add_featurewise_stdnorm()'''
 
     NN = input_data(shape=[None, 128, 128, 3],
-                    data_preprocessing=img_prep,
+                    # data_preprocessing=img_prep,
                     name='input')
 
     NN = conv_2d(NN, 32, 2, activation='relu')

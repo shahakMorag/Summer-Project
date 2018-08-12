@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="2cd7f46f-3415-49e1-8f2e-93651268f467" name="Default" comment="finished markdown file">
-      <change afterPath="$PROJECT_DIR$/NN/example.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/NN/makeInputs.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/NN/model.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/NN/train.py" afterDir="false" />
+    <list default="true" id="2cd7f46f-3415-49e1-8f2e-93651268f467" name="Default" comment="finished make input">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NN/makeInputs.py" beforeDir="false" afterPath="$PROJECT_DIR$/NN/makeInputs.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NN/model.py" beforeDir="false" afterPath="$PROJECT_DIR$/NN/model.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NN/train.py" beforeDir="false" afterPath="$PROJECT_DIR$/NN/train.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -16,11 +14,12 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="CoverageDataManager">
+    <SUITE FILE_PATH="coverage/Summer_Project$train.coverage" NAME="train Coverage Results" MODIFIED="1534078951959" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/NN" />
     <SUITE FILE_PATH="coverage/Summer_Project$transformations.coverage" NAME="transformations Coverage Results" MODIFIED="1534068399882" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/test/image transformations" />
     <SUITE FILE_PATH="coverage/Summer_Project$example.coverage" NAME="example Coverage Results" MODIFIED="1534074266798" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/NN" />
     <SUITE FILE_PATH="coverage/Summer_Project$crop_test__1_.coverage" NAME="crop_test (1) Coverage Results" MODIFIED="1534017319197" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/test/PIL tests" />
     <SUITE FILE_PATH="coverage/Summer_Project$crop_test.coverage" NAME="crop_test Coverage Results" MODIFIED="1534005906124" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/Summer_Project$makeInputs.coverage" NAME="makeInputs Coverage Results" MODIFIED="1534075609942" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/NN" />
+    <SUITE FILE_PATH="coverage/Summer_Project$makeInputs.coverage" NAME="makeInputs Coverage Results" MODIFIED="1534077217178" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/NN" />
     <SUITE FILE_PATH="coverage/Summer_Project$test.coverage" NAME="test Coverage Results" MODIFIED="1534005063433" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
   <component name="FUSProjectUsageTrigger">
@@ -28,31 +27,31 @@
       <usages-collector id="statistics.file.extensions.open">
         <counts>
           <entry key="jpg" value="35" />
-          <entry key="md" value="3" />
+          <entry key="md" value="4" />
           <entry key="png" value="6" />
-          <entry key="py" value="16" />
+          <entry key="py" value="21" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
           <entry key="Image" value="41" />
-          <entry key="Markdown" value="3" />
-          <entry key="Python" value="16" />
+          <entry key="Markdown" value="4" />
+          <entry key="Python" value="21" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="dummy" value="2" />
-          <entry key="md" value="3517" />
-          <entry key="py" value="3990" />
-          <entry key="txt" value="257" />
+          <entry key="md" value="3529" />
+          <entry key="py" value="4397" />
+          <entry key="txt" value="320" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="Markdown" value="3508" />
-          <entry key="PLAIN_TEXT" value="259" />
-          <entry key="Python" value="3999" />
+          <entry key="Markdown" value="3520" />
+          <entry key="PLAIN_TEXT" value="322" />
+          <entry key="Python" value="4406" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.lifecycle.project">
@@ -68,31 +67,10 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/README.md">
-          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-            <state split_layout="SPLIT">
-              <first_editor relative-caret-position="290">
-                <caret line="159" column="95" selection-start-line="159" selection-start-column="95" selection-end-line="159" selection-end-column="95" />
-              </first_editor>
-              <second_editor />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/NN/model.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="51">
-              <caret line="3" column="52" selection-start-line="3" selection-start-column="52" selection-end-line="3" selection-end-column="52" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/NN/example.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="169">
-              <caret line="13" column="40" lean-forward="true" selection-start-line="13" selection-start-column="40" selection-end-line="13" selection-end-column="40" />
+            <state relative-caret-position="193">
+              <caret line="16" column="21" selection-start-line="16" selection-start-column="21" selection-end-line="16" selection-end-column="21" />
               <folding>
                 <element signature="e#0#14#0" expanded="true" />
               </folding>
@@ -101,23 +79,27 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/NN/train.py">
+        <entry file="file://$PROJECT_DIR$/NN/makeInputs.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="51">
-              <caret line="3" selection-start-line="3" selection-end-line="3" />
+            <state relative-caret-position="136">
+              <caret line="40" column="7" selection-start-line="40" selection-start-column="7" selection-end-line="40" selection-end-column="7" />
+              <folding>
+                <element signature="e#0#21#0" expanded="true" />
+                <marker date="1534078871821" expanded="true" signature="121:122" ph="..." />
+                <marker date="1534078871821" expanded="true" signature="121:126" ph="..." />
+                <marker date="1534078871821" expanded="true" signature="384:385" ph="..." />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/NN/makeInputs.py">
+        <entry file="file://$PROJECT_DIR$/NN/train.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="187">
-              <caret line="11" column="17" selection-start-line="11" selection-start-column="17" selection-end-line="11" selection-end-column="17" />
+            <state relative-caret-position="136">
+              <caret line="8" column="20" selection-start-line="8" selection-start-column="20" selection-end-line="8" selection-end-column="20" />
               <folding>
-                <element signature="e#0#21#0" expanded="true" />
-                <marker date="1534075609904" expanded="true" signature="88:89" ph="..." />
-                <marker date="1534075609904" expanded="true" signature="88:93" ph="..." />
+                <element signature="e#0#35#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -149,11 +131,11 @@
         <option value="$PROJECT_DIR$/test.py" />
         <option value="$PROJECT_DIR$/test/PIL tests/crop_test.py" />
         <option value="$PROJECT_DIR$/test/image transformations/transformations.py" />
+        <option value="$PROJECT_DIR$/NN/example.py" />
         <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/NN/model.py" />
-        <option value="$PROJECT_DIR$/NN/example.py" />
-        <option value="$PROJECT_DIR$/NN/train.py" />
         <option value="$PROJECT_DIR$/NN/makeInputs.py" />
+        <option value="$PROJECT_DIR$/NN/train.py" />
       </list>
     </option>
   </component>
@@ -165,7 +147,6 @@
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="99" />
-    <option name="y" value="-8" />
     <option name="width" value="1120" />
     <option name="height" value="530" />
   </component>
@@ -225,7 +206,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.makeInputs">
+  <component name="RunManager" selected="Python.train">
     <configuration name="crop_test (1)" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="Summer-Project" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -240,28 +221,6 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/test/PIL tests/crop_test.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="crop_test" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="Summer-Project" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="C:\Users\shaha\PycharmProjects\Summer-Project\test\PIL tests\crop_test.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -314,6 +273,28 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="train" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="Summer-Project" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/NN" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/NN/train.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="transformations" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="Summer-Project" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -337,19 +318,19 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Python.crop_test" />
       <item itemvalue="Python.transformations" />
       <item itemvalue="Python.crop_test (1)" />
       <item itemvalue="Python.example" />
       <item itemvalue="Python.makeInputs" />
+      <item itemvalue="Python.train" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.train" />
         <item itemvalue="Python.makeInputs" />
         <item itemvalue="Python.example" />
         <item itemvalue="Python.transformations" />
         <item itemvalue="Python.crop_test (1)" />
-        <item itemvalue="Python.crop_test" />
       </list>
     </recent_temporary>
   </component>
@@ -511,20 +492,40 @@
       <option name="project" value="LOCAL" />
       <updated>1534072981440</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="make inputs start">
+      <created>1534075682105</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1534075682105</updated>
+    </task>
+    <task id="LOCAL-00023" summary="fixed markdown">
+      <created>1534075789717</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1534075789717</updated>
+    </task>
+    <task id="LOCAL-00024" summary="finished make input">
+      <created>1534077405790</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1534077405790</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4954751" visible="true" weight="0.18456884" />
       <window_info id="Structure" order="1" sideWeight="0.5045249" side_tool="true" weight="0.16490166" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.3289689" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.18330605" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.3502455" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.4680851" />
+      <window_info active="true" anchor="bottom" id="Debug" order="3" visible="true" weight="0.3502455" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -561,7 +562,11 @@
     <MESSAGE value="finished markdown" />
     <MESSAGE value="finished affine transformation" />
     <MESSAGE value="finished markdown file" />
-    <option name="LAST_COMMIT_MESSAGE" value="finished markdown file" />
+    <MESSAGE value="make inputs start" />
+    <MESSAGE value="fixed markdown" />
+    <MESSAGE value="finished make input" />
+    <option name="LAST_COMMIT_MESSAGE" value="finished make input" />
+    <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/eitan_test.py" />
@@ -663,16 +668,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/README.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="290">
-            <caret line="159" column="95" selection-start-line="159" selection-start-column="95" selection-end-line="159" selection-end-column="95" />
-          </first_editor>
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python36/Lib/site-packages/tflearn/layers/conv.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="85">
@@ -682,22 +677,42 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/NN/model.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" column="52" selection-start-line="3" selection-start-column="52" selection-end-line="3" selection-end-column="52" />
+        <state relative-caret-position="193">
+          <caret line="16" column="21" selection-start-line="16" selection-start-column="21" selection-end-line="16" selection-end-column="21" />
+          <folding>
+            <element signature="e#0#14#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/NN/train.py">
+    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python36/Lib/site-packages/numpy/core/numeric.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" selection-start-line="3" selection-end-line="3" />
+        <state relative-caret-position="123">
+          <caret line="530" selection-start-line="530" selection-end-line="530" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="109">
+            <caret line="152" column="7" selection-start-line="152" selection-start-column="7" selection-end-line="152" selection-end-column="7" />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python36/Lib/site-packages/tensorflow/python/client/session.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="99">
+          <caret line="1099" selection-start-line="1099" selection-end-line="1099" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/NN/example.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="169">
-          <caret line="13" column="40" lean-forward="true" selection-start-line="13" selection-start-column="40" selection-end-line="13" selection-end-column="40" />
+        <state relative-caret-position="74">
+          <caret line="48" lean-forward="true" selection-start-line="48" selection-end-line="48" />
           <folding>
             <element signature="e#0#14#0" expanded="true" />
           </folding>
@@ -706,12 +721,23 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/NN/makeInputs.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="11" column="17" selection-start-line="11" selection-start-column="17" selection-end-line="11" selection-end-column="17" />
+        <state relative-caret-position="136">
+          <caret line="40" column="7" selection-start-line="40" selection-start-column="7" selection-end-line="40" selection-end-column="7" />
           <folding>
             <element signature="e#0#21#0" expanded="true" />
-            <marker date="1534075609904" expanded="true" signature="88:89" ph="..." />
-            <marker date="1534075609904" expanded="true" signature="88:93" ph="..." />
+            <marker date="1534078871821" expanded="true" signature="121:122" ph="..." />
+            <marker date="1534078871821" expanded="true" signature="121:126" ph="..." />
+            <marker date="1534078871821" expanded="true" signature="384:385" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/NN/train.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="8" column="20" selection-start-line="8" selection-start-column="20" selection-end-line="8" selection-end-column="20" />
+          <folding>
+            <element signature="e#0#35#0" expanded="true" />
           </folding>
         </state>
       </provider>
