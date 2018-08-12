@@ -159,6 +159,7 @@ Finally we started building the neural network.
 
 ![neural network](https://icdn5.digitaltrends.com/image/artificial_neural_network_1-791x388.jpg)
 
+#### Architecture
 We created a neural network with the following architecture:
 ```python
 from tflearn.layers.conv import conv_2d, max_pool_2d
