@@ -11,7 +11,7 @@ def get_pictures(dir, limit):
 
     for filename in glob.glob(dir + '/*.png'):
         limit -= 1
-        if limit == 0:
+        if limit == -1:
             break
         images.append(Image.open(filename))
 
@@ -22,26 +22,29 @@ def get_pictures(dir, limit):
 
 
 def make_inputs():
-    X, Y = [], []
     X = get_pictures(
-        "F:\Tomato_Classification_Project\Tomato_Classification_Project\Patches\Patches\patches_size_128_skip_32_categories_5/bad_leaf",
+        "F:\Tomato_Classification_Project\Tomato_Classification_Project\Patches\Patches"
+        "\patches_size_128_skip_32_categories_5/bad_leaf",
         limit)
-    Y.append([[1, 0, 0, 0, 0]] * (limit - 1))
+    Y = [[1, 0, 0, 0, 0]] * limit
     X += get_pictures(
-        "F:\Tomato_Classification_Project\Tomato_Classification_Project\Patches\Patches\patches_size_128_skip_32_categories_5/fruit",
+        "F:\Tomato_Classification_Project\Tomato_Classification_Project\Patches\Patches"
+        "\patches_size_128_skip_32_categories_5/fruit",
         limit)
-    Y.append([[0, 1, 0, 0, 0]] * (limit - 1))
+    Y += ([[0, 1, 0, 0, 0]] * limit)
     X += (get_pictures(
-        "F:\Tomato_Classification_Project\Tomato_Classification_Project\Patches\Patches\patches_size_128_skip_32_categories_5/leaf",
+        "F:\Tomato_Classification_Project\Tomato_Classification_Project\Patches\Patches"
+        "\patches_size_128_skip_32_categories_5/leaf",
         limit))
-    Y.append([[0, 0, 1, 0, 0]] * (limit - 1))
+    Y += ([[0, 0, 1, 0, 0]] * limit)
     X += (get_pictures(
-        "F:\Tomato_Classification_Project\Tomato_Classification_Project\Patches\Patches\patches_size_128_skip_32_categories_5/other",
+        "F:\Tomato_Classification_Project\Tomato_Classification_Project\Patches\Patches"
+        "\patches_size_128_skip_32_categories_5/other",
         limit))
-    Y.append([0, 0, 0, 1, 0] * (limit - 1))
+    Y += ([[0, 0, 0, 1, 0]] * limit)
     X += (get_pictures(
-        "F:\Tomato_Classification_Project\Tomato_Classification_Project\Patches\Patches\patches_size_128_skip_32_categories_5/stem",
+        "F:\Tomato_Classification_Project\Tomato_Classification_Project\Patches\Patches"
+        "\patches_size_128_skip_32_categories_5/stem",
         limit))
-    Y.append([[0, 0, 0, 0, 1]] * (limit - 1))
+    Y += ([[0, 0, 0, 0, 1]] * limit)
     return X, Y
-
