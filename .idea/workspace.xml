@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="2cd7f46f-3415-49e1-8f2e-93651268f467" name="Default" comment="change net">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NN/model.py" beforeDir="false" afterPath="$PROJECT_DIR$/NN/model.py" afterDir="false" />
-    </list>
+    <list default="true" id="2cd7f46f-3415-49e1-8f2e-93651268f467" name="Default" comment="change net" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -98,9 +95,6 @@
               <caret line="4" column="12" selection-start-line="4" selection-start-column="12" selection-end-line="4" selection-end-column="12" />
               <folding>
                 <element signature="e#0#21#0" expanded="true" />
-                <marker date="1534083486850" expanded="true" signature="122:123" ph="..." />
-                <marker date="1534083486850" expanded="true" signature="122:127" ph="..." />
-                <marker date="1534083486850" expanded="true" signature="368:369" ph="..." />
               </folding>
             </state>
           </provider>
@@ -582,7 +576,14 @@
       <option name="project" value="LOCAL" />
       <updated>1534096966462</updated>
     </task>
-    <option name="localTasksCounter" value="33" />
+    <task id="LOCAL-00033" summary="change net">
+      <created>1534097702279</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1534097702279</updated>
+    </task>
+    <option name="localTasksCounter" value="34" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -805,9 +806,6 @@
           <caret line="4" column="12" selection-start-line="4" selection-start-column="12" selection-end-line="4" selection-end-column="12" />
           <folding>
             <element signature="e#0#21#0" expanded="true" />
-            <marker date="1534083486850" expanded="true" signature="122:123" ph="..." />
-            <marker date="1534083486850" expanded="true" signature="122:127" ph="..." />
-            <marker date="1534083486850" expanded="true" signature="368:369" ph="..." />
           </folding>
         </state>
       </provider>
