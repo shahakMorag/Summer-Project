@@ -220,7 +220,7 @@ and the result is the classification.
 We've trained a model on Eitan's computer (CPU) over-night and got a working model with accuracy.
 The graph below shows the accuracy of the model as a function of the training step.
 The whole session took 13 hours on a quad-core i5 cpu.
-![first model accuracy](readme_imgs\acc1.png)
+![first model accuracy](readme_imgs/acc1.png)
 
 ### Moved to OpenCV instead of PIL
 The OpenCV library for python seemed to be a better choice for our needs, so we decided to use it instead of PIL
