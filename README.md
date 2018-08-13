@@ -206,6 +206,8 @@ In order to improve our network results.
 ### Preprocessing
 We came up with the idea of generating data sets using external softwares, e.g. Matlab, since we will do it only once.
 
+## Third Day
+
 ### Model Ensemble And Our Idea
 Model ensemble is the idea of training several neural networks of the same 
 architecture with different initialization at training time and at testing time use the median of their result.
@@ -213,3 +215,51 @@ architecture with different initialization at training time and at testing time 
 Train several neural networks of different architecture and train
 a network that receive as input all the rest of the architecture's out and
 and the result is the classification.
+
+### First Model Results
+We've trained a model on Eitan's computer (CPU) over-night and got a working model with accuracy.
+The graph below shows the accuracy of the model as a function of the training step.
+The whole session took 13 hours on a quad-core i5 cpu.
+![first model accuracy](readme_imgs\acc1.png)
+
+### Moved to OpenCV instead of PIL
+The OpenCV library for python seemed to be a better choice for our needs, so we decided to use it instead of PIL
+
+### Tools-Set for classification of generating the output
+The input for the classifier is a list of crops, taken from a big image.
+We classify each sub-image and later map it to a unique color that we associate with it's class. This is the color of the corresponding pixel in the output.
+ 
+```python
+def apply_classification(image_list):
+    model = custom_network()
+    model.load('../NN/first.model')
+    lst = []
+    for im in image_list:
+        im = im.reshape(-1, 128, 128, 3)
+        res = model.predict(im)
+        lst.append(np.argmax(res))
+    return lst
+
+```
+
+Later, we generate the new image based on the data from the classifier:
+
+```python
+# 0 - bad leaf
+# 1 - fruit
+# 2 - leaf
+# 3 - other
+# 4 - stem
+keys = [0, 1, 2, 3, 4]
+colors = [[0, 0, 255], [255, 0, 0], [0, 255, 0], [0, 255, 255], [255, 255, 0]]
+
+dict = dict(zip(keys, colors))
+
+
+def keys2img(vals, height, width):
+    res = []
+    for item in vals:
+        res.append(dict.get(item))
+
+    return np.reshape(res, (height, width, 3))
+```
