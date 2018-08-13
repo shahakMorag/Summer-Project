@@ -45,6 +45,8 @@ def custom_network():
 
     NN = fully_connected(NN, 1024, activation='relu', weights_init='xavier', bias_init='xavier')
     NN = dropout(NN, 0.5)
+    NN = fully_connected(NN, 1024, activation='relu', weights_init='xavier', bias_init='xavier')
+    NN = dropout(NN, 0.5)
 
     NN = fully_connected(NN, 5, activation='softmax')
 
