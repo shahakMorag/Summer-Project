@@ -1,6 +1,8 @@
 import cv2
 import numpy as np
 
+from NN.model import custom_network
+
 im = img = cv2.imread('../test/image transformations/eyal.png', 1)
 # im = im.resize((500, 500))
 
@@ -26,9 +28,14 @@ def crops_show(im_list):
         cv2.waitKey(1000)
 
 
-def apply_classification
+def apply_classification(image_list):
+    model = custom_network()
+    model.load('first.model')
+    return map(lambda x: np.argmax(x), map(lambda x: model.predict(x), image_list))
+
 
 
 list = createCrops(im, step, step, crop_x, crop_y)
+m = apply_classification(list)
 
 crops_show(list)
