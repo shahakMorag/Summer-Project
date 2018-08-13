@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="2cd7f46f-3415-49e1-8f2e-93651268f467" name="Default" comment="added crops">
+    <list default="true" id="2cd7f46f-3415-49e1-8f2e-93651268f467" name="Default" comment="added classification">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NN/model.py" beforeDir="false" afterPath="$PROJECT_DIR$/NN/model.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NN/train.py" beforeDir="false" afterPath="$PROJECT_DIR$/NN/train.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cv_utils/crop_utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/cv_utils/crop_utils.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -69,26 +71,26 @@
       <usages-collector id="statistics.file.extensions.open">
         <counts>
           <entry key="md" value="1" />
-          <entry key="py" value="4" />
+          <entry key="py" value="9" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
           <entry key="Markdown" value="1" />
-          <entry key="Python" value="4" />
+          <entry key="Python" value="9" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="Python Console" value="28" />
-          <entry key="py" value="169" />
-          <entry key="txt" value="12" />
+          <entry key="py" value="570" />
+          <entry key="txt" value="33" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="PLAIN_TEXT" value="12" />
-          <entry key="Python" value="197" />
+          <entry key="PLAIN_TEXT" value="33" />
+          <entry key="Python" value="598" />
         </counts>
       </usages-collector>
     </session>
@@ -108,10 +110,10 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/NN/train.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="221">
-              <caret line="13" column="23" lean-forward="true" selection-start-line="13" selection-start-column="12" selection-end-line="13" selection-end-column="23" />
+            <state relative-caret-position="85">
+              <caret line="5" column="23" selection-start-line="5" selection-start-column="23" selection-end-line="5" selection-end-column="23" />
               <folding>
-                <element signature="e#0#35#0" expanded="true" />
+                <element signature="e#0#50#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -132,12 +134,21 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/cv_utils/crop_utils.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="413">
-              <caret line="39" lean-forward="true" selection-start-line="39" selection-end-line="39" />
+            <state relative-caret-position="102">
+              <caret line="6" column="1" selection-start-line="6" selection-start-column="1" selection-end-line="6" selection-end-column="1" />
               <folding>
                 <element signature="e#0#10#0" expanded="true" />
-                <marker date="1534172643182" expanded="true" signature="664:811" ph="..." />
+                <marker date="1534177046044" expanded="true" signature="686:1267" ph="..." />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python35/Lib/site-packages/tensorflow/python/client/session.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="190">
+              <caret line="1075" selection-start-line="1075" selection-end-line="1075" />
             </state>
           </provider>
         </entry>
@@ -145,10 +156,11 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/NN/model.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="170">
-              <caret line="10" column="18" selection-start-line="10" selection-start-column="4" selection-end-line="10" selection-end-column="18" />
+            <state relative-caret-position="822">
+              <caret line="101" column="61" selection-start-line="101" selection-start-column="61" selection-end-line="101" selection-end-column="61" />
               <folding>
                 <element signature="e#0#14#0" expanded="true" />
+                <marker date="1534175662540" expanded="true" signature="3729:3730" ph="..." />
               </folding>
             </state>
           </provider>
@@ -183,9 +195,9 @@
         <option value="$PROJECT_DIR$/test/image transformations/transformations.py" />
         <option value="$PROJECT_DIR$/NN/example.py" />
         <option value="$PROJECT_DIR$/README.md" />
+        <option value="$PROJECT_DIR$/NN/makeInputs.py" />
         <option value="$PROJECT_DIR$/NN/train.py" />
         <option value="$PROJECT_DIR$/NN/model.py" />
-        <option value="$PROJECT_DIR$/NN/makeInputs.py" />
         <option value="$PROJECT_DIR$/cv_utils/crop_utils.py" />
       </list>
     </option>
@@ -221,6 +233,11 @@
             <path>
               <item name="Summer-Project" type="b2602c69:ProjectViewProjectNode" />
               <item name="Summer-Project" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Summer-Project" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Summer-Project" type="462c0819:PsiDirectoryNode" />
+              <item name="cv_utils" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="Summer-Project" type="b2602c69:ProjectViewProjectNode" />
@@ -387,8 +404,8 @@
     <recent_temporary>
       <list>
         <item itemvalue="Python.crop_utils" />
-        <item itemvalue="Python.transformations" />
         <item itemvalue="Python.train" />
+        <item itemvalue="Python.transformations" />
         <item itemvalue="Python.makeInputs" />
         <item itemvalue="Python.example" />
       </list>
@@ -657,7 +674,14 @@
       <option name="project" value="LOCAL" />
       <updated>1534172307964</updated>
     </task>
-    <option name="localTasksCounter" value="37" />
+    <task id="LOCAL-00037" summary="added classification">
+      <created>1534172696595</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1534172696595</updated>
+    </task>
+    <option name="localTasksCounter" value="38" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -669,8 +693,8 @@
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.32997987" />
-      <window_info active="true" anchor="bottom" id="Debug" order="3" visible="true" weight="0.3993964" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.32997987" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.3993964" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -712,19 +736,9 @@
     <MESSAGE value="added results screenshot" />
     <MESSAGE value="change net" />
     <MESSAGE value="added crops" />
-    <option name="LAST_COMMIT_MESSAGE" value="added crops" />
+    <MESSAGE value="added classification" />
+    <option name="LAST_COMMIT_MESSAGE" value="added classification" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/cv_utils/crop_utils.py</url>
-          <line>40</line>
-          <option name="timeStamp" value="2" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/eitan_test.py" />
@@ -788,6 +802,27 @@
       </provider>
       <provider editor-type-id="text-editor" />
     </entry>
+    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python35/Lib/site-packages/tensorflow/python/training/saver.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="190">
+          <caret line="1716" selection-start-line="1716" selection-end-line="1716" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python35/Lib/codecs.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="190">
+          <caret line="308" selection-start-line="308" selection-end-line="308" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python35/Lib/site-packages/tensorflow/python/client/session.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="190">
+          <caret line="1075" selection-start-line="1075" selection-end-line="1075" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/NN/makeInputs.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="85">
@@ -798,33 +833,34 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/NN/model.py">
+    <entry file="file://$PROJECT_DIR$/NN/train.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="10" column="18" selection-start-line="10" selection-start-column="4" selection-end-line="10" selection-end-column="18" />
+        <state relative-caret-position="85">
+          <caret line="5" column="23" selection-start-line="5" selection-start-column="23" selection-end-line="5" selection-end-column="23" />
           <folding>
-            <element signature="e#0#14#0" expanded="true" />
+            <element signature="e#0#50#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/NN/train.py">
+    <entry file="file://$PROJECT_DIR$/NN/model.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="13" column="23" lean-forward="true" selection-start-line="13" selection-start-column="12" selection-end-line="13" selection-end-column="23" />
+        <state relative-caret-position="822">
+          <caret line="101" column="61" selection-start-line="101" selection-start-column="61" selection-end-line="101" selection-end-column="61" />
           <folding>
-            <element signature="e#0#35#0" expanded="true" />
+            <element signature="e#0#14#0" expanded="true" />
+            <marker date="1534175662540" expanded="true" signature="3729:3730" ph="..." />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/cv_utils/crop_utils.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="413">
-          <caret line="39" lean-forward="true" selection-start-line="39" selection-end-line="39" />
+        <state relative-caret-position="102">
+          <caret line="6" column="1" selection-start-line="6" selection-start-column="1" selection-end-line="6" selection-end-column="1" />
           <folding>
             <element signature="e#0#10#0" expanded="true" />
-            <marker date="1534172643182" expanded="true" signature="664:811" ph="..." />
+            <marker date="1534177046044" expanded="true" signature="686:1267" ph="..." />
           </folding>
         </state>
       </provider>
