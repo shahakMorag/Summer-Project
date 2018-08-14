@@ -4,12 +4,13 @@ from keras.models import Sequential
 from keras.layers import Dense, Dropout, Flatten, BatchNormalization
 from keras.layers import Conv2D, MaxPooling2D
 from keras_preprocessing.image import ImageDataGenerator
+from NN.AntiRectifier import Antirectifier
 
 from NN.makeInputs import make_inputs
 
 batch_size = 128
 num_classes = 5
-epochs = 12
+epochs = 1
 
 # preprocess_epochs = 4
 
@@ -18,7 +19,7 @@ img_rows, img_cols = 128, 128
 channels = 3
 
 # the data, split between train and test sets
-(x_train, y_train), (x_test, y_test) = make_inputs(True)
+x_train, y_train, x_test, y_test = make_inputs(True)
 
 input_shape = (img_rows, img_cols, channels)
 
@@ -31,24 +32,21 @@ print(x_train.shape[0], 'train samples')
 print(x_test.shape[0], 'test samples')
 
 # convert class vectors to binary class matrices
-y_train = keras.utils.to_categorical(y_train, num_classes)
-y_test = keras.utils.to_categorical(y_test, num_classes)
+# y_train = keras.utils.to_categorical(y_train, num_classes)
+# y_test = keras.utils.to_categorical(y_test, num_classes)
 
 model = Sequential()
+''''
 model.add(Conv2D(32, kernel_size=(3, 3),
                  activation='relu',
                  input_shape=input_shape))
-model.add(Conv2D(64, (3, 3), activation='relu'))
-model.add(MaxPooling2D(pool_size=(2, 3)))
+model.add(MaxPooling2D(pool_size=(2, 2)))
 model.add(BatchNormalization(axis=1))
-
-model.add(Conv2D(64, (3, 3), activation='relu'))
-model.add(MaxPooling2D(pool_size=(2, 3)))
-model.add(BatchNormalization())
-
 model.add(Dropout(0.25))
+'''
 model.add(Flatten())
-model.add(Dense(1024, activation='relu'))
+model.add(Dense(1024))
+model.add(Antirectifier())
 model.add(Dropout(0.5))
 model.add(Dense(num_classes, activation='softmax'))
 

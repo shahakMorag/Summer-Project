@@ -1,10 +1,10 @@
 from PIL import Image
 import glob
-import numpy
+import numpy as np
 
 limit = 2000
 test = 100
-path = "C:\Tomato_Classification_Project\Patches\Patches"
+path = "F:\Tomato_Classification_Project\Tomato_Classification_Project\Patches\Patches"
 
 
 def get_pictures(dir, limit):
@@ -18,7 +18,7 @@ def get_pictures(dir, limit):
         images.append(Image.open(filename))
 
     for x in images:
-        res.append(numpy.array(x))
+        res.append(np.array(x))
 
     return res
 
@@ -51,6 +51,6 @@ def make_inputs(is_test=False):
     Y_test += [[0, 0, 0, 0, 1]] * test
 
     if is_test:
-        return X, Y, X_test, Y_test
+        return np.array(X), np.array(Y), np.array(X_test), np.array(Y_test)
 
     return X, Y
