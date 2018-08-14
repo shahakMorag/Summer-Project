@@ -263,3 +263,12 @@ def keys2img(vals, height, width):
 
     return np.reshape(res, (height, width, 3))
 ```
+
+## Fourth Day
+### Fixed colors keys to colors translation
+We had to convert the arrays to type uint8 since the function "imshow" accepts this type
+
+### New Idea: Color Picker
+We thought about embedding a color picker so that the user could the color applied for each class after classification
+
+![color_picker](readme_imgs/color_picker.png)

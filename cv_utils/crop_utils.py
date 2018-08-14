@@ -38,16 +38,19 @@ def apply_classification(image_list):
     return lst
 
 
-# 0 - bad leaf
-# 1 - fruit
-# 2 - leaf
-# 3 - other
-# 4 - stem
+# 0 - bad leaf - blue    - [255, 0, 0]
+# 1 - fruit    - red     - [9,1,146]
+# 2 - leaf     - green   - [0, 255, 0]
+# 3 - other    - brown   - [0,25,74]
+# 4 - stem - dark green  - [9,42,1]
 keys = [0, 1, 2, 3, 4]
-colors = [[0, 0, 255], [255, 0, 0], [0, 255, 0], [0, 255, 255], [255, 255, 0]]
-
+colors = np.array([[255, 0, 0], [9, 1, 146], [0, 255, 0], [0, 25, 74], [9, 42, 1]]).astype(np.uint8)
 dict = dict(zip(keys, colors))
 
+
+# [0, 0, 255] - red
+# [0, 255, 0] - green
+# [255, 0, 0] - blue
 
 def keys2img(vals, height, width):
     res = []
@@ -57,9 +60,13 @@ def keys2img(vals, height, width):
     return np.reshape(res, (height, width, 3))
 
 
-list = createCrops(im, step, step, crop_x, crop_y)
-m = apply_classification(list)
-imcv = keys2img(m, 11, 3)
+# list = createCrops(im, step, step, crop_x, crop_y)
+# m = apply_classification(list)
+
+re = [0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4]
+m = re * 25000
+
+imcv = keys2img(m, 500, 1000)
 
 cv2.imshow("shem sel hahalon", imcv)
 cv2.waitKey(0)
