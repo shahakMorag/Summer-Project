@@ -4,8 +4,6 @@ import numpy as np
 from NN.model import custom_network
 
 im = img = cv2.imread('../test/image transformations/eyal.png', 1)
-# im = cv2.resize(im,)
-# im = im.resize((500, 500))
 
 step = 16
 crop_x = 128
@@ -57,6 +55,7 @@ def keys2img(vals, height, width):
         res.append(dict.get(item))
 
     return np.reshape(res, (height, width, 3))
+
 
 list = createCrops(im, step, step, crop_x, crop_y)
 m = apply_classification(list)
