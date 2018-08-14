@@ -75,15 +75,11 @@ def keys2img(vals, height, width):
     return np.reshape(res, (int(height), int(width), 3))
 
 
-old_w, old_h = np.size(im, 1), np.size(im, 0)
+# We better trust practical calculations...
 new_height, new_width = calc_dim(im, step, step, crop_x, crop_y)
-new_width_n = np.floor(((old_w - crop_x) / step) + 1)
-new_height_n = np.floor(((old_h - crop_y) / step) + 1)
+
 list = createCrops(im, step, step, crop_x, crop_y)
 m = apply_classification(list)
-
-# new_width = np.floor(((old_w - crop_x)/step) + 1)
-# new_height = np.floor(((old_h - crop_y)/step) + 1)
 
 imcv = keys2img(m, new_height, new_width)
 

@@ -2,10 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2cd7f46f-3415-49e1-8f2e-93651268f467" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/test/image transformations/IMG_5562.JPG" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NN/makeInputs.py" beforeDir="false" afterPath="$PROJECT_DIR$/NN/makeInputs.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NN/train.py" beforeDir="false" afterPath="$PROJECT_DIR$/NN/train.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cv_utils/crop_utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/cv_utils/crop_utils.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -87,8 +84,8 @@
       <file leaf-file-name="crop_utils.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/cv_utils/crop_utils.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="264">
-              <caret line="86" selection-start-line="86" selection-end-line="86" />
+            <state relative-caret-position="239">
+              <caret line="80" column="30" selection-start-line="80" selection-start-column="30" selection-end-line="80" selection-end-column="30" />
               <folding>
                 <element signature="e#0#10#0" expanded="true" />
               </folding>
@@ -617,7 +614,14 @@
       <option name="project" value="LOCAL" />
       <updated>1534270278133</updated>
     </task>
-    <option name="localTasksCounter" value="36" />
+    <task id="LOCAL-00036" summary="changed net">
+      <created>1534284024670</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1534284024670</updated>
+    </task>
+    <option name="localTasksCounter" value="37" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -632,13 +636,13 @@
       <window_info anchor="bottom" id="Python Console" order="12" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.2975558" />
       <window_info anchor="bottom" id="Terminal" order="10" weight="0.3289689" />
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4954751" visible="true" weight="0.19322917" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.4954751" visible="true" weight="0.19322917" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="right" id="Database" order="3" />
       <window_info anchor="right" id="SciView" order="4" weight="0.32980332" />
       <window_info id="Structure" order="1" sideWeight="0.5045249" side_tool="true" weight="0.16490166" />
       <window_info id="Favorites" order="2" side_tool="true" />
-      <window_info active="true" anchor="bottom" id="Debug" order="3" visible="true" weight="0.34962806" />
+      <window_info anchor="bottom" id="Debug" order="3" visible="true" weight="0.34962806" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -684,7 +688,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/cv_utils/crop_utils.py</url>
-          <line>86</line>
+          <line>82</line>
           <option name="timeStamp" value="7" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
@@ -697,7 +701,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python35/Lib/site-packages/tensorflow/python/client/session.py" />
     <entry file="file://$PROJECT_DIR$/NN/makeInputs.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="51">
@@ -923,10 +926,13 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/test/image transformations/IMG_5562.JPG">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
     <entry file="file://$PROJECT_DIR$/cv_utils/crop_utils.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="264">
-          <caret line="86" selection-start-line="86" selection-end-line="86" />
+        <state relative-caret-position="239">
+          <caret line="80" column="30" selection-start-line="80" selection-start-column="30" selection-end-line="80" selection-end-column="30" />
           <folding>
             <element signature="e#0#10#0" expanded="true" />
           </folding>
