@@ -1,9 +1,9 @@
 import cv2
 import numpy as np
 
-from NN.model import custom_network
+from NN.model import custom_network, changed_model
 
-im = img = cv2.imread('../test/image transformations/eyal.png', 1)
+im = img = cv2.imread('../test/image transformations/IMG_5562.JPG', 1)
 
 step = 16
 crop_x = 128
@@ -21,6 +21,21 @@ def createCrops(im, step_x, step_y, crop_x, crop_y):
     return res
 
 
+def calc_dim(im, step_x, step_y, crop_x, crop_y):
+    im_w, im_h = np.size(im, 1), np.size(im, 0)
+    height, width = im.shape[:2]
+
+    h = 0
+    w = 0
+
+    for up in range(0, height - crop_y, step_y):
+        h += 1
+
+    for left in range(0, width - crop_x, step_x):
+        w += 1
+
+    return h, w
+
 def crops_show(im_list):
     for crop in im_list:
         cv2.imshow("ddsa", crop)
@@ -28,8 +43,8 @@ def crops_show(im_list):
 
 
 def apply_classification(image_list):
-    model = custom_network()
-    model.load('../NN/first.model')
+    model = changed_model()
+    model.load('../NN/second.model')
     lst = []
     for im in image_list:
         im = im.reshape(-1, 128, 128, 3)
@@ -57,16 +72,20 @@ def keys2img(vals, height, width):
     for item in vals:
         res.append(dict.get(item))
 
-    return np.reshape(res, (height, width, 3))
+    return np.reshape(res, (int(height), int(width), 3))
 
 
-# list = createCrops(im, step, step, crop_x, crop_y)
-# m = apply_classification(list)
+old_w, old_h = np.size(im, 1), np.size(im, 0)
+new_height, new_width = calc_dim(im, step, step, crop_x, crop_y)
+new_width_n = np.floor(((old_w - crop_x) / step) + 1)
+new_height_n = np.floor(((old_h - crop_y) / step) + 1)
+list = createCrops(im, step, step, crop_x, crop_y)
+m = apply_classification(list)
 
-re = [0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4]
-m = re * 25000
+# new_width = np.floor(((old_w - crop_x)/step) + 1)
+# new_height = np.floor(((old_h - crop_y)/step) + 1)
 
-imcv = keys2img(m, 500, 1000)
+imcv = keys2img(m, new_height, new_width)
 
 cv2.imshow("shem sel hahalon", imcv)
 cv2.waitKey(0)

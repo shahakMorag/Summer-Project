@@ -6,7 +6,7 @@ X, Y = make_inputs()
 model = changed_model()  # custom_network()
 
 model.fit(X, Y,
-          n_epoch=3,
+          n_epoch=5,
           show_metric=True,
           shuffle=True,
           run_id='tomato')

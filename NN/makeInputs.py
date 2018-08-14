@@ -2,7 +2,7 @@ from PIL import Image
 import glob
 import numpy as np
 
-limit = 2000
+limit = 100
 test = 100
 path = "F:\Tomato_Classification_Project\Tomato_Classification_Project\Patches\Patches"
 
