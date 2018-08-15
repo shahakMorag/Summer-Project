@@ -95,8 +95,9 @@ for e in range(epochs):
             # we need to break the loop by hand because
             # the generator loops indefinitely
             break
-
 '''
 score = model.evaluate(x_test, y_test, verbose=0)
 print('Test loss:', score[0])
 print('Test accuracy:', score[1])
+
+model.save("first.model")
