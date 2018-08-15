@@ -10,7 +10,7 @@ from NN.makeInputs import make_inputs
 
 batch_size = 128
 num_classes = 5
-epochs = 1
+epochs = 10
 
 # preprocess_epochs = 4
 
@@ -36,8 +36,7 @@ print(x_test.shape[0], 'test samples')
 # y_test = keras.utils.to_categorical(y_test, num_classes)
 
 model = Sequential()
-
-model.add(Conv2D(32, kernel_size=(3, 3),
+model.add(Conv2D(32, kernel_size=(5, 5),
                  activation='relu',
                  input_shape=input_shape))
 model.add(MaxPooling2D(pool_size=(2, 2)))
@@ -51,6 +50,9 @@ model.add(BatchNormalization(axis=1))
 model.add(Dropout(0.25))
 
 model.add(Flatten())
+model.add(Dense(2048))
+model.add(Antirectifier())
+model.add(Dropout(0.5))
 model.add(Dense(1024))
 model.add(Antirectifier())
 model.add(Dropout(0.5))
@@ -66,13 +68,13 @@ model.fit(x_train, y_train,
           verbose=1,
           validation_data=(x_test, y_test))
 
-datagen = ImageDataGenerator(
+'''datagen = ImageDataGenerator(
     featurewise_center=True,
     featurewise_std_normalization=True,
-    rotation_range=20,
-    width_shift_range=0.2,
-    height_shift_range=0.2)
-# horizontal_flip=True)
+    rotation_range=20)
+width_shift_range=0.2,
+height_shift_range=0.2)
+horizontal_flip=True)
 
 # compute quantities required for featurewise normalization
 # (std, mean, and principal components if ZCA whitening is applied)
@@ -94,7 +96,7 @@ for e in range(epochs):
             # the generator loops indefinitely
             break
 
-
+'''
 score = model.evaluate(x_test, y_test, verbose=0)
 print('Test loss:', score[0])
 print('Test accuracy:', score[1])
