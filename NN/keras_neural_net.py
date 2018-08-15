@@ -1,7 +1,7 @@
 from __future__ import print_function
 import keras
 from keras.models import Sequential
-from keras.layers import Dense, Dropout, Flatten, BatchNormalization
+from keras.layers import Dense, Dropout, Flatten, BatchNormalization, K, Lambda
 from keras.layers import Conv2D, MaxPooling2D
 from keras_preprocessing.image import ImageDataGenerator
 from NN.AntiRectifier import Antirectifier
@@ -35,6 +35,20 @@ print(x_test.shape[0], 'test samples')
 # y_train = keras.utils.to_categorical(y_train, num_classes)
 # y_test = keras.utils.to_categorical(y_test, num_classes)
 
+def antirectifier(x):
+    x -= K.mean(x, axis=1, keepdims=True)
+    x = K.l2_normalize(x, axis=1)
+    pos = K.relu(x)
+    neg = K.relu(-x)
+    return K.concatenate([pos, neg], axis=1)
+
+
+def antirectifier_output_shape(input_shape):
+    shape = list(input_shape)
+    assert len(shape) == 2  # only valid for 2D tensors
+    shape[-1] *= 2
+    return tuple(shape)
+
 model = Sequential()
 model.add(Conv2D(32, kernel_size=(3, 3),
                  activation='relu',
@@ -50,11 +64,11 @@ model.add(BatchNormalization(axis=1))
 model.add(Dropout(0.25))
 
 model.add(Flatten())
-model.add(Dense(2048))  # , activation='relu'))
-model.add(Antirectifier())
+model.add(Dense(2048))
+model.add(Lambda(antirectifier, output_shape=antirectifier_output_shape))
 model.add(Dropout(0.5))
-model.add(Dense(2048))  #, activation='relu'))
-model.add(Antirectifier())
+model.add(Dense(2048))
+model.add(Lambda(antirectifier, output_shape=antirectifier_output_shape))
 model.add(Dropout(0.5))
 model.add(Dense(num_classes, activation='softmax'))
 
