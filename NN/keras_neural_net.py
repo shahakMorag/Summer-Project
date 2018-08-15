@@ -10,7 +10,7 @@ from NN.makeInputs import make_inputs
 
 batch_size = 128
 num_classes = 5
-epochs = 5
+epochs = 1
 
 # preprocess_epochs = 4
 
@@ -66,13 +66,13 @@ model.fit(x_train, y_train,
           verbose=1,
           validation_data=(x_test, y_test))
 
-'''datagen = ImageDataGenerator(
+datagen = ImageDataGenerator(
     featurewise_center=True,
     featurewise_std_normalization=True,
     rotation_range=20,
     width_shift_range=0.2,
-    height_shift_range=0.2,
-    horizontal_flip=True)
+    height_shift_range=0.2)
+# horizontal_flip=True)
 
 # compute quantities required for featurewise normalization
 # (std, mean, and principal components if ZCA whitening is applied)
@@ -83,7 +83,7 @@ model.fit_generator(datagen.flow(x_train, y_train, batch_size=32),
                     steps_per_epoch=len(x_train) / 32, epochs=epochs)
 
 # here's a more "manual" example
-for e in range(preprocess_epochs):
+for e in range(epochs):
     print('Epoch', e)
     batches = 0
     for x_batch, y_batch in datagen.flow(x_train, y_train, batch_size=32):
@@ -93,7 +93,7 @@ for e in range(preprocess_epochs):
             # we need to break the loop by hand because
             # the generator loops indefinitely
             break
-'''
+
 
 score = model.evaluate(x_test, y_test, verbose=0)
 print('Test loss:', score[0])
