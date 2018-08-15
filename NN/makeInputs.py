@@ -2,9 +2,9 @@ from PIL import Image
 import glob
 import numpy as np
 
-limit = 100
+limit = 2000
 test = 100
-path = "F:\Tomato_Classification_Project\Tomato_Classification_Project\Patches\Patches"
+path = "C:\Tomato_Classification_Project\Patches\Patches"
 
 
 def get_pictures(dir, limit):

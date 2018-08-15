@@ -10,7 +10,7 @@ from NN.makeInputs import make_inputs
 
 batch_size = 128
 num_classes = 5
-epochs = 1
+epochs = 5
 
 # preprocess_epochs = 4
 
@@ -36,14 +36,20 @@ print(x_test.shape[0], 'test samples')
 # y_test = keras.utils.to_categorical(y_test, num_classes)
 
 model = Sequential()
-''''
+
 model.add(Conv2D(32, kernel_size=(3, 3),
                  activation='relu',
                  input_shape=input_shape))
 model.add(MaxPooling2D(pool_size=(2, 2)))
 model.add(BatchNormalization(axis=1))
 model.add(Dropout(0.25))
-'''
+
+model.add(Conv2D(32, kernel_size=(3, 3),
+                 activation='relu'))
+model.add(MaxPooling2D(pool_size=(2, 2)))
+model.add(BatchNormalization(axis=1))
+model.add(Dropout(0.25))
+
 model.add(Flatten())
 model.add(Dense(1024))
 model.add(Antirectifier())
