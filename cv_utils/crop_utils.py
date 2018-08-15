@@ -3,6 +3,7 @@ import cv2
 import numpy as np
 
 from NN.AntiRectifier import Antirectifier
+from keras.models import load_model
 from NN.model import custom_network, changed_model
 
 im = img = cv2.imread('../test/image transformations/IMG_5562.JPG', 1)
@@ -46,7 +47,7 @@ def crops_show(im_list):
 
 def apply_classification(image_list):
     # model = changed_model()
-    model = tf.keras.models.load_model('../NN/first.model', custom_objects={'Antirectifier': Antirectifier})
+    model = load_model('../NN/first.model', custom_objects={'Antirectifier': Antirectifier})
     lst = []
     for im in image_list:
         im = im.reshape(-1, 128, 128, 3)

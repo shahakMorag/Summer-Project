@@ -3,7 +3,7 @@ import glob
 import numpy as np
 
 limit = 2000
-test = 100
+test = 500
 path = "C:\Tomato_Classification_Project\Patches\Patches"
 
 
