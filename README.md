@@ -272,3 +272,13 @@ We had to convert the arrays to type uint8 since the function "imshow" accepts t
 We thought about embedding a color picker so that the user could the color applied for each class after classification
 
 ![color_picker](readme_imgs/color_picker.png)
+
+##Fifth Day
+### Use Gamma Correction As A Pupil 
+We came up with the idea of making our neural net learn the gamma correction that will make it's 
+classification easier.
+
+The idea is to make two neural networks one that return one number which is the gamma correction parameter
+and the other is the classifier and we will train the neural nets alternatively.
+
+The gamma's neural net will be use the other net in order to calculate the loss.
