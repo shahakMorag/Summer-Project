@@ -47,7 +47,7 @@ def crops_show(im_list):
 
 def apply_classification(image_list):
     # model = changed_model()
-    model = load_model('../NN/first.model', custom_objects={'Antirectifier': Antirectifier})
+    model = load_model('../NN/third.model')
     lst = []
     for im in image_list:
         im = im.reshape(-1, 128, 128, 3)
