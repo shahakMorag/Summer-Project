@@ -1,29 +1,6 @@
 import cv2
 import numpy as np
 
-
-def noBlackCrop(img):
-    imgray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-    retval, threshold = cv2.threshold(imgray, 10, 255, cv2.THRESH_BINARY)
-    img2, contours, hierarchy = cv2.findContours(threshold, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
-    cnt = contours[0]
-    cv2.drawContours(img, [cnt], 0, (0, 255, 0), 3)
-
-    h, w = im.shape[:2]
-
-    cols, rows = [], []
-
-    for x in range(0, w, 1):
-        tmp_col = [row[x] for row in imgray]
-        first, last, y = 0, 0, 0
-
-        while y < h and tmp_col[0, y] == [0, 0, 0]:
-            print(tmp_col[0, y])
-            y += 1
-
-    cv2.imshow("sa", img)
-
-
 def adjust_gamma(image, gamma=1.0):
     # build a lookup table mapping the pixel values [0, 255] to
     # their adjusted gamma values
