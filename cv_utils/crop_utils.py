@@ -47,7 +47,7 @@ def crops_show(im_list):
 
 def apply_classification(image_list):
     # model = changed_model()
-    model = load_model('../NN/first.model', custom_objects={'Antirectifier': Antirectifier})
+    model = load_model('../NN/first.model')
     lst = []
     for im in image_list:
         im = im.reshape(-1, 128, 128, 3)
@@ -83,6 +83,7 @@ new_height, new_width = calc_dim(im, step, step, crop_x, crop_y)
 
 list = createCrops(im, step, step, crop_x, crop_y)
 m = apply_classification(list)
+print(str(m))
 
 imcv = keys2img(m, new_height, new_width)
 
