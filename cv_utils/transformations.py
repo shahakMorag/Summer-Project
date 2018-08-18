@@ -26,16 +26,19 @@ def get_relative_brightness(img, channels):
 def correct_gamma(img):
     br = get_relative_brightness(img, 3)
     n_img = img
+    threshold = 7
 
     if br > 110:
-        while br > 110:
+        while br > 110 and threshold > 0:
             br = get_relative_brightness(n_img, 3)
             n_img = adjust_gamma(n_img, 0.9)
+            threshold -= 1
 
     else:
-        while br < 110:
+        while br < 110 and threshold > 0:
             br = get_relative_brightness(n_img, 3)
-            n_img = adjust_gamma(n_img, 1.1)
+            n_img = adjust_gamma(n_img, 2)
+            threshold -= 1
 
     return n_img
 

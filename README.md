@@ -296,14 +296,27 @@ which will be the gamma correction.
 ## Sixth Day
 ### First Reasonable Results
 Today we finally got good results of semantic segmentation:
-![original](test/image%20transformations/IMG_5562.JPG =250x)
+![original](test/image%20transformations/IMG_5562.JPG)
+Here we can see our first result:
+
 ![first result](readme_imgs/NN_outputs/first_output.png)
+
+Here is a try to improve segmentation with smaller stride:
+ 
 ![big result](readme_imgs/NN_outputs/first_output_big.png)
 
 
 ### Transformation
+We used perspective transformations and rotations in order to create more patches.
 
+On each patch we applied our gamma correction.
+
+![perspective transformation](readme_imgs/perspective_transformation.png)
 
 ### Patches Size
 
 #### Different Size Of Crops And Strides  
+We thought that instead of using strides of 16 pixels we will use strides of the minimum that our
+allocated gpu can handle in order to improve the goodness of the segmentation.
+
+In addition we made different sized of patches which isn't a rectangle.
