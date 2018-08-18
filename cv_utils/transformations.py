@@ -5,7 +5,7 @@ from NN.makeInputs import make_inputs
 path = path = "D:\Tomato_Classification_Project\Patches\Patches\patches_size_128_skip_32_categories_5"
 
 
-def getRelativeBrightness(img):
+def get_relative_brightness(img):
     gray_img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     h, w = img.shape[:2]
     hist = cv2.calcHist([gray_img], [0], None, [256], [0, 256])
@@ -19,20 +19,21 @@ def getRelativeBrightness(img):
 
 
 def correct_gamma(img):
-    br = getRelativeBrightness(img)
+    br = get_relative_brightness(img)
     n_img = img
 
     if br > 110:
         while br > 110:
-            br = getRelativeBrightness(n_img)
+            br = get_relative_brightness(n_img)
             n_img = adjust_gamma(n_img, 0.9)
 
     else:
         while br < 110:
-            br = getRelativeBrightness(n_img)
+            br = get_relative_brightness(n_img)
             n_img = adjust_gamma(n_img, 1.1)
 
     return n_img
+
 
 def adjust_gamma(image, gamma=1.0):
     # build a lookup table mapping the pixel values [0, 255] to
@@ -44,10 +45,12 @@ def adjust_gamma(image, gamma=1.0):
     # apply gamma correction using the lookup table
     return cv2.LUT(image, table)
 
+
 def apply_rotation(img, deg, scale):
     h, w = img.shape[:2]
     mat = cv2.getRotationMatrix2D((h / 2, w / 2), deg, scale)
     return cv2.warpAffine(img, mat, (w, h))
+
 
 def apply_perspective(img, dest):
     h, w = img.shape[:2]

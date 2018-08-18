@@ -3,8 +3,6 @@ import keras
 from keras.models import Sequential
 from keras.layers import Dense, Dropout, Flatten, BatchNormalization, K, Lambda
 from keras.layers import Conv2D, MaxPooling2D
-from keras_preprocessing.image import ImageDataGenerator
-from NN.AntiRectifier import Antirectifier
 
 from NN.makeInputs import make_inputs
 
