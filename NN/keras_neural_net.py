@@ -10,7 +10,7 @@ from NN.makeInputs import make_inputs
 
 batch_size = 128
 num_classes = 5
-epochs = 10
+epochs = 100
 
 # preprocess_epochs = 4
 
@@ -64,16 +64,16 @@ model.add(BatchNormalization(axis=1))
 model.add(Dropout(0.25))
 
 model.add(Flatten())
-model.add(Dense(2048))
-model.add(Lambda(antirectifier, output_shape=antirectifier_output_shape))
+model.add(Dense(2048, activation="relu"))
+#model.add(Lambda(antirectifier, output_shape=antirectifier_output_shape))
 model.add(Dropout(0.5))
-model.add(Dense(2048))
-model.add(Lambda(antirectifier, output_shape=antirectifier_output_shape))
+model.add(Dense(2048, activation="tanh"))
+#model.add(Lambda(antirectifier, output_shape=antirectifier_output_shape))
 model.add(Dropout(0.5))
 model.add(Dense(num_classes, activation='softmax'))
 
 model.compile(loss=keras.losses.categorical_crossentropy,
-              optimizer="adam",  # keras.optimizers.Adadelta(),
+              optimizer=keras.optimizers.Adadelta(),
               metrics=['accuracy'])
 
 model.fit(x_train, y_train,
