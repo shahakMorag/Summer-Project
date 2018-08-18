@@ -9,7 +9,7 @@ im = img = cv2.imread('../test/image transformations/IMG_5562.JPG', 1)
 im = im.astype('float32')
 im /= 256
 
-step = 16
+step = 8
 crop_x = 128
 crop_y = 128
 
@@ -50,7 +50,7 @@ def apply_classification(image_list):
     print("Applying classification...")
     start_time = time.time()
     # model = changed_model()
-    model = load_model('../NN/first.model')
+    model = load_model('../NN/fourth.model')
     lst = model.predict(np.array(image_list), verbose=1)
     tags = lst.argmax(axis=1)
 

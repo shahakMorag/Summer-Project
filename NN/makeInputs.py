@@ -11,10 +11,15 @@ def make_one_hot(lst, num_classes):
     tmp2[np.arange(tmp.shape[0]), tmp] = 1
     return tmp2
 
-def get_pictures(dir, limit):
+
+def get_pictures(dir, start, limit):
     images = []
 
     for filename in glob.glob(dir + '\*.png'):
+        if start > 0:
+            start -= 1
+            continue
+
         limit -= 1
         if limit == -1:
             break
@@ -25,28 +30,28 @@ def get_pictures(dir, limit):
     return images
 
 
-def make_inputs(limit, test, num_classes, is_test=False):
-    temp = get_pictures(path + "\\patches_size_128_skip_32_categories_5\\bad_leaf", limit + test)
+def make_inputs(start, limit, test, num_classes, is_test=False):
+    temp = get_pictures(path + "\\patches_size_128_skip_32_categories_5\\bad_leaf", start, limit + test)
     X = temp[:limit]
     X_test = temp[limit:]
     Y = [0] * limit
     Y_test = [0] * test
-    temp = get_pictures(path + "\patches_size_128_skip_32_categories_5/fruit", limit + test)
+    temp = get_pictures(path + "\patches_size_128_skip_32_categories_5/fruit", start, limit + test)
     X += temp[:limit]
     X_test += temp[limit:]
     Y += [1] * limit
     Y_test += [1] * test
-    temp = get_pictures(path + "\patches_size_128_skip_32_categories_5/leaf", limit + test)
+    temp = get_pictures(path + "\patches_size_128_skip_32_categories_5/leaf", start, limit + test)
     X += temp[:limit]
     X_test += temp[limit:]
     Y += [2] * limit
     Y_test += [2] * test
-    temp = get_pictures(path + "\patches_size_128_skip_32_categories_5/other", limit + test)
+    temp = get_pictures(path + "\patches_size_128_skip_32_categories_5/other", start, limit + test)
     X += temp[:limit]
     X_test += temp[limit:]
     Y += [3] * limit
     Y_test += [3] * test
-    temp = get_pictures(path + "\patches_size_128_skip_32_categories_5/stem", limit + test)
+    temp = get_pictures(path + "\patches_size_128_skip_32_categories_5/stem", start, limit + test)
     X += temp[:limit]
     X_test += temp[limit:]
     Y += [4] * limit

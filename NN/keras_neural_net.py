@@ -11,7 +11,7 @@ from NN.makeInputs import make_inputs
 batch_size = 64
 num_classes = 5
 epochs = 100
-limit = 12000
+limit = 8000
 test = 100
 
 # preprocess_epochs = 4
@@ -21,7 +21,7 @@ img_rows, img_cols = 128, 128
 channels = 3
 
 # the data, split between train and test sets
-x_train, y_train, x_test, y_test = make_inputs(limit, test, num_classes, True)
+x_train, y_train, x_test, y_test = make_inputs(0, limit, test, num_classes, True)
 
 input_shape = (img_rows, img_cols, channels)
 
@@ -32,6 +32,7 @@ x_test /= 255
 print('x_train shape:', x_train.shape)
 print(x_train.shape[0], 'train samples')
 print(x_test.shape[0], 'test samples')
+
 
 # convert class vectors to binary class matrices
 # y_train = keras.utils.to_categorical(y_train, num_classes)
