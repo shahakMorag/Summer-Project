@@ -9,7 +9,7 @@ epochs = 100
 
 start = 8000
 
-limit = 5000
+limit = 8000
 test = 100
 
 img_rows, img_cols = 128, 128

@@ -2,7 +2,6 @@ import cv2
 import numpy as np
 import time
 
-from NN.AntiRectifier import Antirectifier
 from keras.models import load_model
 
 im = img = cv2.imread('../test/image transformations/IMG_5562.JPG', 1)

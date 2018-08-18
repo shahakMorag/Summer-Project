@@ -15,25 +15,17 @@ def make_one_hot(lst, num_classes):
 def get_pictures(dir, start, limit):
     images = []
 
-    for filename in glob.glob(dir + '\*.png'):
-        if start > 0:
-            start -= 1
-            continue
+    while limit > 0:
+        for filename in glob.glob(dir + '\*.png'):
+            if start > 0:
+                start -= 1
+                continue
 
-        limit -= 1
-        if limit == -1:
-            break
-        tmp = cv2.imread(filename, 1)
-
-        images.append(tmp)
-
-    for filename in glob.glob(dir + '\*.png'):
-        limit -= 1
-        if limit == -1:
-            break
-        tmp = cv2.imread(filename, 1)
-
-        images.append(tmp)
+            tmp = cv2.imread(filename, 1)
+            images.append(tmp)
+            limit -= 1
+            if limit == 0:
+                break
 
     return images
 
