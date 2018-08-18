@@ -272,3 +272,20 @@ We had to convert the arrays to type uint8 since the function "imshow" accepts t
 We thought about embedding a color picker so that the user could the color applied for each class after classification
 
 ![color_picker](readme_imgs/color_picker.png)
+
+## Fifth Day
+### Use Gamma Correction As A Pupil
+
+![pupil](http://www.yourdictionary.com/images/definitions/lg/12961.pupil.jpg)
+
+We came up with the idea of training 2 Neural network.
+One that do the classifying and one the will be pupil network.
+
+
+ 
+We will train alternatively both model.
+
+The pupil network will receive image and will plot positive number
+which will be the gamma correction.
+
+![gamma correction](https://ronsholidaylights.files.wordpress.com/2015/10/gamma-curve.png?w=958) 
