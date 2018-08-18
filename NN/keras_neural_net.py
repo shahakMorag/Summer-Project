@@ -19,7 +19,7 @@ img_rows, img_cols = 128, 128
 channels = 3
 
 # the data, split between train and test sets
-x_train, y_train, x_test, y_test = make_inputs(True)
+x_train, y_train, x_test, y_test = make_inputs(num_classes, True)
 
 input_shape = (img_rows, img_cols, channels)
 

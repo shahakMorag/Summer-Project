@@ -1,12 +1,12 @@
 import tensorflow as tf
 import cv2
 import numpy as np
+import time
 
 from NN.AntiRectifier import Antirectifier
 from keras.models import load_model
-from NN.model import custom_network, changed_model
 
-im = img = cv2.imread('../test/image transformations/IMG_5562.JPG', 1)
+im = img = cv2.imread('../test/image transformations/IMG_0781.JPG', 1)
 
 step = 16
 crop_x = 128
@@ -46,14 +46,17 @@ def crops_show(im_list):
 
 
 def apply_classification(image_list):
+    print("Applying classification...")
+    start_time = time.time()
     # model = changed_model()
     model = load_model('../NN/first.model')
-    lst = []
-    for im in image_list:
-        im = im.reshape(-1, 128, 128, 3)
-        res = model.predict(im)
-        lst.append(np.argmax(res))
-    return lst
+    lst = model.predict(np.array(image_list), verbose=1)
+    tags = lst.argmax(axis=1)
+
+    end_time = time.time()
+    d_time = end_time - start_time
+    print("Classification took " + repr(d_time) + "seconds")
+    return tags
 
 
 # 0 - bad leaf - blue    - [255, 0, 0]
@@ -71,9 +74,15 @@ dict = dict(zip(keys, colors))
 # [255, 0, 0] - blue
 
 def keys2img(vals, height, width):
+    print("Creating image...")
+    start_time = time.time()
     res = []
     for item in vals:
         res.append(dict.get(item))
+
+    end_time = time.time()
+    d_time = end_time - start_time
+    print("Image creation took " + repr(d_time) + " seconds")
 
     return np.reshape(res, (int(height), int(width), 3))
 
@@ -83,7 +92,6 @@ new_height, new_width = calc_dim(im, step, step, crop_x, crop_y)
 
 list = createCrops(im, step, step, crop_x, crop_y)
 m = apply_classification(list)
-print(str(m))
 
 imcv = keys2img(m, new_height, new_width)
 
