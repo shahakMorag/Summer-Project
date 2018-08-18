@@ -7,13 +7,15 @@ batch_size = 250
 num_classes = 5
 epochs = 100
 
+start = 8000
+
 limit = 5000
 test = 100
 
 img_rows, img_cols = 128, 128
 channels = 3
 
-x_train, y_train, x_test, y_test = make_inputs(8000, limit, test, num_classes, True)
+x_train, y_train, x_test, y_test = make_inputs(start, limit, test, num_classes, True)
 
 input_shape = (img_rows, img_cols, channels)
 

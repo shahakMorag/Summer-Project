@@ -27,6 +27,14 @@ def get_pictures(dir, start, limit):
 
         images.append(tmp)
 
+    for filename in glob.glob(dir + '\*.png'):
+        limit -= 1
+        if limit == -1:
+            break
+        tmp = cv2.imread(filename, 1)
+
+        images.append(tmp)
+
     return images
 
 
