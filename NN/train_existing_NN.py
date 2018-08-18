@@ -3,9 +3,9 @@ from keras.models import load_model
 # the data, split between train and test sets
 from NN.makeInputs import make_inputs
 
-batch_size = 250
+batch_size = 300
 num_classes = 5
-epochs = 100
+epochs = 50
 
 start = 8000
 
@@ -27,7 +27,7 @@ print('x_train shape:', x_train.shape)
 print(x_train.shape[0], 'train samples')
 print(x_test.shape[0], 'test samples')
 
-model = load_model("../NN/first.model")
+model = load_model("../NN/fourth.model")
 model.fit(x_train, y_train,
           batch_size=batch_size,
           epochs=epochs,
@@ -38,4 +38,4 @@ score = model.evaluate(x_test, y_test, verbose=0)
 print('Test loss:', score[0])
 print('Test accuracy:', score[1])
 
-model.save("fourth.model")
+model.save("fifth.model")

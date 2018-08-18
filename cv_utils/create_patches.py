@@ -3,6 +3,7 @@ import cv2
 import glob
 import numpy as np
 import cv_utils.transformations
+from cv_utils.transformations import create_perspective_patches, create_rotated_patches, correct_gamma
 
 path = "D:\Tomato_Classification_Project\Patches\Patches"
 
@@ -12,22 +13,30 @@ def get_pictures(dir):
     res = []
 
     for filename in glob.glob(dir + '/*.png'):
-        images.append(cv2.imread(filename, 1))
+        im = cv2.imread(filename, 1)
+        pers = create_perspective_patches(im)
+        rot = create_rotated_patches(im)
+
+        per_g, rot_g = [], []
+
+        for img in pers:
+            tmp = correct_gamma(img)
+            per_g.append(tmp)
+
+        for img in rot:
+            tmp = correct_gamma(img)
+            rot_g.append(tmp)
+
+        i = 0
+        for img in per_g:
+            filename = filename.replace('.png', '').replace('\\', '/')
+
+            path = filename + '_per_' + repr(i) + '.png'
+            print('saving to ' + path)
+            cv2.imwrite(path, img)
+            i += 1
 
     return res
 
 
-def save_batch(batch, path_to_dir):
-    i = 0
-    if not os.path.exists(path_to_dir):
-        os.makedirs(path_to_dir)
-
-    for img in batch:
-        cv2.imwrite(path_to_dir + repr(i) + '.png')
-
-
-def make_patches():
-    temp = get_pictures(path + "\patches_size_128_skip_32_categories_5/bad_leaf")
-
-
-make_patches()
+get_pictures('D:/New folder')

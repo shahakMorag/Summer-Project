@@ -5,10 +5,15 @@ from NN.makeInputs import make_inputs
 path = path = "D:\Tomato_Classification_Project\Patches\Patches\patches_size_128_skip_32_categories_5"
 
 
-def get_relative_brightness(img):
-    gray_img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+def get_relative_brightness(img, channels):
+    if channels == 3:
+        gray_img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+        hist = cv2.calcHist([gray_img], [0], None, [256], [0, 256])
+
+    elif channels == 1:
+        return img.mean(axis=None)
+
     h, w = img.shape[:2]
-    hist = cv2.calcHist([gray_img], [0], None, [256], [0, 256])
     expect = 0
     i = 0
     for x in hist:
@@ -19,17 +24,17 @@ def get_relative_brightness(img):
 
 
 def correct_gamma(img):
-    br = get_relative_brightness(img)
+    br = get_relative_brightness(img, 3)
     n_img = img
 
     if br > 110:
         while br > 110:
-            br = get_relative_brightness(n_img)
+            br = get_relative_brightness(n_img, 3)
             n_img = adjust_gamma(n_img, 0.9)
 
     else:
         while br < 110:
-            br = get_relative_brightness(n_img)
+            br = get_relative_brightness(n_img, 3)
             n_img = adjust_gamma(n_img, 1.1)
 
     return n_img
@@ -62,19 +67,35 @@ def apply_perspective(img, dest):
 def create_perspective_patches(img):
     #                  up-left, up-right, down-left, down-right
     # apply some perspective transformations
-    pts1 = np.float32([[0, 0], [328, -200], [0, 128], [328, 328]])
+    param = 20
+
+    # trapezoids
+    pts1 = np.float32([[0, 0], [128 + param, -param], [0, 128], [128 + param, 128 + param]])
     im_pers_1 = apply_perspective(img, pts1)
 
-    pts2 = np.float32([[0, 0], [128, 0], [-200, 328], [328, 328]])
-    im_pers_2 = apply_perspective(img, pts1)
+    pts2 = np.float32([[0, 0], [128, 0], [-param, 128 + param], [128 + param, 128 + param]])
+    im_pers_2 = apply_perspective(img, pts2)
 
-    pts3 = np.float32([[-200, -200], [328, -200], [0, 128], [128, 128]])
-    im_pers_3 = apply_perspective(img, pts1)
+    pts3 = np.float32([[-param, -param], [128 + param, -param], [0, 128], [128, 128]])
+    im_pers_3 = apply_perspective(img, pts3)
 
-    pts4 = np.float32([[-200, -200], [128, 0], [-200, 328], [128, 128]])
-    im_pers_4 = apply_perspective(img, pts1)
+    pts4 = np.float32([[-param, -param], [128, 0], [-param, 128 + param], [128, 128]])
+    im_pers_4 = apply_perspective(img, pts4)
 
-    return [im_pers_1, im_pers_2, im_pers_3, im_pers_4]
+    # merubaim
+    pts5 = np.float32([[0, 0], [128, -param], [-param, 128], [128 + 1.2 * param, 128 + 1.2 * param]])
+    im_pers_5 = apply_perspective(img, pts5)
+
+    pts6 = np.float32([[0, 128 + param], [128, 0], [-1.2 * param, 128 + 1.2 * param], [128 + 1.2 * param, 128]])
+    im_pers_6 = apply_perspective(img, pts6)
+
+    pts7 = np.float32([[0, 0], [128, -param], [-param, 128], [128 + 1.2 * param, 128 + 1.2 * param]])
+    im_pers_7 = apply_perspective(img, pts7)
+
+    pts8 = np.float32([[0, 0], [128, -param], [-param, 128], [128 + 1.2 * param, 128 + 1.2 * param]])
+    im_pers_8 = apply_perspective(img, pts8)
+
+    return [im_pers_1, im_pers_2, im_pers_3, im_pers_4, im_pers_5, im_pers_6, im_pers_7, im_pers_8]
 
 
 def create_rotated_patches(img):
@@ -93,3 +114,13 @@ def create_rotated_patches(img):
 def sharpen(im):
     kernel = np.array([[-1, -1, -1], [-1, 9, -1], [-1, -1, -1]])
     return cv2.filter2D(im, -1, kernel)
+
+im = cv2.imread('../test/image transformations/IMG_0781.JPG', 1)
+im = cv2.resize(im, (500, 300))
+lst = create_perspective_patches(im)
+cv2.imshow('1', lst[4])
+cv2.imshow('orih', im)
+# cv2.imshow('2',lst[1])
+# cv2.imshow('3',lst[2])
+# cv2.imshow('4',lst[3])
+cv2.waitKey(0)
