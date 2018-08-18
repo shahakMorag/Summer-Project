@@ -275,12 +275,19 @@ We thought about embedding a color picker so that the user could the color appli
 
 ![color_picker](readme_imgs/color_picker.png)
 
-##Fifth Day
-### Use Gamma Correction As A Pupil 
-We came up with the idea of making our neural net learn the gamma correction that will make it's 
-classification easier.
+## Fifth Day
+### Use Gamma Correction As A Pupil
 
-The idea is to make two neural networks one that return one number which is the gamma correction parameter
-and the other is the classifier and we will train the neural nets alternatively.
+![pupil](http://www.yourdictionary.com/images/definitions/lg/12961.pupil.jpg)
 
-The gamma's neural net will be use the other net in order to calculate the loss.
+We came up with the idea of training 2 Neural network.
+One that do the classifying and one the will be pupil network.
+
+
+ 
+We will train alternatively both model.
+
+The pupil network will receive image and will plot positive number
+which will be the gamma correction.
+
+![gamma correction](https://ronsholidaylights.files.wordpress.com/2015/10/gamma-curve.png?w=958) 

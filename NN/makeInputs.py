@@ -2,8 +2,6 @@ import cv2
 import glob
 import numpy as np
 
-limit = 8000
-test = 100
 path = "D:\Tomato_Classification_Project\Patches\Patches"
 
 
@@ -27,7 +25,7 @@ def get_pictures(dir, limit):
     return images
 
 
-def make_inputs(num_classes, is_test=False):
+def make_inputs(limit, test, num_classes, is_test=False):
     temp = get_pictures(path + "\\patches_size_128_skip_32_categories_5\\bad_leaf", limit + test)
     X = temp[:limit]
     X_test = temp[limit:]
@@ -53,6 +51,7 @@ def make_inputs(num_classes, is_test=False):
     X_test += temp[limit:]
     Y += [4] * limit
     Y_test += [4] * test
+    print()
 
     if is_test:
         return np.array(X), make_one_hot(Y, num_classes), np.array(X_test), make_one_hot(Y_test, num_classes)

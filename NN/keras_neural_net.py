@@ -8,9 +8,11 @@ from NN.AntiRectifier import Antirectifier
 
 from NN.makeInputs import make_inputs
 
-batch_size = 128
+batch_size = 64
 num_classes = 5
-epochs = 200
+epochs = 100
+limit = 12000
+test = 100
 
 # preprocess_epochs = 4
 
@@ -19,14 +21,14 @@ img_rows, img_cols = 128, 128
 channels = 3
 
 # the data, split between train and test sets
-x_train, y_train, x_test, y_test = make_inputs(num_classes, True)
+x_train, y_train, x_test, y_test = make_inputs(limit, test, num_classes, True)
 
 input_shape = (img_rows, img_cols, channels)
 
 x_train = x_train.astype('float32')
 x_test = x_test.astype('float32')
-#x_train /= 255
-#x_test /= 255
+x_train /= 255
+x_test /= 255
 print('x_train shape:', x_train.shape)
 print(x_train.shape[0], 'train samples')
 print(x_test.shape[0], 'test samples')
@@ -50,57 +52,45 @@ def antirectifier_output_shape(input_shape):
     return tuple(shape)
 
 model = Sequential()
-
-# convolution layers press ctrl + d
-model.add(Conv2D(16 , # number of kernels
-                 kernel_size=(2, 2),
+model.add(Conv2D(32, kernel_size=(3, 3),
                  activation='relu',
                  input_shape=input_shape))
-model.add(Conv2D(16 , # number of kernels
-                 kernel_size=(2, 2),
-                 activation='relu'))
-
 model.add(MaxPooling2D(pool_size=(2, 2)))
 model.add(BatchNormalization(axis=1))
 model.add(Dropout(0.25))
-# until here
 
 model.add(Conv2D(64, kernel_size=(3, 3),
                  activation='relu'))
-
 model.add(MaxPooling2D(pool_size=(2, 2)))
 model.add(BatchNormalization(axis=1))
 model.add(Dropout(0.25))
 
 model.add(Flatten())
-model.add(Dense(1024, kernel_regularizer=keras.regularizers.l2(0.1)))
-model.add(Lambda(antirectifier, output_shape=antirectifier_output_shape))
+model.add(Dense(2048, activation="relu"))
+#model.add(Lambda(antirectifier, output_shape=antirectifier_output_shape))
 model.add(Dropout(0.5))
-model.add(Dense(1024, kernel_regularizer=keras.regularizers.l2(0.1)))
-model.add(Lambda(antirectifier, output_shape=antirectifier_output_shape))
-model.add(Dropout(0.5))
-model.add(Dense(1024, kernel_regularizer=keras.regularizers.l2(0.1)))
-model.add(Lambda(antirectifier, output_shape=antirectifier_output_shape))
+model.add(Dense(2048, activation="tanh"))
+#model.add(Lambda(antirectifier, output_shape=antirectifier_output_shape))
 model.add(Dropout(0.5))
 model.add(Dense(num_classes, activation='softmax'))
 
 model.compile(loss=keras.losses.categorical_crossentropy,
-              optimizer='adam',#keras.optimizers.Adadelta(),
+              optimizer=keras.optimizers.Adadelta(),
               metrics=['accuracy'])
 
-'''model.fit(x_train, y_train,
+model.fit(x_train, y_train,
           batch_size=batch_size,
           epochs=epochs,
           verbose=1,
-          validation_data=(x_test, y_test))'''
+          validation_data=(x_test, y_test))
 
-datagen = ImageDataGenerator(
+'''datagen = ImageDataGenerator(
     featurewise_center=True,
     featurewise_std_normalization=True,
-    rotation_range=20,
-    zoom_range=0.2,
-    brightness_range=0.2)
-
+    rotation_range=20)
+width_shift_range=0.2,
+height_shift_range=0.2)
+horizontal_flip=True)
 
 # compute quantities required for featurewise normalization
 # (std, mean, and principal components if ZCA whitening is applied)
@@ -121,7 +111,7 @@ for e in range(epochs):
             # we need to break the loop by hand because
             # the generator loops indefinitely
             break
-
+'''
 score = model.evaluate(x_test, y_test, verbose=0)
 print('Test loss:', score[0])
 print('Test accuracy:', score[1])
