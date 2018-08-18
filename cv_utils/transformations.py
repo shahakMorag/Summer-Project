@@ -111,6 +111,10 @@ def create_rotated_patches(img):
     return [im_rot_1, im_rot_2, im_rot_3, im_rot_4, im_rot_5, im_rot_6, im_rot_7]
 
 
+def sharpen(im):
+    kernel = np.array([[-1, -1, -1], [-1, 9, -1], [-1, -1, -1]])
+    return cv2.filter2D(im, -1, kernel)
+
 im = cv2.imread('../test/image transformations/IMG_0781.JPG', 1)
 im = cv2.resize(im, (500, 300))
 lst = create_perspective_patches(im)
