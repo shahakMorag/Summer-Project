@@ -7,6 +7,8 @@ from NN.AntiRectifier import Antirectifier
 from keras.models import load_model
 
 im = img = cv2.imread('../test/image transformations/IMG_0781.JPG', 1)
+im = im.astype('float32')
+im /= 256
 
 step = 16
 crop_x = 128

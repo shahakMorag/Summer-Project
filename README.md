@@ -10,7 +10,7 @@ Today we learned how to use `PIL` library in Python in order to edit and work wi
 We covered various type of transformations of photos, colors and shapes.
 
 ### PIL Features
-![sharpened tomato](test/image%20transformations/Edge_Enhance_Tomato.jpg)
+![sharpened tomato](readme_imgs/Edge_Enhance_Tomato.jpg)
 
 
 An example of sharpening photo in order to facilitate the learning the tomato. 
@@ -24,7 +24,7 @@ image.filter(ImageFilter.EDGE_ENHANCE_MORE)
 
 We also tried invert photos: 
 
-![inverted tomato](test/image%20transformations/Inverted_Tomato.jpg)
+![inverted tomato](readme_imgs/Inverted_Tomato.jpg)
 
 with this code:
 ```python
@@ -55,11 +55,11 @@ Here is part of the results for using crop on a 500x500 image.
 the parameters used are crop width and height of 150 and stride of 120:
 
 
-![crop0](test/PIL%20tests/Crop0.jpg)
-![crop1](test/PIL%20tests/Crop1.jpg)
+![crop0](readme_imgs/Crop0.jpg)
+![crop1](readme_imgs/Crop1.jpg)
 
-![crop2](test/PIL%20tests/Crop2.jpg)
-![crop3](test/PIL%20tests/Crop3.jpg)
+![crop2](readme_imgs/Crop2.jpg)
+![crop3](readme_imgs/Crop3.jpg)
 
 ### Color Spaces And Random Ones
 We have experimented different types of color spaces transformations.
@@ -102,13 +102,15 @@ def rgb2uyv(rgb):
 ```
 Here is photo of the result:
 
-![YUV Tomato](test/image%20transformations/tomato_in_yuv_colorspace.jpg)
+![YUV Tomato](readme_imgs/tomato_in_yuv_colorspace.jpg)
 
  Later we came up with the idea of make a random color space transformation.
  We hope that using it will improve the results of the learning.  We tried several distributions.
  Here is the code with exponential distribution:
  
  ```python
+import numpy as np
+ 
 def random_color_space(image):
     image = image.convert("RGB")
     A = np.random.exponential(1/7, (3, 3))
@@ -118,7 +120,7 @@ def random_color_space(image):
  
 Here is picture before transformation:
 
-![eyal](test/image%20transformations/eyal.png)
+![eyal](readme_imgs/eyal.png)
 
 Here is the picture after transformation ( the tomatoes gets different colors from the rest of the picture):
 
@@ -127,8 +129,8 @@ Here is the picture after transformation ( the tomatoes gets different colors fr
 > We should be careful when using this method because wild <br />
  distributions and parameters could lead to wild images, for instance:
 
-![wild tomato](test/image%20transformations/wild_tomato.jpeg) 
-![wild tomato 2](test/image%20transformations/wild_tomato2.jpeg) 
+![wild tomato](readme_imgs/wild_tomato.jpeg) 
+![wild tomato 2](readme_imgs/wild_tomato2.jpeg) 
 
 
 ## Second Day
@@ -138,19 +140,19 @@ We will start working on Affine transformations to pictures.
 First we the image to the center of all image that it won't cut after transformation.
 For example this image:
 
-![eyal cutted](test/image%20transformations/eyal_cuted.jpg) 
+![eyal cutted](readme_imgs/eyal_cuted.jpg) 
 
 here is the picture after the change:
 
-![middle eyal](test/image%20transformations/eyal_moved.jpg)
+![middle eyal](readme_imgs/eyal_moved.jpg)
 
 We created 3 different affine transformations on images in order to make more diversed data set for the training.
 
 Here are some examples:
 
-![first affine transformation](test/image%20transformations/Tomato_first_affine.jpg) 
-![second affine transformation](test/image%20transformations/Tomato_second_affine.jpg) 
-![third affine transformation](test/image%20transformations/Tomato_third_affine.jpg) 
+![first affine transformation](readme_imgs/Tomato_first_affine.jpg) 
+![second affine transformation](readme_imgs/Tomato_second_affine.jpg) 
+![third affine transformation](readme_imgs/Tomato_third_affine.jpg) 
 
 We came up with the idea of refining the transformation from yesterday by making several transformation for every category.
 
@@ -187,7 +189,7 @@ We can see that we have shallow neural network with only one convolution part an
 
 Here we can the result from today (71.63% accuracy):
 
-![today's result](NN/firstDayResult.png)
+![today's result](readme_imgs/firstDayResult.png)
 
 
 #### Augmentation
