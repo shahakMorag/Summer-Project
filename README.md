@@ -291,3 +291,19 @@ The pupil network will receive image and will plot positive number
 which will be the gamma correction.
 
 ![gamma correction](https://ronsholidaylights.files.wordpress.com/2015/10/gamma-curve.png?w=958) 
+
+
+## Sixth Day
+### First Reasonable Results
+Today we finally got good results of semantic segmentation:
+![original](test/image%20transformations/IMG_5562.JPG =250x)
+![first result](readme_imgs/NN_outputs/first_output.png)
+![big result](readme_imgs/NN_outputs/first_output_big.png)
+
+
+### Transformation
+
+
+### Patches Size
+
+#### Different Size Of Crops And Strides  
