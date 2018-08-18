@@ -1,4 +1,4 @@
-from NN.model import custom_network, changed_model
+from tflearn.model import changed_model
 from NN.makeInputs import make_inputs
 
 X, Y = make_inputs()
