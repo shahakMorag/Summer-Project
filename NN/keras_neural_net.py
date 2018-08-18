@@ -8,9 +8,11 @@ from NN.AntiRectifier import Antirectifier
 
 from NN.makeInputs import make_inputs
 
-batch_size = 128
+batch_size = 64
 num_classes = 5
 epochs = 100
+limit = 12000
+test = 100
 
 # preprocess_epochs = 4
 
@@ -19,7 +21,7 @@ img_rows, img_cols = 128, 128
 channels = 3
 
 # the data, split between train and test sets
-x_train, y_train, x_test, y_test = make_inputs(num_classes, True)
+x_train, y_train, x_test, y_test = make_inputs(limit, test, num_classes, True)
 
 input_shape = (img_rows, img_cols, channels)
 
