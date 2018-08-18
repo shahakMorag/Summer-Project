@@ -67,7 +67,7 @@ def apply_perspective(img, dest):
 def create_perspective_patches(img):
     #                  up-left, up-right, down-left, down-right
     # apply some perspective transformations
-    param = 20
+    param = 30
 
     # trapezoids
     pts1 = np.float32([[0, 0], [128 + param, -param], [0, 128], [128 + param, 128 + param]])
@@ -86,13 +86,13 @@ def create_perspective_patches(img):
     pts5 = np.float32([[0, 0], [128, -param], [-param, 128], [128 + 1.2 * param, 128 + 1.2 * param]])
     im_pers_5 = apply_perspective(img, pts5)
 
-    pts6 = np.float32([[0, 128 + param], [128, 0], [-1.2 * param, 128 + 1.2 * param], [128 + 1.2 * param, 128]])
+    pts6 = np.float32([[0, - param], [128, 0], [-1.2 * param, 128 + 1.2 * param], [128 + 1.2 * param, 128]])
     im_pers_6 = apply_perspective(img, pts6)
 
-    pts7 = np.float32([[0, 0], [128, -param], [-param, 128], [128 + 1.2 * param, 128 + 1.2 * param]])
+    pts7 = np.float32([[-1.2 * param, -1.2 * param], [128 + param, 0], [0, 128 + param], [128, 128]])
     im_pers_7 = apply_perspective(img, pts7)
 
-    pts8 = np.float32([[0, 0], [128, -param], [-param, 128], [128 + 1.2 * param, 128 + 1.2 * param]])
+    pts8 = np.float32([[-param, 0], [128 + 1.2 * param, -1.2 * param], [0, 128], [128, 128 + param]])
     im_pers_8 = apply_perspective(img, pts8)
 
     return [im_pers_1, im_pers_2, im_pers_3, im_pers_4, im_pers_5, im_pers_6, im_pers_7, im_pers_8]
@@ -114,13 +114,3 @@ def create_rotated_patches(img):
 def sharpen(im):
     kernel = np.array([[-1, -1, -1], [-1, 9, -1], [-1, -1, -1]])
     return cv2.filter2D(im, -1, kernel)
-
-im = cv2.imread('../test/image transformations/IMG_0781.JPG', 1)
-im = cv2.resize(im, (500, 300))
-lst = create_perspective_patches(im)
-cv2.imshow('1', lst[4])
-cv2.imshow('orih', im)
-# cv2.imshow('2',lst[1])
-# cv2.imshow('3',lst[2])
-# cv2.imshow('4',lst[3])
-cv2.waitKey(0)

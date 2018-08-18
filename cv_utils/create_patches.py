@@ -33,10 +33,26 @@ def get_pictures(dir):
 
             path = filename + '_per_' + repr(i) + '.png'
             print('saving to ' + path)
-            cv2.imwrite(path, img)
+            print(cv2.imwrite(path, img))
+            i += 1
+
+        i = 0
+        for img in rot_g:
+            filename = filename.replace('.png', '').replace('\\', '/')
+
+            path = filename + '_rot_' + repr(i) + '.png'
+            print('saving to ' + path)
+            print(cv2.imwrite(path, img))
             i += 1
 
     return res
 
 
-get_pictures('D:/New folder')
+# get_pictures('D:/New folder')
+
+
+get_pictures('D:\Tomato_Classification_Project\Patches\Patches\patches_size_128_skip_32_categories_5/bad_leaf')
+get_pictures('D:\Tomato_Classification_Project\Patches\Patches\patches_size_128_skip_32_categories_5/fruit')
+get_pictures('D:\Tomato_Classification_Project\Patches\Patches\patches_size_128_skip_32_categories_5/leaf')
+get_pictures('D:\Tomato_Classification_Project\Patches\Patches\patches_size_128_skip_32_categories_5/other')
+get_pictures('D:\Tomato_Classification_Project\Patches\Patches\patches_size_128_skip_32_categories_5/stem')
