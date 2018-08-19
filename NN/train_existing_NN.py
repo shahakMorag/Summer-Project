@@ -2,12 +2,14 @@ from keras.models import load_model
 
 # the data, split between train and test sets
 from NN.makeInputs import make_inputs
+from keras.callbacks import CSVLogger, ModelCheckpoint, EarlyStopping
+from keras.callbacks import ReduceLROnPlateau
 
 batch_size = 200
 num_classes = 5
 epochs = 300
 
-def train(start, limit, model):
+def train(start, limit, model, log_file_path,trained_models_path, patience = 30):
     test = 100
 
     img_rows, img_cols = 128, 128
@@ -25,12 +27,23 @@ def train(start, limit, model):
     print(x_train.shape[0], 'train samples')
     print(x_test.shape[0], 'test samples')
 
+    #callbacks
+    #csv_logger = CSVLogger(log_file_path, append=False)
+    early_stop = EarlyStopping('val_acc', patience=patience)
+    reduce_lr = ReduceLROnPlateau('val_loss', factor=0.1,
+                                  patience=int(patience / 4), verbose=1)
+    model_names = trained_models_path + '.{epoch:02d}-{val_acc:.2f}.hdf5'
+    model_checkpoint = ModelCheckpoint(model_names, 'val_loss', verbose=1,
+                                       save_best_only=True)
+
+    callbacks = [model_checkpoint, early_stop, reduce_lr]
 
     model.fit(x_train, y_train,
               batch_size=batch_size,
               epochs=epochs,
               verbose=1,
-              validation_data=(x_test, y_test))
+              validation_data=(x_test, y_test),
+              callbacks= callbacks)
 
     score = model.evaluate(x_test, y_test, verbose=0)
     print('Test loss:', score[0])
