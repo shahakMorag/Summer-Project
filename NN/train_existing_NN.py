@@ -36,9 +36,9 @@ def train(start, limit, model, trained_models_path, patience = 30):
 
 model = load_model("../NN/first.model")
 limit = 2000
-train(0, limit, model, 'C:/Users\shahak_morag\PycharmProjects\Summer-Project\models')
-train(8000, limit, model, 'C:/Users\shahak_morag\PycharmProjects\Summer-Project\models')
-train(16000, limit, model, 'C:/Users\shahak_morag\PycharmProjects\Summer-Project\models')
-train(24000, limit, model, 'C:/Users\shahak_morag\PycharmProjects\Summer-Project\models')
+train(0, limit, model, 'C:/Users\shahak_morag\PycharmProjects\Summer-Project\models/')
+train(8000, limit, model, 'C:/Users\shahak_morag\PycharmProjects\Summer-Project\models/')
+train(16000, limit, model, 'C:/Users\shahak_morag\PycharmProjects\Summer-Project\models/')
+train(24000, limit, model, 'C:/Users\shahak_morag\PycharmProjects\Summer-Project\models/')
 
 model.save("second.model")
