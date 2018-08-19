@@ -316,6 +316,9 @@ On each patch we applied our gamma correction.
 ### Patches Size
 We saw that small patches are good for non green parts like tomatoes and ground.
 
+So we make different size of patches according to the patch color.
+
+
 #### Different Size Of Crops And Strides  
 We thought that instead of using strides of 16 pixels we will use strides of the minimum that our
 allocated gpu can handle in order to improve the goodness of the segmentation.
