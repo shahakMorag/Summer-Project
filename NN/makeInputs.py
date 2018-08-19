@@ -2,7 +2,7 @@ import cv2
 import glob
 import numpy as np
 
-path = "D:\Tomato_Classification_Project\Patches\Patches"
+path = "C:\Tomato_Classification_Project\Patches\Patches"
 
 
 def make_one_hot(lst, num_classes):
@@ -13,7 +13,8 @@ def make_one_hot(lst, num_classes):
 
 
 def get_pictures(dir, start, limit):
-    images = []
+    images = np.empty([limit,128,128,3], dtype=np.uint8)
+    i = 0
 
     while limit > 0:
         for filename in glob.glob(dir + '\*.png'):
@@ -21,8 +22,8 @@ def get_pictures(dir, start, limit):
                 start -= 1
                 continue
 
-            tmp = cv2.imread(filename, 1)
-            images.append(tmp)
+            images[i] = cv2.imread(filename, 1)
+            i += 1
             limit -= 1
             if limit == 0:
                 break
@@ -30,35 +31,22 @@ def get_pictures(dir, start, limit):
     return images
 
 
-def make_inputs(start, limit, test, num_classes, is_test=False):
-    temp = get_pictures(path + "\\patches_size_128_skip_32_categories_5\\bad_leaf", start, limit + test)
-    X = temp[:limit]
-    X_test = temp[limit:]
+def make_inputs(start, limit, num_classes):
+    print("Making imputs:")
+    print("Start: " + repr(start) + ", limit: " + repr(limit) + ", classes: " + repr(num_classes))
+    X = get_pictures(path + "\\patches_size_128_skip_32_categories_5\\bad_leaf", start, limit )
     Y = [0] * limit
-    Y_test = [0] * test
-    temp = get_pictures(path + "\patches_size_128_skip_32_categories_5/fruit", start, limit + test)
-    X += temp[:limit]
-    X_test += temp[limit:]
-    Y += [1] * limit
-    Y_test += [1] * test
-    temp = get_pictures(path + "\patches_size_128_skip_32_categories_5/leaf", start, limit + test)
-    X += temp[:limit]
-    X_test += temp[limit:]
-    Y += [2] * limit
-    Y_test += [2] * test
-    temp = get_pictures(path + "\patches_size_128_skip_32_categories_5/other", start, limit + test)
-    X += temp[:limit]
-    X_test += temp[limit:]
-    Y += [3] * limit
-    Y_test += [3] * test
-    temp = get_pictures(path + "\patches_size_128_skip_32_categories_5/stem", start, limit + test)
-    X += temp[:limit]
-    X_test += temp[limit:]
-    Y += [4] * limit
-    Y_test += [4] * test
-    print()
 
-    if is_test:
-        return np.array(X), make_one_hot(Y, num_classes), np.array(X_test), make_one_hot(Y_test, num_classes)
+    X = np.concatenate((X, get_pictures(path + "\\patches_size_128_skip_32_categories_5\\fruit", start, limit )))
+    Y += [1] * limit
+
+    X = np.concatenate((X,get_pictures(path + "\\patches_size_128_skip_32_categories_5\\leaf", start, limit )))
+    Y += [2] * limit
+
+    X = np.concatenate((X, get_pictures(path + "\\patches_size_128_skip_32_categories_5\\other", start, limit )))
+    Y += [3] * limit
+
+    X = np.concatenate((X,get_pictures(path + "\\patches_size_128_skip_32_categories_5\\stem", start, limit )))
+    Y += [4] * limit
 
     return X, make_one_hot(Y, num_classes)

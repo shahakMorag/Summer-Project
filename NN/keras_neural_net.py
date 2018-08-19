@@ -8,7 +8,7 @@ from NN.makeInputs import make_inputs
 
 batch_size = 64
 num_classes = 5
-epochs = 100
+epochs = 1
 limit = 8000
 test = 100
 
@@ -51,21 +51,21 @@ def antirectifier_output_shape(input_shape):
     return tuple(shape)
 
 model = Sequential()
-model.add(Conv2D(32, kernel_size=(3, 3),
+model.add(Conv2D(32, kernel_size=(2, 2),
                  activation='relu',
                  input_shape=input_shape))
 model.add(MaxPooling2D(pool_size=(2, 2)))
 model.add(BatchNormalization(axis=1))
 model.add(Dropout(0.25))
 
-model.add(Conv2D(64, kernel_size=(3, 3),
+model.add(Conv2D(64, kernel_size=(2, 2),
                  activation='relu'))
 model.add(MaxPooling2D(pool_size=(2, 2)))
 model.add(BatchNormalization(axis=1))
 model.add(Dropout(0.25))
 
 model.add(Flatten())
-model.add(Dense(2048, activation="relu"))
+model.add(Dense(2200, activation="relu"))
 #model.add(Lambda(antirectifier, output_shape=antirectifier_output_shape))
 model.add(Dropout(0.5))
 model.add(Dense(2048, activation="tanh"))
