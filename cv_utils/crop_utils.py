@@ -2,14 +2,15 @@ import cv2
 import numpy as np
 import time
 from cv_utils.transformations import get_relative_brightness, correct_gamma
+import keras
+from keras_preprocessing.image import ImageDataGenerator
 
 from keras.models import load_model
 
 im = img = cv2.imread('../test/image transformations/IMG_5562.JPG', 1)
 im = im.astype('float32')
-im /= 256
 
-step = 12
+step = 20
 radius_x = 64
 radius_y = 80
 
@@ -31,6 +32,7 @@ def is_green(im):
 def createCrops(im, step_x, step_y, radius_x, radius_y):
     res = []
     height, width = im.shape[:2]
+
     for y_mid in range(radius_y, height - radius_y, step_y):
         for x_mid in range(radius_x, width - radius_x, step_x):
             cropped = im[y_mid - radius_y:y_mid + radius_y, x_mid - radius_x:x_mid + radius_x]
@@ -38,7 +40,8 @@ def createCrops(im, step_x, step_y, radius_x, radius_y):
                 cropped = im[y_mid - non_green_radius_y:y_mid + non_green_radius_y,
                           x_mid - non_green_radius_x:x_mid + non_green_radius_x]
             cropped = cv2.resize(cropped, (128, 128))
-            res.append(correct_gamma(cropped))
+            # res.append(correct_gamma(cropped))
+            res.append(cropped)
 
     return res
 
@@ -66,18 +69,43 @@ def crops_show(im_list):
 
 
 def apply_classification(image_list):
+    '''
+    image_list = np.array(image_list)
+    image_list /= 255
     print("Applying classification...")
     start_time = time.time()
     # model = changed_model()
-    model = load_model('../NN/fifth.model')
-    lst = model.predict(np.array(image_list), verbose=1)
+    model = load_model('../NN/test.model')
+    lst = model.predict(np.array(image_list), verbose=1, rescale=)
     tags = lst.argmax(axis=1)
 
     end_time = time.time()
     d_time = end_time - start_time
     print("Classification took " + repr(d_time) + "seconds")
     return tags
+    '''
+    start_time = time.time()
+    print("Applying classification...")
+    model = load_model('../NN/test.model')
 
+    test_datagen = ImageDataGenerator(rescale=1. / 255)
+
+    test_generator = test_datagen.flow(
+        x=np.array(image_list),
+        batch_size=1,
+        shuffle=False)
+
+    nb_samples = len(image_list)
+    predicts = model.predict_generator(test_generator,
+                                       steps=nb_samples,
+                                       verbose=1,
+                                       workers=16)
+
+    tags = predicts.argmax(axis=1)
+    end_time = time.time()
+    d_time = end_time - start_time
+    print("Classification took " + repr(d_time) + "seconds")
+    return tags
 
 # 0 - bad leaf - blue    - [255, 0, 0]
 # 1 - fruit    - red     - [9,1,146]

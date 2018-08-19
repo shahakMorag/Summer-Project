@@ -49,4 +49,6 @@ def make_inputs(start, limit, num_classes):
     X = np.concatenate((X,get_pictures(path + "\\patches_size_128_skip_32_categories_5\\stem", start, limit )))
     Y += [4] * limit
 
+    print("Finished making inputs")
+
     return X, make_one_hot(Y, num_classes)
