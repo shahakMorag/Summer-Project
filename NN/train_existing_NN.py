@@ -7,7 +7,7 @@ from keras.callbacks import ReduceLROnPlateau
 
 batch_size = 200
 num_classes = 5
-epochs = 15
+epochs = 30
 
 def train(start, limit, model, trained_models_path, patience = 30):
     x_train, y_train = make_inputs(start, limit, num_classes)
@@ -35,10 +35,10 @@ def train(start, limit, model, trained_models_path, patience = 30):
               validation_split=0.0125)
 
 model = load_model("../NN/first.model")
-limit = 2000
+limit = 5000
 train(0, limit, model, 'C:/Users\shahak_morag\PycharmProjects\Summer-Project\models/')
-train(8000, limit, model, 'C:/Users\shahak_morag\PycharmProjects\Summer-Project\models/')
-train(16000, limit, model, 'C:/Users\shahak_morag\PycharmProjects\Summer-Project\models/')
-train(24000, limit, model, 'C:/Users\shahak_morag\PycharmProjects\Summer-Project\models/')
+train(limit, limit, model, 'C:/Users\shahak_morag\PycharmProjects\Summer-Project\models/')
+train(2 * limit, limit, model, 'C:/Users\shahak_morag\PycharmProjects\Summer-Project\models/')
+train(3 * limit, limit, model, 'C:/Users\shahak_morag\PycharmProjects\Summer-Project\models/')
 
 model.save("second.model")
