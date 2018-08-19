@@ -1,7 +1,7 @@
 import cv2
 import numpy as np
 import time
-from cv_utils.transformations import get_relative_brightness
+from cv_utils.transformations import get_relative_brightness, correct_gamma
 
 from keras.models import load_model
 
@@ -38,7 +38,7 @@ def createCrops(im, step_x, step_y, radius_x, radius_y):
                 cropped = im[y_mid - non_green_radius_y:y_mid + non_green_radius_y,
                           x_mid - non_green_radius_x:x_mid + non_green_radius_x]
             cropped = cv2.resize(cropped, (128, 128))
-            res.append(cropped)
+            res.append(correct_gamma(cropped))
 
     return res
 
