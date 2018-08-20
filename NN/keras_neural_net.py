@@ -9,6 +9,7 @@ input_shape = (128, 128, 3)
 patience = 30
 batch_size = 64
 epochs = 1
+seed = 1
 train_images_path = 'C:\Tomato_Classification_Project\Tomato_Classification_Project\Patches\Patches\patches_size_128_skip_32_categories_5'
 
 #
@@ -44,6 +45,7 @@ model.fit_generator(
     epochs=epochs,
     verbose=1,
     workers=8,
-    callbacks=callbacks)
+    callbacks=callbacks,
+    seed=seed)
 
 model.save("20-8-18-1.model")

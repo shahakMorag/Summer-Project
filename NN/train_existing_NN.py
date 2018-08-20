@@ -11,6 +11,7 @@ patience = 30
 path_to_data = 'D:\Tomato_Classification_Project_5_iter\Patches\Patches\patches_size_128_skip_32_categories_5'
 path_to_load_model = "../NN/first.model"
 path_to_save_model = "second.model"
+seed = 1
 
 
 def train(model):
@@ -33,7 +34,8 @@ def train(model):
         batch_size=batch_size,
         color_mode='rgb',
         classes=['bad_leaf', 'fruit', 'leaf', 'other', 'stem'],
-        class_mode='categorical'
+        class_mode='categorical',
+        seed=seed
     )
 
     print(train_generator.class_indices)
