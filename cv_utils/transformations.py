@@ -22,9 +22,9 @@ def get_relative_brightness(img, channels):
     return expect / (h * w)
 
 
-def correct_gamma(img):
-    br = get_relative_brightness(img, 3)
-    n_img = img
+def correct_gamma(i_img):
+    br = get_relative_brightness(i_img, 3)
+    n_img = i_img
     threshold = 5
 
     if br > 110:
