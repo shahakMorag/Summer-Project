@@ -1,7 +1,7 @@
 import cv2
 import numpy as np
 import time
-from cv_utils.transformations import get_relative_brightness, correct_gamma
+from transformations import get_relative_brightness, correct_gamma
 import keras
 from keras_preprocessing.image import ImageDataGenerator
 
@@ -12,7 +12,7 @@ im = im.astype('float32')
 
 step = 20
 radius_x = 64
-radius_y = 80
+radius_y = 64
 
 non_green_radius_x = 15
 non_green_radius_y = 15
@@ -86,7 +86,7 @@ def apply_classification(image_list):
     '''
     start_time = time.time()
     print("Applying classification...")
-    model = load_model('../NN/test.model')
+    model = load_model('../NN/second.model')
 
     test_datagen = ImageDataGenerator(rescale=1. / 255)
 
@@ -99,7 +99,7 @@ def apply_classification(image_list):
     predicts = model.predict_generator(test_generator,
                                        steps=nb_samples,
                                        verbose=1,
-                                       workers=16)
+                                       workers=8)
 
     tags = predicts.argmax(axis=1)
     end_time = time.time()

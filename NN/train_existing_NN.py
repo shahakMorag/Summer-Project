@@ -2,8 +2,7 @@ from keras.models import load_model
 from keras_preprocessing.image import ImageDataGenerator
 
 # the data, split between train and test sets
-from makeInputs import make_inputs
-from keras.callbacks import CSVLogger, ModelCheckpoint, EarlyStopping
+from keras.callbacks import EarlyStopping
 from keras.callbacks import ReduceLROnPlateau
 
 batch_size = 200
@@ -39,12 +38,10 @@ def train(start, limit, model, trained_models_path, path_to_data, patience=30):
               validation_split=0.0125)
     '''
     # callbacks
-    # csv_logger = CSVLogger(log_file_path, append=False)
     early_stop = EarlyStopping('acc', patience=patience)
     reduce_lr = ReduceLROnPlateau('acc', factor=0.1,
                                   patience=int(patience / 4), verbose=1)
     model_names = trained_models_path + '.{epoch:02d}-{val_acc:.2f}.hdf5'
-    # model_checkpoint = ModelCheckpoint(model_names, 'acc', verbose=1, save_best_only=True, period=40)
 
     callbacks = [early_stop, reduce_lr]
 
@@ -64,6 +61,8 @@ def train(start, limit, model, trained_models_path, path_to_data, patience=30):
         class_mode='categorical'
     )
 
+    print(train_generator.class_indices)
+
     model.fit_generator(
         train_generator,
         epochs=epochs,
@@ -78,3 +77,4 @@ model = load_model("../NN/first.model")
 
 train(0, 0, model, 'C:/Users\eitan.k\PycharmProjects\Summer-Project\models/', path_to_data)
 model.save("second.model")
+

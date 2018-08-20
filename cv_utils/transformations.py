@@ -1,6 +1,5 @@
 import cv2
 import numpy as np
-from NN.makeInputs import make_inputs
 
 path = path = "D:\Tomato_Classification_Project\Patches\Patches\patches_size_128_skip_32_categories_5"
 
