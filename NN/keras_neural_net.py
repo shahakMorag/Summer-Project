@@ -3,16 +3,16 @@ import keras
 from keras.models import Sequential
 from keras.layers import Dense, Dropout, Flatten, BatchNormalization, K, Lambda
 from keras.layers import Conv2D, MaxPooling2D
-from keras.callbacks import CSVLogger, ModelCheckpoint, EarlyStopping
+from keras.callbacks import EarlyStopping
 from keras.callbacks import ReduceLROnPlateau
 from makeInputs import make_inputs
 
-from models import our_model
+from our_model import get_model  # , inception_neural_net
 
 batch_size = 64
 num_classes = 5
 epochs = 1
-limit = 8000
+limit = 2000
 test = 100
 
 # input image dimensions
@@ -29,7 +29,7 @@ x_train /= 255
 print('x_train shape:', x_train.shape)
 print(x_train.shape[0], 'train samples')
 
-model = our_model.get_model()
+model = get_model(input_shape, num_classes)
 '''model = Sequential()
 model.add(Conv2D(32, kernel_size=(2, 2),
                  activation='relu',

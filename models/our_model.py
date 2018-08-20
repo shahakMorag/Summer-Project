@@ -4,6 +4,7 @@ from keras.layers import Conv2D, MaxPooling2D, BatchNormalization, Dropout, Flat
 
 
 def get_model(input_shape, num_classes):
+    print('hi')
     model = Sequential()
     model.add(Conv2D(32, kernel_size=(2, 2),
                      activation='relu',
