@@ -2,15 +2,15 @@ from __future__ import print_function
 from keras.callbacks import EarlyStopping
 from keras.callbacks import ReduceLROnPlateau
 from keras_preprocessing.image import ImageDataGenerator
-from our_model import get_model
+from inception_neural_net import get_model
 
 # input image dimensions and parameters
 input_shape = (128, 128, 3)
 patience = 30
-batch_size = 64
-epochs = 1
+batch_size = 128
+epochs = 8
 seed = 1
-train_images_path = 'C:\Tomato_Classification_Project\Tomato_Classification_Project\Patches\Patches\patches_size_128_skip_32_categories_5'
+train_images_path = 'C:\Tomato_Classification_Project\Patches\Patches\patches_size_128_skip_32_categories_5'
 
 #
 model = get_model(input_shape, num_classes=5)

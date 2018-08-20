@@ -6,11 +6,11 @@ from keras.callbacks import EarlyStopping
 from keras.callbacks import ReduceLROnPlateau
 
 batch_size = 200
-epochs = 3
+epochs = 5
 patience = 30
-path_to_data = 'D:\Tomato_Classification_Project_5_iter\Patches\Patches\patches_size_128_skip_32_categories_5'
-path_to_load_model = "../NN/first.model"
-path_to_save_model = "second.model"
+path_to_data = 'C:\Tomato_Classification_Project\Patches\Patches\patches_size_128_skip_32_categories_5'
+path_to_load_model = "../models/2008181.model"
+path_to_save_model = "../models/2008182.model"
 seed = 1
 
 

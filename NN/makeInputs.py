@@ -2,7 +2,7 @@ import cv2
 import glob
 import numpy as np
 
-path = "C:\Tomato_Classification_Project_5_iter\Patches\Patches"
+path = "C:\Tomato_Classification_Project\Patches\Patches"
 
 
 def make_one_hot(lst, num_classes):

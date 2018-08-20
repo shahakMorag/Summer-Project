@@ -70,7 +70,7 @@ def crops_show(im_list):
 def apply_classification(image_list):
     start_time = time.time()
     print("Applying classification...")
-    model = load_model('../NN/20-8-18-1.model')
+    model = load_model('../NN/2008181.model')
 
     test_datagen = ImageDataGenerator(rescale=1. / 255)
 
