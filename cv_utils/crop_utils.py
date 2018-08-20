@@ -39,8 +39,8 @@ def create_crops(i_img, step_x, step_y, radius_x, radius_y):
                 cropped = i_img[y_mid - radius_y:y_mid + radius_y, x_mid - radius_x:x_mid + radius_x]
 
             cropped = cv2.resize(cropped, (128, 128))
-            corrected = correct_gamma(cropped)
-            res.append(np.array(corrected, dtype=np.float32))
+            # corrected = correct_gamma(cropped)
+            res.append(np.array(cropped, dtype=np.float32))
 
     return res
 
@@ -85,7 +85,7 @@ def apply_classification(image_list):
     '''
     start_time = time.time()
     print("Applying classification...")
-    model = load_model('../NN/second.model')
+    model = load_model('../NN/20-8-18-1.model')
 
     test_datagen = ImageDataGenerator(rescale=1. / 255)
 

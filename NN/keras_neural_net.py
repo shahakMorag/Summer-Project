@@ -3,7 +3,7 @@ from keras.callbacks import EarlyStopping
 from keras.callbacks import ReduceLROnPlateau
 from keras_preprocessing.image import ImageDataGenerator
 
-from NN.our_model import get_model
+from our_model import get_model
 
 batch_size = 64
 num_classes = 5
@@ -15,11 +15,13 @@ test = 100
 img_rows, img_cols = 128, 128
 channels = 3
 
-# the data, split between train and test sets
-x_train, y_train = make_inputs(0, limit, num_classes)
+
 
 input_shape = (img_rows, img_cols, channels)
 '''
+# the data, split between train and test sets
+x_train, y_train = make_inputs(0, limit, num_classes)
+
 x_train = x_train.astype('float32')
 x_train /= 255
 print('x_train shape:', x_train.shape)
@@ -71,7 +73,7 @@ model.fit(x_train, y_train,
 '''
 
 patience = 30
-model = get_model()
+model = get_model(input_shape, num_classes)
 
 print('Starting to fit the model...')
 
