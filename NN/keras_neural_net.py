@@ -28,7 +28,8 @@ train_generator = train_datagen.flow_from_directory(
     batch_size=batch_size,
     color_mode='rgb',
     classes=['bad_leaf', 'fruit', 'leaf', 'other', 'stem'],
-    class_mode='categorical'
+    class_mode='categorical',
+    seed=seed
 )
 
 print(train_generator.class_indices)
@@ -45,7 +46,6 @@ model.fit_generator(
     epochs=epochs,
     verbose=1,
     workers=8,
-    callbacks=callbacks,
-    seed=seed)
+    callbacks=callbacks)
 
-model.save("20-8-18-1.model")
+model.save("2008181.model")

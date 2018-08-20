@@ -68,21 +68,6 @@ def crops_show(im_list):
 
 
 def apply_classification(image_list):
-    '''
-    image_list = np.array(image_list)
-    image_list /= 255
-    print("Applying classification...")
-    start_time = time.time()
-    # model = changed_model()
-    model = load_model('../NN/test.model')
-    lst = model.predict(np.array(image_list), verbose=1, rescale=)
-    tags = lst.argmax(axis=1)
-
-    end_time = time.time()
-    d_time = end_time - start_time
-    print("Classification took " + repr(d_time) + "seconds")
-    return tags
-    '''
     start_time = time.time()
     print("Applying classification...")
     model = load_model('../NN/20-8-18-1.model')
