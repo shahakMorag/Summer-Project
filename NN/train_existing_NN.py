@@ -6,9 +6,10 @@ from keras.callbacks import EarlyStopping
 from keras.callbacks import ReduceLROnPlateau
 
 batch_size = 200
-epochs = 5
+epochs = 10
 patience = 30
-path_to_data = 'C:\Tomato_Classification_Project\Patches\Patches\patches_size_128_skip_32_categories_5'
+train_images_path = 'C:\Tomato_Classification_Project\Tomato_Classification_Project\Patches\Patches\patches_size_128_skip_32_categories_5'
+valid_images_path = 'C:\Tomato_Classification_Project\Tomato_Classification_Project\Patches\Patches/validation'
 path_to_load_model = "../models/2008181.model"
 path_to_save_model = "../models/2008182.model"
 seed = 1
@@ -23,13 +24,14 @@ def train(model):
 
     print('Starting to fit the model...')
 
+    # ------------------------------------------ training data set ------------------------------------------
+
     train_data_gen = ImageDataGenerator(
-        validation_split=0.0125,
-        rescale=1. / 255,
+        rescale=1. / 255
     )
 
     train_generator = train_data_gen.flow_from_directory(
-        path_to_data,
+        train_images_path,
         target_size=(128, 128),
         batch_size=batch_size,
         color_mode='rgb',
@@ -38,13 +40,35 @@ def train(model):
         seed=seed
     )
 
+    # ------------------------------------------ validation data set ------------------------------------------
+    valid_data_gen = ImageDataGenerator(
+        rescale=1. / 255
+    )
+
+    valid_generator = valid_data_gen.flow_from_directory(
+        valid_images_path,
+        target_size=(128, 128),
+        batch_size=1,
+        color_mode='rgb',
+        classes=['bad_leaf', 'fruit', 'leaf', 'other', 'stem'],
+        class_mode='categorical'
+    )
+
     print(train_generator.class_indices)
 
+    # callbacks
+    early_stop = EarlyStopping('acc', patience=patience)
+    reduce_lr = ReduceLROnPlateau('acc', factor=0.1,
+                                  patience=int(patience / 4), verbose=1)
+
+    callbacks = [early_stop, reduce_lr]
+
     model.fit_generator(
-        train_generator,
+        generator=train_generator,
+        validation_data=valid_generator,
         epochs=epochs,
         verbose=1,
-        workers=16,
+        workers=8,
         callbacks=callbacks)
 
 

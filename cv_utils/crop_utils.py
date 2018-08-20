@@ -8,6 +8,7 @@ from keras_preprocessing.image import ImageDataGenerator
 from keras.models import load_model
 
 im = img = cv2.imread('../test/image transformations/IMG_5562.JPG', 1)
+model_path = '../models/2008181.model'
 
 step = 20
 radius_x = 64
@@ -70,7 +71,7 @@ def crops_show(im_list):
 def apply_classification(image_list):
     start_time = time.time()
     print("Applying classification...")
-    model = load_model('../NN/2008181.model')
+    model = load_model(model_path)
 
     test_datagen = ImageDataGenerator(rescale=1. / 255)
 
@@ -133,10 +134,3 @@ imcv = keys2img(m, new_height, new_width)
 
 cv2.imshow("shem sel hahalon", imcv)
 cv2.waitKey(0)
-
-#crops_show(list)
-
-'''
-im = img = cv2.imread('../test/image transformations/000101.png', 1)
-is_green(im)
-'''
