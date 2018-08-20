@@ -2,16 +2,18 @@ from keras.models import load_model
 from keras_preprocessing.image import ImageDataGenerator
 
 # the data, split between train and test sets
-from makeInputs import make_inputs
-from keras.callbacks import CSVLogger, ModelCheckpoint, EarlyStopping
+from keras.callbacks import EarlyStopping
 from keras.callbacks import ReduceLROnPlateau
 
 batch_size = 200
-num_classes = 5
 epochs = 3
+patience = 30
+path_to_data = 'D:\Tomato_Classification_Project_5_iter\Patches\Patches\patches_size_128_skip_32_categories_5'
+path_to_load_model = "../NN/first.model"
+path_to_save_model = "second.model"
 
 
-def train(start, limit, model, trained_models_path, path_to_data, patience=30):
+def train(model):
     # callbacks
     early_stop = EarlyStopping('acc', patience=patience)
     reduce_lr = ReduceLROnPlateau('acc', factor=0.1,
@@ -44,10 +46,6 @@ def train(start, limit, model, trained_models_path, path_to_data, patience=30):
         callbacks=callbacks)
 
 
-path_to_data = 'D:\Tomato_Classification_Project_5_iter\Patches\Patches\patches_size_128_skip_32_categories_5'
-
-model = load_model("../NN/first.model")
-
-train(0, 0, model, 'C:/Users\eitan.k\PycharmProjects\Summer-Project\models/', path_to_data)
-model.save("second.model")
-
+model = load_model(path_to_load_model)
+train(model)
+model.save(path_to_save_model)
