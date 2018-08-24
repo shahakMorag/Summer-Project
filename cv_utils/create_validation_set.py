@@ -23,8 +23,27 @@ def create(source_path, dest_path, part):
         moved += 1
 
 
-part = 0.05
+# Moves all files from src path dir to destination path dir
+def move_all(source_path, dest_path, part):
+    create(source_path, dest_path, part)
 
+
+def move_sub_dirs(src_root, dst_root, part):
+    move_all(src_root + '/' + 'bad_leaf', dst_root + '/' + 'bad_leaf', part)
+    move_all(src_root + '/' + 'fruit', dst_root + '/' + 'fruit', part)
+    move_all(src_root + '/' + 'leaf', dst_root + '/' + 'leaf', part)
+    move_all(src_root + '/' + 'other', dst_root + '/' + 'other', part)
+    move_all(src_root + '/' + 'stem', dst_root + '/' + 'stem', part)
+
+part = 0.5
+
+move_sub_dirs('C:\Tomato_Classification_Project\Tomato_Classification_Project\Patches\Patches/validation',
+              'C:\Tomato_Classification_Project\Tomato_Classification_Project\Patches\Patches\patches_size_128_skip_32_categories_5',
+              0.63)
+
+#move_all('C:\source', 'C:\dest')
+
+'''
 create(
     'C:\Tomato_Classification_Project\Tomato_Classification_Project\Patches\Patches\patches_size_128_skip_32_categories_5/bad_leaf',
     'C:\Tomato_Classification_Project\Tomato_Classification_Project\Patches\Patches/validation/bad_leaf', part)
@@ -40,3 +59,5 @@ create(
 create(
     'C:\Tomato_Classification_Project\Tomato_Classification_Project\Patches\Patches\patches_size_128_skip_32_categories_5\stem',
     'C:\Tomato_Classification_Project\Tomato_Classification_Project\Patches\Patches/validation\stem', part)
+
+'''

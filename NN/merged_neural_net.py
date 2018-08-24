@@ -6,9 +6,10 @@ from keras.applications import inception_v3
 
 def get_model(input_shape, num_classes):
     input_tensor = Input(shape=input_shape)
-    base_model = keras.applications.InceptionResNetV2(input_tensor=input_tensor, weights='imagenet', include_top=False)
+    base_model1 = keras.applications.densenet.DenseNet201(input_tensor=input_tensor, weights='imagenet', include_top=False)
+    base_model2 = keras.applications.nasnet.NASNetMobile(input_tensor=input_tensor, weights='imagenet', include_top=False)
 
-    x = base_model.output
+    x = keras.layers.concatenate([base_model1.output, base_model2.output])
     x = GlobalAveragePooling2D()(x)
     x = Dense(4096, activation='relu')(x)
     x = BatchNormalization()(x)
@@ -19,9 +20,12 @@ def get_model(input_shape, num_classes):
 
     predictions = Dense(num_classes, activation='softmax')(x)
 
-    model = Model(inputs=base_model.input, outputs=predictions)
+    model = Model(inputs=keras.layers.concatenate([base_model1.input, base_model2.input]), outputs=predictions)
 
-    for layer in base_model.layers:
+    for layer in base_model1.layers:
+        layer.trainable = False
+
+    for layer in base_model2.layers:
         layer.trainable = False
 
     model.compile(loss=keras.losses.categorical_crossentropy,

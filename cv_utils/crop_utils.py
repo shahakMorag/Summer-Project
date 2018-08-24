@@ -8,7 +8,7 @@ from keras_preprocessing.image import ImageDataGenerator
 from keras.models import load_model
 
 im = img = cv2.imread('../test/image transformations/IMG_5562.JPG', 1)
-model_path = '../models/2008181.model'
+model_path = '../models/our_model/2018_08_21_23_24_10_epochs.model'
 
 step = 20
 radius_x = 64
@@ -73,23 +73,21 @@ def apply_classification(image_list):
     print("Applying classification...")
     model = load_model(model_path)
 
-    test_datagen = ImageDataGenerator(rescale=1. / 255)
+    test_generator = ImageDataGenerator(rescale=1. / 255).flow(
+                                        x=np.array(image_list),
+                                        batch_size=1,
+                                        shuffle=False,
+    )
 
-    test_generator = test_datagen.flow(
-        x=np.array(image_list),
-        batch_size=1,
-        shuffle=False)
-
-    nb_samples = len(image_list)
     predicts = model.predict_generator(test_generator,
-                                       steps=nb_samples,
+                                       steps=len(image_list),
                                        verbose=1,
                                        workers=8)
 
     tags = predicts.argmax(axis=1)
     end_time = time.time()
     d_time = end_time - start_time
-    print("Classification took " + repr(d_time) + "seconds")
+    print("Classification took " + repr(d_time) + " seconds")
     return tags
 
 # 0 - bad leaf - blue    - [255, 0, 0]
@@ -131,6 +129,6 @@ list = create_crops(im, step, step, radius_x, radius_y)
 m = apply_classification(list)
 
 imcv = keys2img(m, new_height, new_width)
-
+imcv = cv2.resize(imcv, None, fx=3, fy=3)
 cv2.imshow("shem sel hahalon", imcv)
 cv2.waitKey(0)

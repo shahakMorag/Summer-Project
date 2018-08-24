@@ -6,12 +6,12 @@ from keras.callbacks import EarlyStopping
 from keras.callbacks import ReduceLROnPlateau
 
 batch_size = 200
-epochs = 10
+epochs = 20
 patience = 30
 train_images_path = 'C:\Tomato_Classification_Project\Tomato_Classification_Project\Patches\Patches\patches_size_128_skip_32_categories_5'
 valid_images_path = 'C:\Tomato_Classification_Project\Tomato_Classification_Project\Patches\Patches/validation'
-path_to_load_model = "../models/2008181.model"
-path_to_save_model = "../models/2008182.model"
+path_to_load_model = "../models/2008182.model"
+path_to_save_model = "../models/200818_40_epochs.model"
 seed = 1
 
 
@@ -19,7 +19,7 @@ def train(model):
     # callbacks
     early_stop = EarlyStopping('acc', patience=patience)
     reduce_lr = ReduceLROnPlateau('acc', factor=0.1,
-                                  patience=int(patience / 4), verbose=1)
+                                  patience=1, verbose=1)
     callbacks = [early_stop, reduce_lr]
 
     print('Starting to fit the model...')
@@ -75,3 +75,5 @@ def train(model):
 model = load_model(path_to_load_model)
 train(model)
 model.save(path_to_save_model)
+
+print("Finished training!")
