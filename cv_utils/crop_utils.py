@@ -8,7 +8,7 @@ from keras_preprocessing.image import ImageDataGenerator
 from keras.models import load_model
 
 im = img = cv2.imread('../test/image transformations/IMG_5562.JPG', 1)
-model_path = '../models/our_model/2018_08_21_23_24_10_epochs.model'
+model_path = '../models/mobilenet/2018_08_25_2_46_100_epochs.model'
 
 step = 20
 radius_x = 64
@@ -68,14 +68,14 @@ def crops_show(im_list):
         cv2.waitKey(1000)
 
 
-def apply_classification(image_list):
+def apply_classification(image_list, batch_size=1):
     start_time = time.time()
     print("Applying classification...")
     model = load_model(model_path)
 
     test_generator = ImageDataGenerator(rescale=1. / 255).flow(
                                         x=np.array(image_list),
-                                        batch_size=1,
+                                        batch_size=batch_size,
                                         shuffle=False,
     )
 
@@ -88,7 +88,7 @@ def apply_classification(image_list):
     end_time = time.time()
     d_time = end_time - start_time
     print("Classification took " + repr(d_time) + " seconds")
-    return tags
+    return np.array(tags).flatten()
 
 # 0 - bad leaf - blue    - [255, 0, 0]
 # 1 - fruit    - red     - [35,28,229]
@@ -124,6 +124,7 @@ def keys2img(vals, height, width):
 
 # We better trust practical calculations...
 new_height, new_width = calc_dim(im, step, step, radius_x, radius_y)
+
 
 list = create_crops(im, step, step, radius_x, radius_y)
 m = apply_classification(list)
