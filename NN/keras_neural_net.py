@@ -3,7 +3,7 @@ from keras.callbacks import EarlyStopping
 from keras.callbacks import ReduceLROnPlateau
 from mobilenet2 import get_model
 import datetime
-from keras_generators import get_train_generator, get_valid_generator
+from nn_utils import get_train_generator, get_valid_generator
 
 # input image dimensions and parameters
 
