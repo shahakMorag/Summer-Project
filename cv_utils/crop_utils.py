@@ -8,7 +8,7 @@ from keras_preprocessing.image import ImageDataGenerator
 from keras.models import load_model
 
 im = img = cv2.imread('../test/image transformations/IMG_5562.JPG', 1)
-model_path = '../models/mobilenet/2018_08_25_2_46_100_epochs.model'
+model_path = '../models/mobilenet/2018_08_25_15_39_50_epochs.model'
 
 step = 20
 radius_x = 64
@@ -33,6 +33,7 @@ def create_crops(i_img, step_x, step_y, radius_x, radius_y):
     for y_mid in range(radius_y, height - radius_y, step_y):
         for x_mid in range(radius_x, width - radius_x, step_x):
             cropped = i_img[y_mid - radius_y:y_mid + radius_y, x_mid - radius_x:x_mid + radius_x]
+            '''
             if not is_green(cropped):
                 cropped = i_img[y_mid - non_green_radius_y:y_mid + non_green_radius_y,
                           x_mid - non_green_radius_x:x_mid + non_green_radius_x]
@@ -40,6 +41,8 @@ def create_crops(i_img, step_x, step_y, radius_x, radius_y):
                 cropped = i_img[y_mid - radius_y:y_mid + radius_y, x_mid - radius_x:x_mid + radius_x]
 
             cropped = cv2.resize(cropped, (128, 128))
+            '''
+            cropped = i_img[y_mid - radius_y:y_mid + radius_y, x_mid - radius_x:x_mid + radius_x]
             # corrected = correct_gamma(cropped)
             res.append(np.array(cropped, dtype=np.float32))
 
@@ -73,11 +76,12 @@ def apply_classification(image_list, batch_size=1):
     print("Applying classification...")
     model = load_model(model_path)
 
-    test_generator = ImageDataGenerator(rescale=1. / 255).flow(
-                                        x=np.array(image_list),
-                                        batch_size=batch_size,
-                                        shuffle=False,
-    )
+    test_generator = ImageDataGenerator(#rescale=1. / 255,
+                                        preprocessing_function=keras.applications.mobilenet.preprocess_input,)\
+        .flow(x=np.array(image_list),
+              batch_size=batch_size,
+              shuffle=False,
+              )
 
     predicts = model.predict_generator(test_generator,
                                        steps=len(image_list),
