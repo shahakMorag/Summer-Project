@@ -334,4 +334,8 @@ spot the categories our neural net get confused with.
 
 ### Additional Net
 We saw that our neural network frequantly get confused with the categories of leafs and other.
+
 So we trained new neural network that classify on this types only and our net will run after the general net work.
+
+### Images from today
+
