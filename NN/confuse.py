@@ -41,10 +41,28 @@ def fix_classes(m, m2, leafs_indexes):
         i += 1
 
 
-#valid_generator = get_valid_generator(valid_images_path="C:\Tomato_Classification_Project\Tomato_Classification_Project\Patches\Patches/validation")
+def calc_acc(truth, predictions):
+    if len(truth) != len(predictions):
+        print("Error! Arrays lengths don't match!")
+        return
+
+    total = len(truth)
+    success = 0
+    for i in range(total):
+        if truth[i] == predictions[i]:
+            success += 1
+
+    acc = success/total
+    print("acc:", acc)
+
 
 pics, true_Y = get_pictures("C:\Tomato_Classification_Project\Tomato_Classification_Project\Patches\Patches/validation")
 Y_pred = apply_classification(pics)
+
+print("Accuracy 1-round:")
+calc_acc(true_Y, Y_pred)
+
+''' ------------------------- second round ------------------------- '''
 
 leafs_indexes = np.where(np.isin(Y_pred, [0, 2, 3]))[0]
 leafs_crop = pics[leafs_indexes.tolist()]
@@ -52,6 +70,8 @@ leafs_crop = pics[leafs_indexes.tolist()]
 # give path to the second round model
 m2 = apply_classification(leafs_crop, model_path="../models/mobilenet/2018_08_26_20_47_500_epochs_leaf.model")
 fix_classes(Y_pred, m2, leafs_indexes)
+print("Accuracy 1-round:")
+calc_acc(true_Y, Y_pred)
 
 mat = confusion_matrix(Y_pred, true_Y)
 print(mat)
