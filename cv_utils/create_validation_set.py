@@ -57,7 +57,6 @@ def move_sub_dirs(src_root, dst_root, part):
     move_all(src_root + '/' + 'other', dst_root + '/' + 'other', part)
     move_all(src_root + '/' + 'stem', dst_root + '/' + 'stem', part)
 
-'''
 move_all('C:\Tomato_Classification_Project\Tomato_Classification_Project\Patches\Patches/validation/bad_leaf',
          'C:\Tomato_Classification_Project\Tomato_Classification_Project\Patches\Patches\patches_size_128_skip_32_categories_5/bad_leaf')
 
@@ -72,7 +71,6 @@ move_all('C:\Tomato_Classification_Project\Tomato_Classification_Project\Patches
 
 move_all('C:\Tomato_Classification_Project\Tomato_Classification_Project\Patches\Patches/validation/stem',
          'C:\Tomato_Classification_Project\Tomato_Classification_Project\Patches\Patches\patches_size_128_skip_32_categories_5/stem')
-'''
 
 '''
 part = 0.5
@@ -84,7 +82,7 @@ move_sub_dirs('C:\Tomato_Classification_Project\Tomato_Classification_Project\Pa
 
 '''
 
-part = 8745/103745
+part = 0.06
 
 create_precense(
     'C:\Tomato_Classification_Project\Tomato_Classification_Project\Patches\Patches\patches_size_128_skip_32_categories_5/bad_leaf',

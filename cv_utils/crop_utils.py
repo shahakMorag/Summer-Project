@@ -6,11 +6,21 @@ import keras
 from keras_preprocessing.image import ImageDataGenerator
 
 from keras.models import load_model
+import tensorflow as tf
 
-im = img = cv2.imread('../test/image transformations/IMG_5562.JPG', 1)
-model_path = '../models/mobilenet/2018_08_25_15_39_50_epochs.model'
+gpu_options = tf.GPUOptions(per_process_gpu_memory_fraction=0.333)
+sess = tf.Session(config=tf.ConfigProto(gpu_options=gpu_options))
 
-step = 20
+im = cv2.imread('../test/image transformations/IMG_5562.JPG', 1)
+im = cv2.cvtColor(im, cv2.COLOR_BGR2RGB)
+'''
+red = im[:,:,2].copy()
+blue = im[:,:,0].copy()
+im[:,:,0] = red
+im[:,:,2] = blue
+'''
+
+step = 13
 radius_x = 64
 radius_y = 64
 
@@ -42,9 +52,7 @@ def create_crops(i_img, step_x, step_y, radius_x, radius_y):
 
             cropped = cv2.resize(cropped, (128, 128))
             '''
-            cropped = i_img[y_mid - radius_y:y_mid + radius_y, x_mid - radius_x:x_mid + radius_x]
-            # corrected = correct_gamma(cropped)
-            res.append(np.array(cropped, dtype=np.float32))
+            res.append(cropped)
 
     return res
 
@@ -71,13 +79,12 @@ def crops_show(im_list):
         cv2.waitKey(1000)
 
 
-def apply_classification(image_list, batch_size=1):
+def apply_classification(image_list, batch_size=1, model_path='../models/mobilenet/2018_08_25_17_6_500_epochs.model'):
     start_time = time.time()
     print("Applying classification...")
     model = load_model(model_path)
 
-    test_generator = ImageDataGenerator(#rescale=1. / 255,
-                                        preprocessing_function=keras.applications.mobilenet.preprocess_input,)\
+    test_generator = ImageDataGenerator(preprocessing_function=keras.applications.mobilenet.preprocess_input) \
         .flow(x=np.array(image_list),
               batch_size=batch_size,
               shuffle=False,
@@ -86,13 +93,23 @@ def apply_classification(image_list, batch_size=1):
     predicts = model.predict_generator(test_generator,
                                        steps=len(image_list),
                                        verbose=1,
-                                       workers=8)
+                                       workers=16)
 
     tags = predicts.argmax(axis=1)
     end_time = time.time()
     d_time = end_time - start_time
     print("Classification took " + repr(d_time) + " seconds")
     return np.array(tags).flatten()
+
+
+def fix_classes(m, m2, leafs_indexes):
+    i = 0
+    while i < len(m2):
+        # the 2 is because the numbers are only in [0,1]
+        m[leafs_indexes[i]] = m2[i] * 2
+        i += 1
+
+
 
 # 0 - bad leaf - blue    - [255, 0, 0]
 # 1 - fruit    - red     - [35,28,229]
@@ -129,9 +146,12 @@ def keys2img(vals, height, width):
 # We better trust practical calculations...
 new_height, new_width = calc_dim(im, step, step, radius_x, radius_y)
 
-
-list = create_crops(im, step, step, radius_x, radius_y)
-m = apply_classification(list)
+crops_list = np.array(create_crops(im, step, step, radius_x, radius_y))
+m = apply_classification(crops_list)
+leafs_indexes = np.where(np.isin(m, [0, 2]))[0]
+leafs_crop = crops_list[leafs_indexes.tolist()]
+m2 = apply_classification(leafs_crop, model_path="../models/mobilenet/2018_08_26_13_40_50_epochs_leaf.model")
+fix_classes(m, m2, leafs_indexes)
 
 imcv = keys2img(m, new_height, new_width)
 imcv = cv2.resize(imcv, None, fx=3, fy=3)
