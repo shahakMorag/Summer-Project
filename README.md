@@ -324,3 +324,5 @@ We thought that instead of using strides of 16 pixels we will use strides of the
 allocated gpu can handle in order to improve the goodness of the segmentation.
 
 In addition we made different sized of patches which isn't a rectangle.
+
+## Seventh Day
