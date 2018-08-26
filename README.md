@@ -326,3 +326,12 @@ allocated gpu can handle in order to improve the goodness of the segmentation.
 In addition we made different sized of patches which isn't a rectangle.
 
 ## Seventh Day
+### Confusion Matrix
+We created confusion matrix on our validation in order to 
+
+spot the categories our neural net get confused with.
+![confusion_matrix](http://scikit-learn.org/stable/_images/sphx_glr_plot_confusion_matrix_001.png)
+
+### Additional Net
+We saw that our neural network frequantly get confused with the categories of leafs and other.
+So we trained new neural network that classify on this types only and our net will run after the general net work.
