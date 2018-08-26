@@ -34,23 +34,23 @@ sess = tf.Session(config=tf.ConfigProto(gpu_options=gpu_options))
 
 dir_to_save_model = "../models/mobilenet"
 start_date = str(datetime.date.today()).replace('-', '_') + "_" + str(datetime.datetime.now().hour) + "_" + str(datetime.datetime.now().minute)
-classifier_type = 'leaf'
+classifier_type = 'class_all'
 
 input_shape = (128, 128, 3)
-patience = 10
+patience = 20
 batch_size = 250
-epochs = 500
+epochs = 1000
 seed = 5
 validate_freq = 3
 
-'''train_images_path = 'C:\Tomato_Classification_Project\Tomato_Classification_Project\Patches\Patches\patches_size_128_skip_32_categories_5'
+train_images_path = 'C:\Tomato_Classification_Project\Tomato_Classification_Project\Patches\Patches\patches_size_128_skip_32_categories_5'
 valid_images_path = 'C:\Tomato_Classification_Project\Tomato_Classification_Project\Patches\Patches/validation'
 '''
 train_images_path = 'C:\Tomato_Classification_Project\Tomato_Classification_Project\Patches\Patches\leaf_net_training'
 valid_images_path = 'C:\Tomato_Classification_Project\Tomato_Classification_Project\Patches\Patches/leaf_validation'
+'''
 
-#
-model = get_model(input_shape, num_classes=3)
+model = get_model(input_shape, num_classes=5)
 
 print('Starting to fit the model...')
 
