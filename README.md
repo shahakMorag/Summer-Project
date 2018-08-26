@@ -337,7 +337,7 @@ We saw that our neural network frequantly get confused with the categories of le
 
 So we trained new neural network that classify on this types only and our net will run after the general net work.
 
-### Images from today
+### Images From Today
 ![seventh_day_1_im](readme_imgs/NN_outputs/Screenshot_1.png)
 
 ![seventh_day_2_im](readme_imgs/NN_outputs/Screenshot_2_with_leaf_seperation.png)
