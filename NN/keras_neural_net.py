@@ -2,9 +2,30 @@ from __future__ import print_function
 from keras.callbacks import EarlyStopping
 from keras.callbacks import ReduceLROnPlateau
 from keras.callbacks import TensorBoard
+from keras.callbacks import Callback
 from mobilenet2 import get_model
 import datetime
 from nn_utils import get_train_generator, get_valid_generator
+
+class ValidateCallback(Callback):
+
+    def __init__(self, p):
+        self.param = p
+
+    def on_epoch_end(self, epoch, logs=None):
+        if not epoch % self.param == 0:
+            return
+
+        print("Evaluating...")
+        scoreSeg = model.evaluate_generator(
+            generator=valid_generator,
+            verbose=1,
+            workers=8,
+        )
+
+        print('Loss: ' + repr(scoreSeg[0]) + ', Acc: ' + repr(scoreSeg[1]))
+
+
 
 '''gpu_options = tf.GPUOptions(per_process_gpu_memory_fraction=1)
 sess = tf.Session(config=tf.ConfigProto(gpu_options=gpu_options))
@@ -18,8 +39,9 @@ classifier_type = 'leaf'
 input_shape = (128, 128, 3)
 patience = 10
 batch_size = 250
-epochs = 2
+epochs = 500
 seed = 5
+validate_freq = 3
 
 '''train_images_path = 'C:\Tomato_Classification_Project\Tomato_Classification_Project\Patches\Patches\patches_size_128_skip_32_categories_5'
 valid_images_path = 'C:\Tomato_Classification_Project\Tomato_Classification_Project\Patches\Patches/validation'
@@ -28,7 +50,7 @@ train_images_path = 'C:\Tomato_Classification_Project\Tomato_Classification_Proj
 valid_images_path = 'C:\Tomato_Classification_Project\Tomato_Classification_Project\Patches\Patches/leaf_validation'
 
 #
-model = get_model(input_shape, num_classes=2)
+model = get_model(input_shape, num_classes=3)
 
 print('Starting to fit the model...')
 
@@ -45,9 +67,10 @@ print('Validate indices: ' + str(valid_generator.class_indices))
 
 # ------------------------------------------ callbacks --------------------------------------------------
 
+valid_callback = ValidateCallback(validate_freq)
 early_stop = EarlyStopping('acc', patience=patience)
 reduce_lr = ReduceLROnPlateau('acc', factor=0.6,
-                              patience=5, verbose=1)
+                              patience=2, verbose=1)
 
 tensorboard = TensorBoard(log_dir='../logs',
                           histogram_freq=0,
@@ -61,11 +84,11 @@ tensorboard = TensorBoard(log_dir='../logs',
                           embeddings_data=None)
 
 
-callbacks = [early_stop, reduce_lr, tensorboard]
+callbacks = [valid_callback, early_stop, reduce_lr, tensorboard]
 
 model.fit_generator(
     generator=train_generator,
-    validation_data=valid_generator,
+    #validation_data=valid_generator,
     epochs=epochs,
     verbose=1,
     workers=8,

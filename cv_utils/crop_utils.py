@@ -6,19 +6,14 @@ import keras
 from keras_preprocessing.image import ImageDataGenerator
 
 from keras.models import load_model
+'''
 import tensorflow as tf
 
 gpu_options = tf.GPUOptions(per_process_gpu_memory_fraction=0.333)
 sess = tf.Session(config=tf.ConfigProto(gpu_options=gpu_options))
-
+'''
 im = cv2.imread('../test/image transformations/IMG_5562.JPG', 1)
 im = cv2.cvtColor(im, cv2.COLOR_BGR2RGB)
-'''
-red = im[:,:,2].copy()
-blue = im[:,:,0].copy()
-im[:,:,0] = red
-im[:,:,2] = blue
-'''
 
 step = 13
 radius_x = 64
@@ -27,6 +22,8 @@ radius_y = 64
 non_green_radius_x = 15
 non_green_radius_y = 15
 
+scale_after = 2
+total_start_time = time.time()
 
 def is_green(i_img):
     b, g, r = cv2.split(i_img)
@@ -102,11 +99,12 @@ def apply_classification(image_list, batch_size=1, model_path='../models/mobilen
     return np.array(tags).flatten()
 
 
+maps = dict(zip([0,1,2],[0,2,3]))
 def fix_classes(m, m2, leafs_indexes):
     i = 0
     while i < len(m2):
         # the 2 is because the numbers are only in [0,1]
-        m[leafs_indexes[i]] = m2[i] * 2
+        m[leafs_indexes[i]] = maps.__getitem__(m2[i])
         i += 1
 
 
@@ -148,12 +146,12 @@ new_height, new_width = calc_dim(im, step, step, radius_x, radius_y)
 
 crops_list = np.array(create_crops(im, step, step, radius_x, radius_y))
 m = apply_classification(crops_list)
-leafs_indexes = np.where(np.isin(m, [0, 2]))[0]
+leafs_indexes = np.where(np.isin(m, [0, 2, 3]))[0]
 leafs_crop = crops_list[leafs_indexes.tolist()]
-m2 = apply_classification(leafs_crop, model_path="../models/mobilenet/2018_08_26_13_40_50_epochs_leaf.model")
+m2 = apply_classification(leafs_crop, model_path="../models/mobilenet/2018_08_26_18_20_20_epochs_leaf.model")
 fix_classes(m, m2, leafs_indexes)
 
 imcv = keys2img(m, new_height, new_width)
-imcv = cv2.resize(imcv, None, fx=3, fy=3)
+imcv = cv2.resize(imcv, None, fx=scale_after, fy=scale_after)
 cv2.imshow("shem sel hahalon", imcv)
 cv2.waitKey(0)
