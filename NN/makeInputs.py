@@ -2,8 +2,6 @@ import cv2
 import glob
 import numpy as np
 
-path = "C:\Tomato_Classification_Project\Patches\Patches"
-
 
 def make_one_hot(lst, num_classes):
     tmp = np.array(lst, dtype=np.int32)
@@ -12,7 +10,7 @@ def make_one_hot(lst, num_classes):
     return tmp2
 
 
-def get_pictures(dir, start, limit):
+def get_pictures(dir):
     images = np.empty([limit,128,128,3], dtype=np.uint8)
     i = 0
 
@@ -31,22 +29,21 @@ def get_pictures(dir, start, limit):
     return images
 
 
-def make_inputs(start, limit, num_classes):
+def make_inputs(path, num_classes):
     print("Making imputs:")
-    print("Start: " + repr(start) + ", limit: " + repr(limit) + ", classes: " + repr(num_classes))
-    X = get_pictures(path + "\\patches_size_128_skip_32_categories_5\\bad_leaf", start, limit )
+    X = get_pictures(path + "\\bad_leaf", start, limit )
     Y = [0] * limit
 
-    X = np.concatenate((X, get_pictures(path + "\\patches_size_128_skip_32_categories_5\\fruit", start, limit )))
+    X = np.concatenate((X, get_pictures(path + "\\fruit", start, limit )))
     Y += [1] * limit
 
-    X = np.concatenate((X,get_pictures(path + "\\patches_size_128_skip_32_categories_5\\leaf", start, limit )))
+    X = np.concatenate((X,get_pictures(path + "\\leaf", start, limit )))
     Y += [2] * limit
 
-    X = np.concatenate((X, get_pictures(path + "\\patches_size_128_skip_32_categories_5\\other", start, limit )))
+    X = np.concatenate((X, get_pictures(path + "\\other", start, limit )))
     Y += [3] * limit
 
-    X = np.concatenate((X,get_pictures(path + "\\patches_size_128_skip_32_categories_5\\stem", start, limit )))
+    X = np.concatenate((X,get_pictures(path + "\\stem", start, limit )))
     Y += [4] * limit
 
     print("Finished making inputs")
