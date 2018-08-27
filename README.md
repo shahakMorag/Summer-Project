@@ -342,3 +342,21 @@ So we trained new neural network that classify on this types only and our net wi
 
 ![seventh_day_2_im](readme_imgs/NN_outputs/Screenshot_2_with_leaf_seperation.png)
 
+## Eighth Day
+### Blending Original Image With Output Image
+We blended those images in order to see how good the results are.
+![blended_image](readme_imgs/NN_outputs/blended_image.png)
+
+Today we focus on accelerating our neural network.
+
+### Resizing And Strides Growths
+We resized the original picture in order to reduce the number of patches that we need to classify.
+If we enlarge our strides it also reduces the number of patches needed.
+
+### Resizing Neural Net
+We noticed that if we remove half of our neural net we still get good results and our neural net
+becomes faster.
+
+### Threaded Processing
+We saw that if we run our neural net on a third of the patches and on 3 processes we get 35 seconds faster image creation. 
+![threads](https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Multithreaded_process.svg/1200px-Multithreaded_process.svg.png)

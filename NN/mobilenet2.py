@@ -1,5 +1,5 @@
 import keras
-from keras.layers import GlobalAveragePooling2D, BatchNormalization, Dropout
+from keras.layers import GlobalAveragePooling2D, BatchNormalization, Dropout, Flatten
 from keras.layers.core import Dense
 from keras.optimizers import Adam
 from keras.optimizers import adadelta
@@ -9,7 +9,8 @@ from keras.models import Model
 def get_model(input_shape, num_classes):
     mobile = keras.applications.mobilenet.MobileNet(input_shape=input_shape, dropout=0.25)
 
-    x = mobile.layers[-1].output
+    x = mobile.layers[-50].output
+    x = Flatten()(x)
     x = Dense(1024, activation='relu')(x)
     x = Dropout(0.5)(x)
     x = BatchNormalization()(x)
@@ -19,6 +20,7 @@ def get_model(input_shape, num_classes):
 
     model.compile(Adam(lr=0.01), loss='categorical_crossentropy', metrics=['accuracy'])
     model.summary()
+    print('There are', len(model.layers), 'layers')
     return model
 
 

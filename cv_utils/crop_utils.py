@@ -4,18 +4,16 @@ import time
 from transformations import get_relative_brightness, correct_gamma
 import keras
 from keras_preprocessing.image import ImageDataGenerator
-import multiprocessing
-import threading
 
 from keras.models import load_model
 '''
 import tensorflow as tf
 
-gpu_options = tf.GPUOptions(per_process_gpu_memory_fraction=1)
+gpu_options = tf.GPUOptions(per_process_gpu_memory_fraction=0.15)
 sess = tf.Session(config=tf.ConfigProto(gpu_options=gpu_options))
 '''
 im = cv2.imread('../test/image transformations/IMG_5562.JPG', 1)
-im = cv2.resize(im, None, fx=0.83, fy=0.83)
+im = cv2.resize(im, None, fx=(1/1.3), fy=(1/1.3))
 im = cv2.cvtColor(im, cv2.COLOR_BGR2RGB)
 
 step = 20
@@ -82,22 +80,22 @@ def crops_show(im_list):
         cv2.waitKey(1000)
 
 
-def apply_classification(image_list, model_path='../models/mobilenet/2018_08_26_23_18_1000_epochs_class_all.model'):
-    print(model_path)
-    model = load_model(model_path)
+def apply_classification(image_list, model_path='../models/mobilenet/2018_08_27_16_53_5_epochs_class_all.model'):
     start_time = time.time()
     print("Applying classification...")
+
+    model = load_model(model_path)
 
     test_generator = ImageDataGenerator(preprocessing_function=keras.applications.mobilenet.preprocess_input) \
         .flow(x=np.array(image_list),
               batch_size=1,
-              shuffle=False,
-              )
+              shuffle=False)
 
     predicts = model.predict_generator(test_generator,
                                        steps=len(image_list),
                                        verbose=1,
-                                       workers=8)
+                                       workers=1,
+                                       use_multiprocessing=False)
 
     tags = predicts.argmax(axis=1)
     end_time = time.time()
@@ -164,8 +162,8 @@ def keys2img(vals, height, width):
 new_height, new_width = calc_dim(im, step, step, radius_x, radius_y)
 
 crops_list = np.array(create_crops(im, step, step, radius_x, radius_y))
-crops_list_first_half = crops_list[:int(len(crops_list) / 2)]
-crops_list_second_half = crops_list[int(len(crops_list) / 2):]
+# crops_list_first_half = crops_list[:int(len(crops_list) / 4)]
+# crops_list_second_half = crops_list[int(len(crops_list) / 2):]
 m = apply_classification(crops_list)
 
 imcv = keys2img(m, new_height, new_width)

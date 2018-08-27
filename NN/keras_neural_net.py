@@ -39,7 +39,7 @@ classifier_type = 'class_all'
 input_shape = (128, 128, 3)
 patience = 20
 batch_size = 250
-epochs = 1000
+epochs = 5
 seed = 5
 validate_freq = 3
 
