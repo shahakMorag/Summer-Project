@@ -4,10 +4,10 @@ import numpy as np
 import keras
 from keras_preprocessing.image import ImageDataGenerator
 from keras.models import load_model
-from makeInputs import get_pictures
+from makeInputs import make_inputs
 
 
-def apply_classification(image_list, batch_size=1, model_path='../models/mobilenet/2018_08_25_17_6_500_epochs.model'):
+def apply_classification(image_list, model_path, batch_size=1):
     start_time = time.time()
     print("Applying classification...")
     model = load_model(model_path)
@@ -56,11 +56,14 @@ def calc_acc(truth, predictions):
     print("acc:", acc)
 
 
-pics, true_Y = get_pictures("C:\Tomato_Classification_Project\Tomato_Classification_Project\Patches\Patches/validation")
-Y_pred = apply_classification(pics)
+pics, true_Y = make_inputs("C:\Tomato_Classification_Project\Tomato_Classification_Project\Patches\Patches/validation")
+Y_pred = apply_classification(pics, model_path="../models/mobilenet/2018_08_26_23_18_1000_epochs_class_all.model")
 
 print("Accuracy 1-round:")
 calc_acc(true_Y, Y_pred)
+
+mat = confusion_matrix(Y_pred, true_Y)
+print(mat)
 
 ''' ------------------------- second round ------------------------- '''
 

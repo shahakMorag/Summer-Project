@@ -17,13 +17,8 @@ def get_model(input_shape, num_classes):
 
     model = Model(inputs=mobile.input, outputs=predictions)
 
-
-    '''for layer in model.layers[:-85]:
-        layer.trainable = False
-    '''
-
     model.compile(Adam(lr=0.01), loss='categorical_crossentropy', metrics=['accuracy'])
-    #model.summary()
+    model.summary()
     return model
 
 
