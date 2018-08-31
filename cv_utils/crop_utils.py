@@ -11,10 +11,10 @@ radius_x = 64
 radius_y = 64
 
 
-def create_crops(i_img, step_x=step, step_y=step, radius_x=radius_x, radius_y=radius_y):
-    height, width = i_img.shape[:2]
+def create_crops(input_image, step_x=step, step_y=step, radius_x=radius_x, radius_y=radius_y):
+    height, width = input_image.shape[:2]
 
-    return [i_img[y_mid - radius_y:y_mid + radius_y, x_mid - radius_x:x_mid + radius_x]
+    return [input_image[y_mid - radius_y:y_mid + radius_y, x_mid - radius_x:x_mid + radius_x]
             for y_mid in range(radius_y, height - radius_y, step_y)
             for x_mid in range(radius_x, width - radius_x, step_x)]
 
@@ -50,13 +50,11 @@ def apply_classification(image_list,
     return np.array(tags)
 
 
-def fix_classes(m, m2, leafs_indexes):
+def fix_classes(original_tags, m2, leafs_indexes):
     maps = dict(zip([0, 1, 2], [0, 2, 3]))
-    i = 0
-    while i < len(m2):
-        # the 2 is because the numbers are only in [0,1]
-        m[leafs_indexes[i]] = maps.__getitem__(m2[i])
-        i += 1
+
+    for i in range(len(m2)):
+        original_tags[leafs_indexes[i]] = maps.__getitem__(m2[i])
 
 
 # We assume that the images in the same size

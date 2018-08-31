@@ -1,45 +1,10 @@
-from sklearn.metrics import confusion_matrix
-import time
 import numpy as np
-import keras
-from keras_preprocessing.image import ImageDataGenerator
-from keras.models import load_model
 from makeInputs import make_inputs
+from sklearn.metrics import confusion_matrix
 
-
-def apply_classification(image_list, model_path, batch_size=1):
-    start_time = time.time()
-    print("Applying classification...")
-    model = load_model(model_path)
-
-    test_generator = ImageDataGenerator(preprocessing_function=keras.applications.mobilenet.preprocess_input) \
-        .flow(x=np.array(image_list),
-              batch_size=batch_size,
-              shuffle=False,
-              )
-
-    predicts = model.predict_generator(test_generator,
-                                       steps=len(image_list),
-                                       verbose=1,
-                                       workers=16)
-
-    tags = predicts.argmax(axis=1)
-    end_time = time.time()
-    d_time = end_time - start_time
-    print("Classification took " + repr(d_time) + " seconds")
-    return np.array(tags).flatten()
-
+from cv_utils.crop_utils import apply_classification, fix_classes
 
 fix_map = dict(zip([0, 1, 2], [1, 3, 4]))
-maps2 = dict(zip([0, 1, 2], [0, 2, 3]))
-
-
-def fix_classes(m, m2, leafs_indexes):
-    i = 0
-    while i < len(m2):
-        # the 2 is because the numbers are only in [0,1]
-        m[leafs_indexes[i]] = maps2.__getitem__(m2[i])
-        i += 1
 
 
 def calc_acc(truth, predictions):
