@@ -3,12 +3,14 @@ from keras.callbacks import Callback, TensorBoard, ReduceLROnPlateau, EarlyStopp
 from keras_preprocessing.image import ImageDataGenerator
 
 
-def get_train_generator(train_images_path, batch_size, target_size):
+def get_train_generator(train_images_path, batch_size, target_size, preprocessing_function=None):
     seed = 1
 
+    if preprocessing_function is None:
+        preprocessing_function = keras.applications.mobilenet.preprocess_input
+
     train_data_gen = ImageDataGenerator(
-        preprocessing_function=keras.applications.mobilenet.preprocess_input,
-        # rescale=1. / 255,
+        preprocessing_function=preprocessing_function,
         rotation_range=20,
         width_shift_range=0.2,
         height_shift_range=0.2,
@@ -28,11 +30,11 @@ def get_train_generator(train_images_path, batch_size, target_size):
     return train_generator
 
 
-def get_valid_generator(valid_images_path, target_size):
-    valid_data_gen = ImageDataGenerator(
-        preprocessing_function=keras.applications.mobilenet.preprocess_input,
-        # rescale=1. / 255,
-    )
+def get_valid_generator(valid_images_path, target_size, preprocessing_function=None):
+    if preprocessing_function is None:
+        preprocessing_function = keras.applications.mobilenet.preprocess_input
+
+    valid_data_gen = ImageDataGenerator(preprocessing_function=preprocessing_function)
 
     valid_generator = valid_data_gen.flow_from_directory(
         valid_images_path,

@@ -9,7 +9,7 @@ def tilted_loss(q,y,f):
 
 def get_model(input_shape, num_classes):
     model = Sequential()
-    model.add(Conv2D(8, kernel_size=(3,3),
+    model.add(Conv2D(8, kernel_size=(5,5),
                      activation='relu',
                      input_shape=input_shape,
                      ))
