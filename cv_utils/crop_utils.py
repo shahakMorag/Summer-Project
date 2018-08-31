@@ -11,20 +11,20 @@ radius_x = 64
 radius_y = 64
 
 
-def create_crops(input_image, step_x=step, step_y=step, radius_x=radius_x, radius_y=radius_y):
-    height, width = input_image.shape[:2]
+def create_crops(image, step_x=step, step_y=step, radius_x=radius_x, radius_y=radius_y):
+    height, width = image.shape[:2]
 
-    return [input_image[y_mid - radius_y:y_mid + radius_y, x_mid - radius_x:x_mid + radius_x]
+    return [image[y_mid - radius_y:y_mid + radius_y, x_mid - radius_x:x_mid + radius_x]
             for y_mid in range(radius_y, height - radius_y, step_y)
             for x_mid in range(radius_x, width - radius_x, step_x)]
 
 
-def calc_dim(im, step_x=step, step_y=step, radius_x=radius_x, radius_y=radius_y):
-    height, width = im.shape[:2]
+def calc_dim(image, step_x=step, step_y=step, radius_x=radius_x, radius_y=radius_y):
+    height, width = image.shape[:2]
     return len(range(radius_y, height - radius_y, step_y)), len(range(radius_x, width - radius_x, step_x))
 
 
-def apply_classification(image_list,
+def apply_classification(images_list,
                          model_path='../models/mobilenet/2018_08_27_21_58_5_epochs_leaf_other.model',
                          model=None,
                          fix_function=None):
@@ -36,12 +36,12 @@ def apply_classification(image_list,
         model = load_model(model_path)
 
     test_generator = ImageDataGenerator(preprocessing_function=keras.applications.mobilenet.preprocess_input) \
-        .flow(x=np.array(image_list),
+        .flow(x=np.array(images_list),
               batch_size=1,
               shuffle=False)
 
     predicts = model.predict_generator(test_generator,
-                                       steps=len(image_list),
+                                       steps=len(images_list),
                                        verbose=1,
                                        workers=1,
                                        use_multiprocessing=False)
@@ -54,11 +54,11 @@ def apply_classification(image_list,
     return np.vectorize(fix_function)(np.array(tags))
 
 
-def fix_classes(original_tags, m2, leafs_indexes):
+def fix_classes(original_tags, fixed_tags, index_to_fix):
     maps = dict(zip([0, 1, 2], [0, 2, 3]))
 
-    for i in range(len(m2)):
-        original_tags[leafs_indexes[i]] = maps.__getitem__(m2[i])
+    for i in range(len(fixed_tags)):
+        original_tags[index_to_fix[i]] = maps.__getitem__(fixed_tags[i])
 
 
 # We assume that the images in the same size
@@ -83,12 +83,12 @@ def keys2img(tags, height, width, num_images=1):
                        [0, 255, 0],
                        [0, 255, 239],
                        [16, 64, 4]]).astype(np.uint8)
-    dict_ = dict(zip(keys, colors))
+    tags_to_colors_map = dict(zip(keys, colors))
     # [0, 0, 255] - red
     # [0, 255, 0] - green
     # [255, 0, 0] - blue
 
-    res = [dict_.get(tag) for tag in tags]
+    res = [tags_to_colors_map.get(tag) for tag in tags]
     return np.reshape(res, (num_images, int(height), int(width), 3))
 
 
@@ -97,13 +97,12 @@ def load_image(image_path):
 
 
 def segment_images(image_location_list, model):
-    num_images = len(image_location_list)
-    raw_images = [cv2.imread(image_location, 1) for image_location in image_location_list]
-    resize_rgb_images = [cv2.cvtColor(cv2.resize(raw_image, None, fx=(1 / 1.3), fy=(1 / 1.3)), cv2.COLOR_BGR2RGB) for raw_image in raw_images]
-
     scale_after = 3
 
-    # We better trust practical calculations...
+    num_images = len(image_location_list)
+    raw_images = [cv2.imread(image_location, 1) for image_location in image_location_list]
+    resize_rgb_images = [cv2.cvtColor(cv2.resize(raw_image, None, fx=(1 / 1), fy=(1 / 1)), cv2.COLOR_BGR2RGB) for raw_image in raw_images]
+
     new_height, new_width = calc_dim(resize_rgb_images[0], step, step, radius_x, radius_y)
 
     crops_list = [np.array(create_crops(image, step, step, radius_x, radius_y)) for image in resize_rgb_images]
