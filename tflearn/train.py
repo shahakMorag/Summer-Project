@@ -1,5 +1,5 @@
 from tflearn.model import changed_model
-from NN.makeInputs import make_inputs
+from cv_utils.makeInputs import make_inputs
 
 X, Y = make_inputs()
 

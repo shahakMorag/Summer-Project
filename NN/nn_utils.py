@@ -82,6 +82,7 @@ class SaveCallback(Callback):
 
         self.model.save(self.model_path)
 
+
 def get_callbacks(validate_freq, valid_generator, model, patience, save_freq, model_path):
     valid_callback = ValidateCallback(validate_freq, valid_generator, model)
     early_stop = EarlyStopping('acc', patience=patience)

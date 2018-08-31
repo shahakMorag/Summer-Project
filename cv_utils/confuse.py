@@ -30,8 +30,8 @@ def apply_classification(image_list, model_path, batch_size=1):
     return np.array(tags).flatten()
 
 
-fix_map = dict(zip([0,1,2],[1,3,4]))
-maps2 = dict(zip([0,1,2],[0,2,3]))
+fix_map = dict(zip([0, 1, 2], [1, 3, 4]))
+maps2 = dict(zip([0, 1, 2], [0, 2, 3]))
 
 
 def fix_classes(m, m2, leafs_indexes):
@@ -53,7 +53,7 @@ def calc_acc(truth, predictions):
         if truth[i] == predictions[i]:
             success += 1
 
-    acc = success/total
+    acc = success / total
     print("acc:", acc)
 
 
@@ -64,8 +64,8 @@ for i in range(len(true_Y)):
 for i in range(len(Y_pred)):
     Y_pred[i] = fix_map.__getitem__(Y_pred[i])'''
 
-Y_pred = apply_classification(pics, model_path="../models/mobilenet/2round/2018_08_30_1_49_500_epochs_round_1_5_classes.model")
-
+Y_pred = apply_classification(pics,
+                              model_path="../models/mobilenet/2round/2018_08_30_1_49_500_epochs_round_1_5_classes.model")
 
 '''print("Accuracy 1-round:")
 calc_acc(true_Y, Y_pred)
@@ -75,16 +75,15 @@ print(mat)'''
 
 ''' ------------------------- second round ------------------------- '''
 
-leafs_indexes = np.where(np.isin(Y_pred, [0,2,3]))[0]
+leafs_indexes = np.where(np.isin(Y_pred, [0, 2, 3]))[0]
 leafs_crop = pics[leafs_indexes.tolist()]
 
 # give path to the second round model
-m2 = apply_classification(leafs_crop, model_path="../models/mobilenet/2round/2018_08_30_0_41_500_epochs_round_2_3_classes.model")
+m2 = apply_classification(leafs_crop,
+                          model_path="../models/mobilenet/2round/2018_08_30_0_41_500_epochs_round_2_3_classes.model")
 fix_classes(Y_pred, m2, leafs_indexes)
 print("Accuracy 1-round:")
 calc_acc(true_Y, Y_pred)
 
 mat = confusion_matrix(Y_pred, true_Y)
 print(mat)
-
-
