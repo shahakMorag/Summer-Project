@@ -1,53 +1,27 @@
-import os
-import cv2
 import glob
-import numpy as np
-import cv_utils.transformations
-from cv_utils.transformations import create_perspective_patches, create_rotated_patches, correct_gamma
+import os
+from cv_utils.transformations import create_perspective_patches, create_rotated_patches
+from cv_utils.crop_utils import *
 
-path = "D:\Tomato_Classification_Project\Patches\Patches"
-
-
-def get_pictures(dir):
-    for filename in glob.glob(dir + '/*.png'):
-        im = cv2.imread(filename, 1)
-        pers = create_perspective_patches(im)
-        rot = create_rotated_patches(im)
-
-        per_g, rot_g = [], []
-
-        for img in pers:
-            tmp = correct_gamma(img)
-            per_g.append(tmp)
-
-        for img in rot:
-            tmp = correct_gamma(img)
-            rot_g.append(tmp)
-
-        i = 0
-        for img in per_g:
-            filename = filename.replace('.png', '').replace('\\', '/')
-
-            path = filename + '_per_' + repr(i) + '.png'
-            print('saving to ' + path)
-            print(cv2.imwrite(path, img))
-            i += 1
-
-        i = 0
-        for img in rot_g:
-            filename = filename.replace('.png', '').replace('\\', '/')
-
-            path = filename + '_rot_' + repr(i) + '.png'
-            print('saving to ' + path)
-            print(cv2.imwrite(path, img))
-            i += 1
+base_path = "D:\Tomato_Classification_Project_5_iter\Patches\Patches\patches_size_128_skip_32_categories_5"
 
 
-# get_pictures('D:/New folder')
+def get_pictures(pictures_directory):
+    for filename in glob.glob(os.path.join(pictures_directory, '*.png')):
+        original_image = load_image(filename)
+        perspective_images = create_perspective_patches(original_image)
+        rotated_images = create_rotated_patches(original_image)
+        filename = filename.replace('.png', '').replace('\\', '/')
+
+        for img, i in zip(perspective_images, range(len(perspective_images))):
+            cv2.imwrite(filename + '_per_' + repr(i) + '.png', img)
+
+        for img, i in zip(rotated_images, range(len(rotated_images))):
+            cv2.imwrite(filename + '_rot_' + repr(i) + '.png', img)
 
 
-get_pictures('D:\Tomato_Classification_Project_5_iter\Patches\Patches\patches_size_128_skip_32_categories_5/bad_leaf')
-get_pictures('D:\Tomato_Classification_Project_5_iter\Patches\Patches\patches_size_128_skip_32_categories_5/fruit')
-get_pictures('D:\Tomato_Classification_Project_5_iter\Patches\Patches\patches_size_128_skip_32_categories_5/leaf')
-get_pictures('D:\Tomato_Classification_Project_5_iter\Patches\Patches\patches_size_128_skip_32_categories_5/other')
-get_pictures('D:\Tomato_Classification_Project_5_iter\Patches\Patches\patches_size_128_skip_32_categories_5/stem')
+get_pictures(os.path.join(base_path, "bad_leaf"))
+get_pictures(os.path.join(base_path, "fruit"))
+get_pictures(os.path.join(base_path, "leaf"))
+get_pictures(os.path.join(base_path, "other"))
+get_pictures(os.path.join(base_path, "stem"))
