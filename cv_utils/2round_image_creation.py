@@ -1,169 +1,30 @@
-import cv2
-import numpy as np
-import time
-from transformations import get_relative_brightness, correct_gamma
-import keras
-from keras_preprocessing.image import ImageDataGenerator
-
+from cv_utils.crop_utils import *
 from keras.models import load_model
+import cv2
 
-'''
-import tensorflow as tf
+image_path = "../test/image transformations/IMG_5562.JPG"
+model_path = "../models/mobilenet/2round/2018_08_29_22_17_500_epochs_round_1_3_classes.model"
+original_image = load_image(image_path)
+crops = create_crops(original_image)
 
-gpu_options = tf.GPUOptions(per_process_gpu_memory_fraction=0.15)
-sess = tf.Session(config=tf.ConfigProto(gpu_options=gpu_options))
-'''
-im = cv2.imread('../test/image transformations/IMG_5562.JPG', 1)
-im = cv2.resize(im, None, fx=(1 / 1.3), fy=(1 / 1.3))
-im = cv2.cvtColor(im, cv2.COLOR_BGR2RGB)
-
-step = 20
-radius_x = 64
-radius_y = 64
-
-non_green_radius_x = 15
-non_green_radius_y = 15
-
-scale_after = 3
-total_start_time = time.time()
-
-
-def create_crops(i_img, step_x, step_y, radius_x, radius_y):
-    res = []
-    height, width = i_img.shape[:2]
-
-    for y_mid in range(radius_y, height - radius_y, step_y):
-        for x_mid in range(radius_x, width - radius_x, step_x):
-            cropped = i_img[y_mid - radius_y:y_mid + radius_y, x_mid - radius_x:x_mid + radius_x]
-            res.append(cropped)
-
-    return res
-
-
-def calc_dim(im, step_x, step_y, radius_x, radius_y):
-    im_w, im_h = np.size(im, 1), np.size(im, 0)
-    height, width = im.shape[:2]
-
-    h = 0
-    w = 0
-
-    for up in range(radius_y, height - radius_y, step_y):
-        h += 1
-
-    for left in range(radius_x, width - radius_x, step_x):
-        w += 1
-
-    return h, w
-
-
-def crops_show(im_list):
-    for crop in im_list:
-        cv2.imshow("ddsa", crop)
-        cv2.waitKey(1000)
-
-
-def apply_classification(image_list, model_path='../models/mobilenet/2018_08_27_21_58_5_epochs_leaf_other.model'):
-    start_time = time.time()
-    print("Applying classification...")
-
-    model = load_model(model_path)
-
-    test_generator = ImageDataGenerator(preprocessing_function=keras.applications.mobilenet.preprocess_input) \
-        .flow(x=np.array(image_list),
-              batch_size=1,
-              shuffle=False)
-
-    predicts = model.predict_generator(test_generator,
-                                       steps=len(image_list),
-                                       verbose=1,
-                                       workers=1,
-                                       use_multiprocessing=False)
-
-    tags = predicts.argmax(axis=1)
-    end_time = time.time()
-    d_time = end_time - start_time
-    print("Classification took " + repr(d_time) + " seconds")
-    return np.array(tags).flatten()
-
-
-# We assume that the images in the same size
-def blend_two_images(neural_net_image, original_image, alpha=1.0):
-    original_image = original_image[radius_y:-radius_y, radius_x:-radius_x]
-    original_image = cv2.resize(original_image, tuple(neural_net_image.shape[1::-1]))
-
-    beta = (1 - alpha)
-    dst = cv2.addWeighted(neural_net_image, alpha, original_image, beta, 0.0)
-    cv2.imshow("halon", dst)
-    cv2.waitKey(0)
-
-
-# 0 - bad leaf - blue    - [255, 0, 0]
-# 1 - fruit    - red     - [35,28,229]
-# 2 - leaf     - green   - [0, 255, 0]
-# 3 - other    - brown   - [0,255,239]
-# 4 - stem - dark green  - [16,64,4]
-keys = [0, 1, 2, 3, 4]
-colors = np.array([[255, 0, 0],
-                   [35, 28, 229],
-                   [0, 255, 0],
-                   [0, 255, 239],
-                   [16, 64, 4]]).astype(np.uint8)
-dict_color = dict(zip(keys, colors))
-fix_map = dict(zip([0,1,2],[1,3,4]))
-maps2 = dict(zip([0,1,2],[0,2,3]))
-
-# [0, 0, 255] - red
-# [0, 255, 0] - green
-# [255, 0, 0] - blue
-
-def keys2img(vals, height, width):
-    print("Creating image...")
-    start_time = time.time()
-    res = []
-    for item in vals:
-        res.append(dict_color.get(item))
-
-    end_time = time.time()
-    d_time = end_time - start_time
-    print("Image creation took " + repr(d_time) + " seconds")
-
-    return np.reshape(res, (int(height), int(width), 3))
-
-
-def fix_classes(m, m2, leafs_indexes):
-    i = 0
-    while i < len(m2):
-        # the 2 is because the numbers are only in [0,1]
-        m[leafs_indexes[i]] = maps2.__getitem__(m2[i])
-        i += 1
-
-
-# We better trust practical calculations...
-new_height, new_width = calc_dim(im, step, step, radius_x, radius_y)
-
-crops_list = np.array(create_crops(im, step, step, radius_x, radius_y))
-# crops_list_first_half = crops_list[:int(len(crops_list) / 4)]
-# crops_list_second_half = crops_list[int(len(crops_list) / 2):]
-m = apply_classification(crops_list, model_path="../models/mobilenet/2round/2018_08_29_22_17_500_epochs_round_1_3_classes.model")
-for i in range(len(m)):
-    m[i] = fix_map.__getitem__(m[i])
-
-'''print("Accuracy 1-round:")
-calc_acc(true_Y, Y_pred)
-
-mat = confusion_matrix(Y_pred, true_Y)
-print(mat)'''
+fix_map = dict(zip(range(3), [1, 3, 4]))
+raw_tags = apply_classification(crops, model_path)[0]
+final_model_tags = [fix_map[raw_tag] for raw_tag in raw_tags]
 
 ''' ------------------------- second round ------------------------- '''
 
-leafs_indexes = np.where(np.isin(m, [0, 2, 3]))[0]
-leafs_crop = crops_list[leafs_indexes.tolist()]
+left_indexes = np.where(np.isin(final_model_tags, [0, 2, 3]))[0].tolist()
+left_crops = crops[left_indexes]
 
 # give path to the second round model
-m2 = apply_classification(leafs_crop,
-                          model_path="../models/mobilenet/2round/2018_08_30_0_41_500_epochs_round_2_3_classes.model")
-fix_classes(m, m2, leafs_indexes)
+round_2_tags = apply_classification(left_crops,
+                                    model_path="../models/mobilenet/2round/2018_08_30_0_41_500_epochs_round_2_3_classes.model")
+fix_classes(final_model_tags, round_2_tags, left_indexes)
 
-imcv = keys2img(m, new_height, new_width)
-imcv = cv2.resize(imcv, None, fx=scale_after, fy=scale_after)
-blend_two_images(imcv, im, alpha=0.7)
+target_height, target_width = calc_dim(original_image)
+
+reconstructed_image = keys2img(final_model_tags, target_height, target_width)[0]
+resized_reconstructed_image = cv2.resize(reconstructed_image, None, fx=2.5, fy=2.5)
+final_image = blend_two_images(resized_reconstructed_image, original_image, alpha=0.7)
+cv2.imshow("window", final_image)
+cv2.waitKey(0)

@@ -35,29 +35,28 @@ class ValidateCallback(Callback):
         print('Loss: ' + repr(scoreSeg[0]) + ', Acc: ' + repr(scoreSeg[1]))
 
 
-def train(classifier_type, train_images_path, valid_images_path, num_classes):
+def train(classifier_type, train_images_path, valid_images_path, num_classes, input_shape, target_size, reserve_layers=15):
     # input image dimensions and parameters
     start_time = time.time()
-    dir_to_save_model = "../models/mobilenet/2round"
+    dir_to_save_model = "../models/mobilenet/mid_models"
     start_date = str(datetime.date.today()).replace('-', '_') + "_" + str(datetime.datetime.now().hour) + "_" + str(datetime.datetime.now().minute)
 
-    input_shape = (128, 128, 3)
-    patience = 20
+    patience = 15
     batch_size = 250
     epochs = 500
-    validate_freq = 5
+    validate_freq = 10
 
-    model = get_model(input_shape, num_classes=num_classes)
+    model = get_model(input_shape, num_classes=num_classes, reserve_layers=reserve_layers)
 
     print('Starting to fit the model...')
 
     # ------------------------------------------ training data set ------------------------------------------
 
-    train_generator = get_train_generator(train_images_path, batch_size)
+    train_generator = get_train_generator(train_images_path, batch_size, target_size)
 
     # ------------------------------------------ validation data set ----------------------------------------
 
-    valid_generator = get_valid_generator(valid_images_path)
+    valid_generator = get_valid_generator(valid_images_path, target_size)
 
     print('Train indices: ' + str(train_generator.class_indices))
     print('Validate indices: ' + str(valid_generator.class_indices))
@@ -93,19 +92,26 @@ def train(classifier_type, train_images_path, valid_images_path, num_classes):
     model.save(dir_to_save_model + "/" + start_date + "_" + repr(epochs) + "_epochs_" + classifier_type + ".model")
 
 
-train(classifier_type='round_1_3_classes',
-      train_images_path='C:\Tomato_Classification_Project\Tomato_Classification_Project\Patches\Patches\stem_tomato',
-      valid_images_path='C:\Tomato_Classification_Project\Tomato_Classification_Project\Patches\Patches\stem_tomato_validation',
-      num_classes=3)
+'''train(classifier_type='size_180_5_classes',
+      train_images_path='C:\Tomato_Classification_Project\Tomato_Classification_Project\Patches\Patches\patches_size_180_skip_16_categories_5',
+      valid_images_path='C:\Tomato_Classification_Project\Tomato_Classification_Project\Patches\Patches/validation_180',
+      num_classes=5,
+      target_size=(180, 180),
+      input_shape=(180, 180, 3))
 
-train(classifier_type='round_2_3_classes',
-      train_images_path='C:\Tomato_Classification_Project\Tomato_Classification_Project\Patches\Patches\leaf_net_training',
-      valid_images_path='C:\Tomato_Classification_Project\Tomato_Classification_Project\Patches\Patches\leaf_validation',
-      num_classes=3)
+train(classifier_type='size_100_5_classes',
+      train_images_path='C:\Tomato_Classification_Project\Tomato_Classification_Project\Patches\Patches\patches_size_100_skip_32_categories_5',
+      valid_images_path='C:\Tomato_Classification_Project\Tomato_Classification_Project\Patches\Patches/validation_100',
+      num_classes=5,
+      target_size=(100, 100),
+      input_shape=(100, 100, 3))'''
 
-train(classifier_type='round_1_5_classes',
+train(classifier_type='size_128_5_classes',
       train_images_path='C:\Tomato_Classification_Project\Tomato_Classification_Project\Patches\Patches\patches_size_128_skip_32_categories_5',
       valid_images_path='C:\Tomato_Classification_Project\Tomato_Classification_Project\Patches\Patches/validation',
-      num_classes=5)
+      num_classes=5,
+      input_shape=(128, 128, 3),
+      target_size=(128, 128),
+      reserve_layers=20)
 
 

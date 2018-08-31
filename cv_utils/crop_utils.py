@@ -6,15 +6,12 @@ from keras_preprocessing.image import ImageDataGenerator
 
 from keras.models import load_model
 
-'''
-import tensorflow as tf
-
-gpu_options = tf.GPUOptions(per_process_gpu_memory_fraction=0.15)
-sess = tf.Session(config=tf.ConfigProto(gpu_options=gpu_options))
-'''
+step = 20
+radius_x = 64
+radius_y = 64
 
 
-def create_crops(i_img, step_x, step_y, radius_x, radius_y):
+def create_crops(i_img, step_x=step, step_y=step, radius_x=radius_x, radius_y=radius_y):
     height, width = i_img.shape[:2]
 
     return [i_img[y_mid - radius_y:y_mid + radius_y, x_mid - radius_x:x_mid + radius_x]
@@ -22,7 +19,7 @@ def create_crops(i_img, step_x, step_y, radius_x, radius_y):
             for x_mid in range(radius_x, width - radius_x, step_x)]
 
 
-def calc_dim(im, step_x, step_y, radius_x, radius_y):
+def calc_dim(im, step_x=step, step_y=step, radius_x=radius_x, radius_y=radius_y):
     height, width = im.shape[:2]
     return len(range(radius_y, height - radius_y, step_y)), len(range(radius_x, width - radius_x, step_x))
 
@@ -63,7 +60,7 @@ def fix_classes(m, m2, leafs_indexes):
 
 
 # We assume that the images in the same size
-def blend_two_images(neural_net_image, original_image, radius_x, radius_y, alpha=1.0):
+def blend_two_images(neural_net_image, original_image, radius_x=radius_x, radius_y=radius_y, alpha=1.0):
     original_image = original_image[radius_y:-radius_y, radius_x:-radius_x]
     original_image = cv2.resize(original_image, tuple(neural_net_image.shape[1::-1]))
 
@@ -93,13 +90,14 @@ def keys2img(tags, height, width, num_images=1):
     return np.reshape(res, (num_images, int(height), int(width), 3))
 
 
-def segment_images(image_location_list, model, num_images):
+def load_image(image_path):
+    return cv2.cvtColor(cv2.imread(image_path,1), cv2.COLOR_BGR2RGB)
+
+
+def segment_images(image_location_list, model):
+    num_images = len(image_location_list)
     raw_images = [cv2.imread(image_location, 1) for image_location in image_location_list]
     resize_rgb_images = [cv2.cvtColor(cv2.resize(raw_image, None, fx=(1 / 1.3), fy=(1 / 1.3)), cv2.COLOR_BGR2RGB) for raw_image in raw_images]
-
-    step = 20
-    radius_x = 64
-    radius_y = 64
 
     scale_after = 3
 

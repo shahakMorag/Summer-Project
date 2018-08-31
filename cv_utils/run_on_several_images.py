@@ -30,7 +30,7 @@ def apply_on_all(save_path):
     locations = get_images_location_list(
         "C:/Tomato_Classification_Project/Tomato_Classification_Project/Alon_misc/tomato_mark_AZ_20180803/mark"
         "/selected_file_list.txt")[215:220]
-    images = segment_images(locations, model, len(locations))
+    images = segment_images(locations, model)
     for image, location in zip(images, locations):
         cv2.imwrite(create_file_name(location), image)
 

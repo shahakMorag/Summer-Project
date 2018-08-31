@@ -57,6 +57,8 @@ def move_sub_dirs(src_root, dst_root, part):
     move_all(src_root + '/' + 'other', dst_root + '/' + 'other', part)
     move_all(src_root + '/' + 'stem', dst_root + '/' + 'stem', part)
 
+
+'''
 move_all('C:\Tomato_Classification_Project\Tomato_Classification_Project\Patches\Patches/validation/bad_leaf',
          'C:\Tomato_Classification_Project\Tomato_Classification_Project\Patches\Patches\patches_size_128_skip_32_categories_5/bad_leaf')
 
@@ -71,31 +73,18 @@ move_all('C:\Tomato_Classification_Project\Tomato_Classification_Project\Patches
 
 move_all('C:\Tomato_Classification_Project\Tomato_Classification_Project\Patches\Patches/validation/stem',
          'C:\Tomato_Classification_Project\Tomato_Classification_Project\Patches\Patches\patches_size_128_skip_32_categories_5/stem')
-
-'''
-part = 0.5
-
-move_sub_dirs('C:\Tomato_Classification_Project\Tomato_Classification_Project\Patches\Patches/validation',
-              'C:\Tomato_Classification_Project\Tomato_Classification_Project\Patches\Patches\patches_size_128_skip_32_categories_5',
-              0.63)
-
-
 '''
 
-part = 0.06
 
-create_precense(
-    'C:\Tomato_Classification_Project\Tomato_Classification_Project\Patches\Patches\patches_size_128_skip_32_categories_5/bad_leaf',
-    'C:\Tomato_Classification_Project\Tomato_Classification_Project\Patches\Patches/validation/bad_leaf', part)
-create_precense(
-    'C:\Tomato_Classification_Project\Tomato_Classification_Project\Patches\Patches\patches_size_128_skip_32_categories_5/fruit',
-    'C:\Tomato_Classification_Project\Tomato_Classification_Project\Patches\Patches/validation/fruit', part)
-create_precense(
-    'C:\Tomato_Classification_Project\Tomato_Classification_Project\Patches\Patches\patches_size_128_skip_32_categories_5\leaf',
-    'C:\Tomato_Classification_Project\Tomato_Classification_Project\Patches\Patches/validation\leaf', part)
-create_precense(
-    'C:\Tomato_Classification_Project\Tomato_Classification_Project\Patches\Patches\patches_size_128_skip_32_categories_5\other',
-    'C:\Tomato_Classification_Project\Tomato_Classification_Project\Patches\Patches/validation\other', part)
-create_precense(
-    'C:\Tomato_Classification_Project\Tomato_Classification_Project\Patches\Patches\patches_size_128_skip_32_categories_5\stem',
-    'C:\Tomato_Classification_Project\Tomato_Classification_Project\Patches\Patches/validation\stem', part)
+
+
+part = 0.08
+
+source_path = "C:\Tomato_Classification_Project\Tomato_Classification_Project\Patches\Patches\patches_size_128_skip_32_categories_5"
+dest_path = "C:\Tomato_Classification_Project\Tomato_Classification_Project\Patches\Patches/validation"
+
+create_precense(source_path + '/bad_leaf', dest_path + '/bad_leaf', part)
+create_precense(source_path + '/fruit', dest_path + '/fruit', part)
+create_precense(source_path + '\leaf', dest_path + '\leaf', part)
+create_precense(source_path + '\other', dest_path + '\other', part)
+create_precense(source_path + '\stem', dest_path + '\stem', part)
