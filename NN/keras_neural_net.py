@@ -43,8 +43,18 @@ def train(classifier_type, train_images_path, valid_images_path, num_classes, in
                         workers=8,
                         callbacks=callbacks)
 
-    print("Total training time is:", time.time() - start_time)
+    training_time = time.time() - start_time
+    print("Total training time is:", training_time)
     model.save(model_path)
+
+    print("Evaluating...")
+    scoreSeg = model.evaluate_generator(
+        generator= valid_generator,
+        verbose=1,
+        workers=8,
+    )
+
+    return training_time, scoreSeg[1]
 
 
 train(classifier_type='size_128_5_classes_hsv',
