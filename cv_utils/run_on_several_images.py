@@ -4,19 +4,10 @@ from crop_utils import *
 
 from keras.models import load_model
 
-'''
-import tensorflow as tf
-
-gpu_options = tf.GPUOptions(per_process_gpu_memory_fraction=0.15)
-sess = tf.Session(config=tf.ConfigProto(gpu_options=gpu_options))
-'''
-
 
 def get_images_location_list(images_location_file):
     with open(images_location_file) as f:
-        locations = [line.replace("\n", "") for line in f.readlines()]
-
-    return locations
+        return f.read().splitlines()
 
 
 def create_file_name(start_location):
