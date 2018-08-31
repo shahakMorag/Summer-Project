@@ -17,20 +17,20 @@ def calc_acc(truth, predictions):
 
 
 pics, true_Y = make_inputs("C:\Tomato_Classification_Project\Tomato_Classification_Project\Patches\Patches/validation")
-Y_pred = apply_classification(pics,
-                              model_path="../models/mobilenet/2round/2018_08_29_22_17_500_epochs_round_1_3_classes.model",
-                              fix_function=lambda x: fix_map[x])
+'''y_predictions = apply_classification(pics,
+                                     model_path="../models/mobilenet/2round/2018_08_29_22_17_500_epochs_round_1_3_classes.model",
+                                     fix_function=lambda x: fix_map[x])'''
 
 
-Y_pred = apply_classification(pics, "../models/mobilenet/2round/2018_08_30_1_49_500_epochs_round_1_5_classes.model")
+y_predictions = apply_classification(pics, "../models/mobilenet/2round/2018_08_30_1_49_500_epochs_round_1_5_classes.model")
 
-leafs_indexes = np.where(np.isin(Y_pred, [0, 2, 3]))[0]
+leafs_indexes = np.where(np.isin(y_predictions, [0, 2, 3]))[0]
 leafs_crop = pics[leafs_indexes.tolist()]
 
 # give path to the second round model
 m2 = apply_classification(leafs_crop, "../models/mobilenet/2round/2018_08_30_0_41_500_epochs_round_2_3_classes.model")
-fix_classes(Y_pred, m2, leafs_indexes)
-calc_acc(true_Y, Y_pred)
+fix_classes(y_predictions, m2, leafs_indexes)
+calc_acc(true_Y, y_predictions)
 
-mat = confusion_matrix(Y_pred, true_Y)
+mat = confusion_matrix(y_predictions, true_Y)
 print(mat)
