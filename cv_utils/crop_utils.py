@@ -26,7 +26,8 @@ def calc_dim(im, step_x=step, step_y=step, radius_x=radius_x, radius_y=radius_y)
 
 def apply_classification(image_list,
                          model_path='../models/mobilenet/2018_08_27_21_58_5_epochs_leaf_other.model',
-                         model=None):
+                         model=None,
+                         fix_function=None):
     start_time = time.time()
     print("Applying classification...")
 
@@ -47,7 +48,10 @@ def apply_classification(image_list,
 
     tags = predicts.argmax(axis=1)
     print("Classification took", repr(time.time() - start_time), "seconds")
-    return np.array(tags)
+    if fix_function is None:
+        return np.array(tags)
+
+    return np.vectorize(fix_function)(np.array(tags))
 
 
 def fix_classes(original_tags, m2, leafs_indexes):
