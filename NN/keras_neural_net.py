@@ -58,6 +58,7 @@ def train(classifier_type, train_images_path, valid_images_path, num_classes, in
     train_generator = None
     valid_generator = None
     callbacks = None
+    log.flush()
 
 
 output = open('../logs/details/' + get_start_date() + '.txt', 'w')
@@ -65,7 +66,7 @@ output = open('../logs/details/' + get_start_date() + '.txt', 'w')
 # RGB models ------------------------------------------------------------------------------------------------------------------------
 
 preprocessing_function = None
-
+'''
 # size 100x100
 train(classifier_type='rgb_size_100',
       train_images_path='C:\Tomato_Classification_Project\Tomato_Classification_Project\Patches\Patches\patches_size_100_skip_32_categories_5',
@@ -98,7 +99,7 @@ train(classifier_type='rgb_size_180',
       reserve_layers=20,
       preprocessing_function=preprocessing_function,
       log=output)
-
+'''
 ## 2-round 128x128
 # size 128x128 round 1
 train(classifier_type='rgb_128_round_1',
