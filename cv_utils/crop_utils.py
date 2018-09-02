@@ -6,7 +6,7 @@ from keras_preprocessing.image import ImageDataGenerator
 
 from keras.models import load_model
 
-step = 10
+step = 13
 radius_x = 50
 radius_y = 50
 
@@ -96,26 +96,19 @@ def load_image(image_path):
     return cv2.cvtColor(cv2.imread(image_path, 1), cv2.COLOR_BGR2RGB)
 
 
-def segment_images(image_location_list, model):
+def segment_images(image_location_list, model, step=step, radius=radius_x):
     scale_after = 3
 
     num_images = len(image_location_list)
-    raw_images = [cv2.resize(load_image(image_location), None, fx= 1 / 1, fy=1 / 1) for image_location in image_location_list]
+    raw_images = [load_image(image_location) for image_location in image_location_list]
 
-    new_height, new_width = calc_dim(raw_images[0], step, step, radius_x, radius_y)
+    new_height, new_width = calc_dim(raw_images[0], step, step, radius, radius)
 
-    crops_list = [np.array(create_crops(image, step, step, radius_x, radius_y)) for image in raw_images]
-    crops_list = np.array(crops_list).reshape((-1, radius_y * 2, radius_x * 2, 3))
+    crops_list = [np.array(create_crops(image, step, step, radius, radius)) for image in raw_images]
+    crops_list = np.array(crops_list).reshape((-1, radius * 2, radius * 2, 3))
     classified = apply_classification(crops_list, model=model)
 
     recovered_image = keys2img(classified, new_height, new_width, num_images)
     resized_recovered_image = [cv2.resize(im, None, fx=scale_after, fy=scale_after) for im in recovered_image]
-    return [blend_two_images(resized_recovered_image[i], raw_images[i], radius_x, radius_y, alpha=1)
+    return [blend_two_images(resized_recovered_image[i], raw_images[i], radius, radius, alpha=1)
             for i in range(len(resized_recovered_image))]
-
-
-image = segment_images(["C:/Users\eitan.k\PycharmProjects\Summer-Project/test\image transformations\IMG_5562.JPG"],
-                       load_model(
-                           "C:/Users\eitan.k\PycharmProjects\Summer-Project\models\mobilenet/mid_models/2018_08_31_8_41_500_epochs_size_100_5_classes.model"))[
-    0]
-cv2.imwrite("C:/Users\eitan.k\Desktop\model100_output_stride10.jpg", image)

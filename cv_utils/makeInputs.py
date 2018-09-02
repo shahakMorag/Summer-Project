@@ -12,7 +12,7 @@ def make_inputs(root_path):
     print("Making imputs:")
     categories = ["bad_leaf", "fruit", "leaf", "other", "stem"]
 
-    x, y = np.empty(0), []
+    x, y = np.array([]).reshape((-1, 128, 128, 3)), []
     for category, i in zip(categories, range(len(categories))):
         pictures, pictures_count = get_pictures(path.join(root_path, category))
         x = np.concatenate((x, pictures))

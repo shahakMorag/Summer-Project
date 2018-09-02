@@ -99,7 +99,7 @@ train(classifier_type='rgb_size_180',
       reserve_layers=20,
       preprocessing_function=preprocessing_function,
       log=output)
-'''
+
 ## 2-round 128x128
 # size 128x128 round 1
 train(classifier_type='rgb_128_round_1',
@@ -122,11 +122,11 @@ train(classifier_type='rgb_128_round_2',
       reserve_layers=10,
       preprocessing_function=preprocessing_function,
       log=output)
-
+'''
 # HSV models ------------------------------------------------------------------------------------------------------------------------
 
 preprocessing_function = rgb2hsv
-
+'''
 # size 100x100
 train(classifier_type='hsv_size_100',
       train_images_path='C:\Tomato_Classification_Project\Tomato_Classification_Project\Patches\Patches\patches_size_100_skip_32_categories_5',
@@ -137,7 +137,8 @@ train(classifier_type='hsv_size_100',
       reserve_layers=20,
       preprocessing_function=preprocessing_function,
       log=output)
-
+'''
+'''
 # size 128x128
 train(classifier_type='hsv_size_128',
       train_images_path='C:\Tomato_Classification_Project\Tomato_Classification_Project\Patches\Patches\patches_size_128_skip_32_categories_5',
@@ -159,7 +160,8 @@ train(classifier_type='hsv_size_180',
       reserve_layers=20,
       preprocessing_function=preprocessing_function,
       log=output)
-
+'''
+'''
 ## 2-round 128x128
 # size 128x128 round 1
 train(classifier_type='hsv_128_round_1',
@@ -182,7 +184,7 @@ train(classifier_type='hsv_128_round_2',
       reserve_layers=10,
       preprocessing_function=preprocessing_function,
       log=output)
-
+'''
 # HLS models ------------------------------------------------------------------------------------------------------------------------
 
 preprocessing_function = rgb2hls
@@ -219,7 +221,7 @@ train(classifier_type='hls_size_180',
       reserve_layers=20,
       preprocessing_function=preprocessing_function,
       log=output)
-
+'''
 ## 2-round 128x128
 # size 128x128 round 1
 train(classifier_type='hls_128_round_1',
@@ -242,5 +244,5 @@ train(classifier_type='hls_128_round_2',
       reserve_layers=10,
       preprocessing_function=preprocessing_function,
       log=output)
-
+'''
 output.close()
