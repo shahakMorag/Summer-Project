@@ -100,7 +100,7 @@ def load_image(image_path):
 
 
 def segment_images(image_location_list, model, step=step, radius=radius_x):
-    scale_after = 3
+    scale_after = 1
 
     num_images = len(image_location_list)
     raw_images = [load_image(image_location) for image_location in image_location_list]
