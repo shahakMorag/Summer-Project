@@ -3,12 +3,13 @@ import numpy as np
 import time
 import keras
 from keras_preprocessing.image import ImageDataGenerator
+from image_transformations import rgb2hsv, rgb2hls
 
 from keras.models import load_model
 
-step = 13
-radius_x = 50
-radius_y = 50
+step = 16
+radius_x = 64
+radius_y = 64
 
 
 def create_crops(image, step_x=step, step_y=step, radius_x=radius_x, radius_y=radius_y):
@@ -35,6 +36,8 @@ def apply_classification(images_list,
     if model is None:
         model = load_model(model_path)
 
+    # keras.applications.mobilenet.preprocess_input
+
     test_generator = ImageDataGenerator(preprocessing_function=keras.applications.mobilenet.preprocess_input) \
         .flow(x=np.array(images_list),
               batch_size=1,
@@ -43,7 +46,7 @@ def apply_classification(images_list,
     predicts = model.predict_generator(test_generator,
                                        steps=len(images_list),
                                        verbose=1,
-                                       workers=1,
+                                       workers=8,
                                        use_multiprocessing=False)
 
     tags = predicts.argmax(axis=1)
@@ -51,7 +54,7 @@ def apply_classification(images_list,
     if fix_function is None:
         return np.array(tags)
 
-    return np.vectorize(fix_function)(np.array(tags))
+    return np.array([fix_function(tag) for tag in tags])
 
 
 def fix_classes(original_tags, fixed_tags, index_to_fix):
@@ -109,6 +112,5 @@ def segment_images(image_location_list, model, step=step, radius=radius_x):
     classified = apply_classification(crops_list, model=model)
 
     recovered_image = keys2img(classified, new_height, new_width, num_images)
-    resized_recovered_image = [cv2.resize(im, None, fx=scale_after, fy=scale_after) for im in recovered_image]
-    return [blend_two_images(resized_recovered_image[i], raw_images[i], radius, radius, alpha=1)
-            for i in range(len(resized_recovered_image))]
+    return [blend_two_images(recovered_image[i], raw_images[i], radius, radius, alpha=1)
+            for i in range(len(recovered_image))]
