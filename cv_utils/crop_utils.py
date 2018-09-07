@@ -1,11 +1,6 @@
 import cv2
 import numpy as np
 import time
-import keras
-from keras_preprocessing.image import ImageDataGenerator
-from image_transformations import rgb2hsv, rgb2hls
-
-from keras.models import load_model
 
 step = 16
 radius_x = 64
@@ -14,10 +9,12 @@ radius_y = 64
 
 def create_crops(image, step_x=step, step_y=step, radius_x=radius_x, radius_y=radius_y):
     height, width = image.shape[:2]
-
-    return [image[y_mid - radius_y:y_mid + radius_y, x_mid - radius_x:x_mid + radius_x]
+    radius_x = int(radius_x)
+    radius_y = int(radius_y)
+    crops = [image[y_mid - radius_y:y_mid + radius_y, x_mid - radius_x:x_mid + radius_x]
             for y_mid in range(radius_y, height - radius_y, step_y)
             for x_mid in range(radius_x, width - radius_x, step_x)]
+    return crops
 
 
 def calc_dim(image, step_x=step, step_y=step, radius_x=radius_x, radius_y=radius_y):
@@ -29,6 +26,10 @@ def apply_classification(images_list,
                          model_path='../models/mobilenet/2018_08_27_21_58_5_epochs_leaf_other.model',
                          model=None,
                          fix_function=None):
+    from image_transformations import rgb2hsv, rgb2hls
+    from keras.models import load_model
+    from keras_preprocessing.image import ImageDataGenerator
+    import keras.applications
     start_time = time.time()
     print("Applying classification...")
 

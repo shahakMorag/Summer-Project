@@ -1,6 +1,16 @@
 import os
 import cv2
 from crop_utils import *
+import argparse
+os.environ["TF_CPP_MIN_LOG_LEVEL"] = "3"
+
+jump = 40
+
+parser = argparse.ArgumentParser()
+parser.add_argument('-p', required=True, type=int)
+args = parser.parse_args()
+patches_path = 'C:\Tomato_Classification_Project\Tomato_Classification_Project\cropped_data\size_500_stride_500/'
+image_path = [patches_path + str(i) + '.png' for i in range(args.p,args.p + jump)]
 
 from keras.models import load_model
 
@@ -10,36 +20,27 @@ def get_images_location_list(images_location_file):
         return f.read().splitlines()
 
 
-def create_file_name(test_name, start_location):
-    path = "C:\Tomato_Classification_Project\Tomato_Classification_Project/temp"
-    return os.path.join(path, test_name + ".jpg")
+def create_file_name(start_location):
+    # filename = "_".join(start_location.split("\\")[-1])
+    filename = start_location.split("/")[-1]
+    path = "C:\Tomato_Classification_Project\Tomato_Classification_Project/targets_encdec"
+    return os.path.join(path, filename)
 
 
-def apply_on_all(test_name, model_path, step, radius):
-    print("test name:", test_name)
-    model = load_model(model_path)
-    locations = ['C:\Tomato_Classification_Project\Tomato_Classification_Project\Data\Demonstration_greenhouse_tomato_Hazera\Demonstration_greenhouse_tomato_Hazera\Pink\HTP_11/IMG_0236.JPG']
-    images = segment_images(locations, model, step=step, radius=radius)
-    for image, location in zip(images, locations):
-        cv2.imwrite(create_file_name(test_name, location), image)
+def apply_on_all(model_path, step, radius):
+    # locations = get_images_location_list("C:\Tomato_Classification_Project\Tomato_Classification_Project\Alon_misc/tomato_mark_AZ_20180803\mark/selected_file_list.txt")
+    images = []
+    locations = image_path
+    for i in range(0, len(locations), jump):
+        model = load_model(model_path)
+        last = min(i+jump, len(locations))
+        tmp_locations = locations[i:last]
+        images = segment_images(tmp_locations, model, step=step, radius=radius)
+
+        for image, location in zip(images, tmp_locations):
+            cv2.imwrite(create_file_name(location), image)
+
+        model = None
 
 
-apply_on_all("RGB size 100 stride 16", '../models/mobilenet/all_models/2018_08_31_22_30_500_epochs_rgb_size_100.model', 16, 50)
-# apply_on_all("RGB size 100 stride 20", '../models/mobilenet/all_models/2018_08_31_22_30_500_epochs_rgb_size_100.model', 20, 50)
-#
-# apply_on_all("RGB size 128 stride 13", '../models/mobilenet/all_models/2018_09_01_0_4_500_epochs_rgb_size_128.model', 13, 64)
-# apply_on_all("RGB size 128 stride 16", '../models/mobilenet/all_models/2018_09_01_0_4_500_epochs_rgb_size_128.model', 16, 64)
-# apply_on_all("RGB size 128 stride 20", '../models/mobilenet/all_models/2018_09_01_0_4_500_epochs_rgb_size_128.model', 20, 64)
-
-# apply_on_all("RGB size 180 stride 13", '../models/mobilenet/all_models/2018_09_01_2_32_500_epochs_rgb_size_180.model', 13, 90)
-apply_on_all("RGB size 180 stride 16", '../models/mobilenet/all_models/2018_09_01_2_32_500_epochs_rgb_size_180.model', 16, 90)
-# apply_on_all("RGB size 180 stride 20", '../models/mobilenet/all_models/2018_09_01_2_32_500_epochs_rgb_size_180.model', 20, 90)
-
-
-# apply_on_all("HSV size 128 stride 13", '../models/mobilenet/all_models/2018_09_01_17_29_500_epochs_hsv_size_128.model', 13, 64)
-# apply_on_all("HSV size 128 stride 16", '../models/mobilenet/all_models/2018_09_01_17_29_500_epochs_hsv_size_128.model', 16, 64)
-# apply_on_all("HSV size 128 stride 20", '../models/mobilenet/all_models/2018_09_01_17_29_500_epochs_hsv_size_128.model', 20, 64)
-
-# apply_on_all("HLS size 128 stride 13", '../models/mobilenet/all_models/2018_09_02_2_7_500_epochs_hls_size_128.model', 13, 64)
-apply_on_all("HLS size 128 stride 16", '../models/mobilenet/all_models/2018_09_02_2_7_500_epochs_hls_size_128.model', 16, 64)
-# apply_on_all("HLS size 128 stride 20", '../models/mobilenet/all_models/2018_09_02_2_7_500_epochs_hls_size_128.model', 20, 64)
+apply_on_all('../models/mobilenet/all_models/2018_09_01_0_4_500_epochs_rgb_size_128.model', 16, 64)

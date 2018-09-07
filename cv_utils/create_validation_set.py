@@ -28,7 +28,7 @@ def move_sub_dirs(source_root, destination_root, part, swap=False):
     partially_move_images(path.join(source_root, 'stem'), path.join(destination_root, 'stem'), part)
 
 
-part = 0.08
-source_path = "D:\patches_size_100_skip_32_categories_5"
-destination_path = "D:\dest"
-move_sub_dirs(source_path, destination_path, part)
+part = 0.2
+source_path = "C:\Tomato_Classification_Project\Tomato_Classification_Project\Patches\Patches\patches_size_128_skip_32_categories_5"
+destination_path = "C:\Tomato_Classification_Project\Tomato_Classification_Project\Patches\Patches/validation_128"
+move_sub_dirs(source_path, destination_path, part, swap=False)
