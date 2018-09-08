@@ -25,4 +25,3 @@ def get_model(input_shape, num_classes, reserve_layers=15):
     return model
 
 
-m = get_model((128, 128, 3), 5, 10)
