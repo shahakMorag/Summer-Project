@@ -91,7 +91,6 @@ def keys2img(tags, height, width, num_images=1):
     # [0, 0, 255] - red
     # [0, 255, 0] - green
     # [255, 0, 0] - blue
-
     res = [tags_to_colors_map.get(tag) for tag in tags]
     return np.reshape(res, (num_images, int(height), int(width), 3))
 
