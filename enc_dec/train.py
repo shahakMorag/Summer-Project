@@ -19,14 +19,14 @@ def get_start_date():
         datetime.datetime.now().minute)
 
 
-def load_data2(max, count, load_labels=False):
-    features = np.zeros((count, 372, 372, 3), dtype=np.float32)
+def load_data2(indexes, start, step, load_labels=False):
+    features = np.zeros((step, 372, 372, 3), dtype=np.float32)
     labels = np.zeros((step, 24, 24, 5), dtype=np.float32)
-    samples = sample(range(max), count)
+    samples = indexes[start: start + step]
 
-    for i, j in zip(samples, range(count)):
+    for i, j in zip(samples, range(step)):
         feature = cv2.imread(
-            'C:\Tomato_Classification_Project\Tomato_Classification_Project\cropped_data\cropped/' + str(
+            'C:\Tomato_Classification_Project\Tomato_Classification_Project\cropped_data\sized_crop/' + str(
                 i) + '.png')
         features[j] = feature
         if load_labels:
@@ -43,7 +43,7 @@ def load_data(start, stop, load_labels=False):
     labels = np.zeros((stop - start, 24, 24, 5), dtype=np.float32)
     for i, j in zip(range(start, stop), range(stop - start)):
         feature = cv2.imread(
-            'C:\Tomato_Classification_Project\Tomato_Classification_Project\cropped_data\cropped/' + str(
+            'C:\Tomato_Classification_Project\Tomato_Classification_Project\cropped_data\sized_crop/' + str(
                 i) + '.png')
         features[j] = feature
         if load_labels:
@@ -100,13 +100,17 @@ def val_loss(actual, predicted):
 model = auto_encoder_avg_pooling((372,372,3))
 model_path_auto = path.join("../models/encoder_decoder", "autoencoder_" + get_start_date() + ".model")
 print("saving model to:", model_path_auto)
-for i in range(125):
+start = 0
+step = 1500  # 1500
+n_max = 280380
+ordered = np.random.permutation(n_max)
+for i in range(186): # 125
     print("number:", str(i))
-    step = 1500  # 1500
-    features, labels = load_data2(123060, step)
+    features, labels = load_data2(ordered, start, step)
     # features, labels = load_data(157, 158)
     generator = pipeline_generator(features, labels, 10, (372, 372), (372, 372, 3))
     model.fit_generator(generator, epochs=10, verbose=1, steps_per_epoch=150, workers=8)
+    start += step
 
 
 model.save(model_path_auto)
@@ -117,11 +121,16 @@ time.sleep(10)
 model = ourSemanticSegmentation(model_path_auto)
 model_path = path.join("../models/encoder_decoder", "semantic_seg_" + get_start_date() + ".model")
 print("saving model to:", model_path)
+start = 0
+step = 2500  # 2500
+n_max = 105320
+ordered = np.random.permutation(n_max)
 for i in range(200):  # 200
     print("number:", str(i))
-    step = 2500
-    features, labels = load_data2(105320, step, load_labels=True)
+    features, labels = load_data2(ordered, start, step, load_labels=True)
     generator = pipeline_generator(features, labels, 25, (372, 372), (24, 24, 5))
     model.fit_generator(generator, epochs=15, verbose=1, steps_per_epoch=100, workers=8)
+    start += step
+    start %= n_max
 
 model.save(model_path)

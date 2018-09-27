@@ -44,9 +44,6 @@ def create_image(model_path, images, batch_size=1):
     return target
 
 
-results_dir = 'D:/results_encoder_decoder'
-
-
 def check(image_path):
     res = cv2.imread(image_path, 1)
     if res is None:
@@ -62,7 +59,7 @@ def create(src):
     path_divides = [paths[i:min(i + n, len(paths))] for i in range(0, len(paths), n)]
     for path_list in path_divides:
         images = [check(image_path) for image_path in tqdm(path_list)]
-        res = create_image("../models/encoder_decoder/semantic_seg_2018_09_21_7_51.model", images)
+        res = create_image("../models/encoder_decoder/semantic_seg_2018_09_25_10_4.model", images)
         for result_image, i in zip(res, range(len(res))):
             tmp_path = path_list[i].replace("/", "\\")
             name = "\\".join(tmp_path.split('\\')[-3:])
@@ -71,7 +68,12 @@ def create(src):
 
 
 if __name__ == '__main__':
+    results_dir = 'D:/results_encoder_decoder_new'
     main_dir = 'C:\Tomato_Classification_Project\Tomato_Classification_Project\Data\Demonstration_greenhouse_tomato_Hazera\Demonstration_greenhouse_tomato_Hazera'
+
+    if not path.exists(results_dir):
+        os.mkdir(results_dir)
+
     for subdir in os.listdir(main_dir):
         current_path = path.join(main_dir, subdir)
         save_path = path.join(results_dir, subdir)

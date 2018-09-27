@@ -77,33 +77,33 @@ def encoder_decoder(input_shape):
 def auto_encoder_avg_pooling(shape):
     input_img = Input(shape=shape)  # adapt this if using `channels_first` image data format
     x = Lambda(lambda x: x / 255.0)(input_img)
-    x = Convolution2D(26, (3, 3), activation='relu', padding='same')(x)
-    x = Convolution2D(26, (3, 3), activation='relu', padding='same')(x)
+    x = Convolution2D(30, (3, 3), activation='relu', padding='same')(x)
+    x = Convolution2D(30, (3, 3), activation='relu', padding='same')(x)
     x = AvgPool2D((2, 2), padding='same')(x)
-    x = Convolution2D(26, (3, 3), activation='relu', padding='same')(x)
-    x = Convolution2D(26, (3, 3), activation='relu', padding='same')(x)
+    x = Convolution2D(30, (3, 3), activation='relu', padding='same')(x)
+    x = Convolution2D(30, (3, 3), activation='relu', padding='same')(x)
     x = AvgPool2D((2, 2), padding='same')(x)
-    x = Convolution2D(26, (3, 3), activation='relu', padding='same')(x)
-    x = Convolution2D(26, (3, 3), activation='relu', padding='same')(x)
+    x = Convolution2D(30, (3, 3), activation='relu', padding='same')(x)
+    x = Convolution2D(30, (3, 3), activation='relu', padding='same')(x)
     x = AvgPool2D((2, 2), padding='same')(x)
     # at this point the representation is (4, 4, 8) i.e. 128-dimensional
     x = GaussianNoise(0.05)(x)
-    x = Convolution2D(26, (3, 3), activation='relu', padding='same')(x)
+    x = Convolution2D(30, (3, 3), activation='relu', padding='same')(x)
 
-    x = Convolution2D(26, (3, 3), activation='relu', padding='same')(x)
-    x = Convolution2D(26, (3, 3), activation='relu', padding='same', name='encoder_output')(x)
+    x = Convolution2D(30, (3, 3), activation='relu', padding='same')(x)
+    x = Convolution2D(30, (3, 3), activation='relu', padding='same', name='encoder_output')(x)
     x = UpSampling2D((2, 2))(x)
-    x = Convolution2D(26, (3, 3), activation='relu', padding='same')(x)
-    x = Convolution2D(26, (3, 3), activation='relu', padding='same')(x)
+    x = Convolution2D(30, (3, 3), activation='relu', padding='same')(x)
+    x = Convolution2D(30, (3, 3), activation='relu', padding='same')(x)
     x = UpSampling2D((2, 2))(x)
-    x = Convolution2D(26, (3, 3), activation='relu', padding="same")(x)
-    x = Convolution2D(26, (3, 3), activation='relu')(x)
+    x = Convolution2D(30, (3, 3), activation='relu', padding="same")(x)
+    x = Convolution2D(30, (3, 3), activation='relu')(x)
     x = UpSampling2D((2, 2))(x)
     decoded = Convolution2D(3, (3, 3), activation="sigmoid", padding='same')(x)
     decoded = Lambda(lambda x: x * 255.0)(decoded)
 
     autoencoder = Model(input_img, decoded)
-    autoencoder.compile(optimizer="adadelta", loss=keras.losses.categorical_crossentropy, metrics=["accuracy"])
+    autoencoder.compile(optimizer="adadelta", loss=keras.losses.MSE, metrics=["accuracy"])
     return autoencoder
 
 
@@ -191,7 +191,7 @@ def ourSemanticSegmentation(auto_encoder_path):
 
     x = auto_encoder.get_layer('encoder_output').output
 
-    x = Convolution2D(26, (3, 3), activation="relu", padding="same", name='a1')(x)
+    x = Convolution2D(30, (3, 3), activation="relu", padding="same", name='a1')(x)
     x = AvgPool2D((2, 2), padding="same", name='a2')(x)
     x = Convolution2D(32, (3, 3), activation="relu", padding="same", name='a3')(x)
     x = AvgPool2D((2, 2), padding="same", name='a4')(x)
@@ -218,8 +218,8 @@ def iou_better(actual, predicted):
 
 
 if __name__ == "__main__":
-    model = auto_encoder_avg_pooling((372, 372, 3))
-    # model = ourSemanticSegmentation('../models/encoder_decoder/m.model')
+    # model = auto_encoder_avg_pooling((372, 372, 3))
+    model = ourSemanticSegmentation('../models/encoder_decoder/autoencoder_2018_09_24_17_50.model')
     model.summary()
     '''
     image = cv2.imread(
