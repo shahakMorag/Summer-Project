@@ -20,8 +20,8 @@ def get_model(input_shape, num_classes, reserve_layers=15):
     model = Model(inputs=mobile.input, outputs=predictions)
 
     model.compile(Adam(lr=0.01), loss='categorical_crossentropy', metrics=['accuracy'])
-    model.summary()
-    print('There are', len(model.layers), 'layers')
+    # model.summary()
+    # print('There are', len(model.layers), 'layers')
     return model
 
 

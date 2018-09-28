@@ -85,7 +85,7 @@ class SaveCallback(Callback):
         self.model.save(self.model_path)
 
 
-def get_callbacks(validate_freq, valid_generator, model, patience, save_freq, model_path):
+def get_callbacks(validate_freq, valid_generator, model, patience, save_freq, model_path, log_dir):
     valid_callback = ValidateCallback(validate_freq, valid_generator, model)
     early_stop = EarlyStopping('acc', patience=patience)
     reduce_lr = ReduceLROnPlateau('acc', factor=0.6,
@@ -93,7 +93,7 @@ def get_callbacks(validate_freq, valid_generator, model, patience, save_freq, mo
 
     checkpoint = SaveCallback(save_freq, model_path, model)
 
-    tensorboard = TensorBoard(log_dir='../logs',
+    tensorboard = TensorBoard(log_dir=log_dir,
                               histogram_freq=0,
                               batch_size=32,
                               write_graph=True,

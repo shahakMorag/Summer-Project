@@ -1,37 +1,28 @@
-import json
-
-import cv2
-import keras
-import numpy as np
 import datetime
+import json
+import os
 import time
-
-from nets import *
-from keras.optimizers import Adam
-from keras import backend as K
-from random import sample
-from encoder_decoder import *
 from os import path
 
+import cv2
+import numpy as np
+from encoder_decoder import *
+import argparse
 
 def get_start_date():
     return str(datetime.date.today()).replace('-', '_') + "_" + str(datetime.datetime.now().hour) + "_" + str(
         datetime.datetime.now().minute)
 
 
-def load_data2(indexes, start, step, load_labels=False):
+def load_data2(indexes, start, step, crops_dir, ground_truth_dir=None, load_labels=False):
     features = np.zeros((step, 372, 372, 3), dtype=np.float32)
     labels = np.zeros((step, 24, 24, 5), dtype=np.float32)
     samples = indexes[start: start + step]
 
     for i, j in zip(samples, range(step)):
-        feature = cv2.imread(
-            'C:\Tomato_Classification_Project\Tomato_Classification_Project\cropped_data\sized_crop/' + str(
-                i) + '.png')
-        features[j] = feature
+        features[j] = cv2.imread(path.join(crops_dir, str(i) + ".png"))
         if load_labels:
-            with open('C:\Tomato_Classification_Project\Tomato_Classification_Project\encoder_decoder_train_set/' + str(
-                    i) + '.txt') as f:
+            with open(path.join(ground_truth_dir, str(i) + ".txt")) as f:
                 label = json.loads(f.read())
             # label = np.reshape(label, (24, 24, 5))
             labels[j] = label
@@ -77,60 +68,55 @@ def pipeline_generator(input_features, input_labels, batch_size, image_size, lab
         yield features, labels
 
 
-def iou_better(actual, predicted):
-    actual = K.abs(K.flatten(actual))
-    predicted = K.abs(K.flatten(predicted))
-    intersection = K.sum(actual * predicted)
-    union = K.sum(actual) + K.sum(predicted) - intersection
-    return intersection / union
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-classifier", required=True)
+    parser.add_argument("-ground_truth_dir", required=True)
+    parser.add_argument("-crops_dir", required=True)
+    parser.add_argument("-auto_encoder_n_max", required=True, type=int)
+    parser.add_argument("-encoder_decoder_n_max", required=True, type=int)
+    parser.add_argument("-auto_encoder_training_epochs", type=int)
+    parser.add_argument("-encoder_decoder_training_epochs", type=int)
+    args = parser.parse_args()
 
+    if not path.exists(path.join("../models/encoder_decoder", args.classifier)):
+        os.mkdir(path.join("../models/encoder_decoder", args.classifier))
 
-def iou_simple(actual, predicted):
-    actual = K.flatten(actual)
-    predicted = K.flatten(predicted)
-    return K.sum(actual * predicted) / (1.0 + K.sum(actual) + K.sum(predicted))
+    # Training autoencoder
+    model = auto_encoder_avg_pooling((372, 372, 3))
+    model_path_auto = path.join(*["/models/encoder_decoder", args.classifier, "autoencoder_" + get_start_date() + ".model"])
+    print("saving model to:", model_path_auto)
+    start = 0
+    step = 1500
+    batch_size = 10
+    ordered = np.random.permutation(args.auto_encoder_n_max)
+    total_epochs = args.auto_encoder_training_epochs if args.auto_encoder_training_epochs is not None else args.auto_encoder_n_max // step
+    for i in range(total_epochs):
 
+        features, labels = load_data2(ordered, start, step, args.crops_dir)
+        # features, labels = load_data(157, 158)
+        generator = pipeline_generator(features, labels, batch_size, (372, 372), (372, 372, 3))
+        model.fit_generator(generator, epochs=10, verbose=1, steps_per_epoch=step // batch_size, workers=8)
+        start += step
 
-def val_loss(actual, predicted):
-    return -iou_simple(actual, predicted)
+    model.save(model_path_auto)
+    model = None
+    time.sleep(10)
 
+    # Training encoder decoder
+    model = ourSemanticSegmentation(model_path_auto)
+    model_path = path.join(*["/models/encoder_decoder", args.classifier, "sematnic_segmentation_" + get_start_date() + ".model"])
+    print("saving model to:", model_path)
+    start = 0
+    step = 2500
+    ordered = np.random.permutation(args.encoder_decoder_n_max)
+    total_epochs = args.encoder_decoder_training_epochs if args.encoder_decoder_training_epochs is not None else 2 * args.encoder_decoder_n_max // step
+    for i in range(total_epochs):
+        print("number:", str(i))
+        features, labels = load_data2(ordered, start, step, args.crops_dir, args.ground_truth, load_labels=True)
+        generator = pipeline_generator(features, labels, 25, (372, 372), (24, 24, 5))
+        model.fit_generator(generator, epochs=15, verbose=1, steps_per_epoch=100, workers=8)
+        start += step
+        start %= args.encoder_decoder_n_max
 
-
-# Training autoencoder
-model = auto_encoder_avg_pooling((372,372,3))
-model_path_auto = path.join("../models/encoder_decoder", "autoencoder_" + get_start_date() + ".model")
-print("saving model to:", model_path_auto)
-start = 0
-step = 1500  # 1500
-n_max = 280380
-ordered = np.random.permutation(n_max)
-for i in range(186): # 125
-    print("number:", str(i))
-    features, labels = load_data2(ordered, start, step)
-    # features, labels = load_data(157, 158)
-    generator = pipeline_generator(features, labels, 10, (372, 372), (372, 372, 3))
-    model.fit_generator(generator, epochs=10, verbose=1, steps_per_epoch=150, workers=8)
-    start += step
-
-
-model.save(model_path_auto)
-model = None
-time.sleep(10)
-
-# Training encoder decoder
-model = ourSemanticSegmentation(model_path_auto)
-model_path = path.join("../models/encoder_decoder", "semantic_seg_" + get_start_date() + ".model")
-print("saving model to:", model_path)
-start = 0
-step = 2500  # 2500
-n_max = 105320
-ordered = np.random.permutation(n_max)
-for i in range(200):  # 200
-    print("number:", str(i))
-    features, labels = load_data2(ordered, start, step, load_labels=True)
-    generator = pipeline_generator(features, labels, 25, (372, 372), (24, 24, 5))
-    model.fit_generator(generator, epochs=15, verbose=1, steps_per_epoch=100, workers=8)
-    start += step
-    start %= n_max
-
-model.save(model_path)
+    model.save(model_path)

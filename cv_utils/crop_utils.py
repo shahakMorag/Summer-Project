@@ -1,4 +1,5 @@
 import cv2
+import keras
 import numpy as np
 import time
 
@@ -99,7 +100,7 @@ def load_image(image_path):
     return cv2.cvtColor(cv2.imread(image_path, 1), cv2.COLOR_BGR2RGB)
 
 
-def segment_images(image_location_list, model, step=step, radius=radius_x):
+def segment_images(image_location_list, model, num_classes, step=step, radius=radius_x):
     scale_after = 1
 
     num_images = len(image_location_list)
@@ -110,7 +111,7 @@ def segment_images(image_location_list, model, step=step, radius=radius_x):
     crops_list = [np.array(create_crops(image, step, step, radius, radius)) for image in raw_images]
     crops_list = np.array(crops_list).reshape((-1, radius * 2, radius * 2, 3))
     classified = apply_classification(crops_list, model=model)
-
-    recovered_image = keys2img(classified, new_height, new_width, num_images)
-    return [blend_two_images(recovered_image[i], raw_images[i], radius, radius, alpha=1)
-            for i in range(len(recovered_image))]
+    return np.array(keras.utils.to_categorical(classified, num_classes=num_classes), dtype=np.int32).tolist()
+    # recovered_image = keys2img(classified, new_height, new_width, num_images)
+    # return [blend_two_images(recovered_image[i], raw_images[i], radius, radius, alpha=1)
+    #         for i in range(len(recovered_image))]

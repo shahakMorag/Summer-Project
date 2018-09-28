@@ -1,16 +1,11 @@
 import os
+from os import path
 import cv2
 from crop_utils import *
 import argparse
+import json
+
 os.environ["TF_CPP_MIN_LOG_LEVEL"] = "3"
-
-jump = 40
-
-parser = argparse.ArgumentParser()
-parser.add_argument('-p', required=True, type=int)
-args = parser.parse_args()
-patches_path = 'C:\Tomato_Classification_Project\Tomato_Classification_Project\cropped_data\size_500_stride_500/'
-image_path = [patches_path + str(i) + '.png' for i in range(args.p,args.p + jump)]
 
 from keras.models import load_model
 
@@ -20,27 +15,40 @@ def get_images_location_list(images_location_file):
         return f.read().splitlines()
 
 
-def create_file_name(start_location):
+def create_file_name(start_location, save_dir):
     # filename = "_".join(start_location.split("\\")[-1])
-    filename = start_location.split("/")[-1]
-    path = "C:\Tomato_Classification_Project\Tomato_Classification_Project/targets_encdec"
-    return os.path.join(path, filename)
+    head, tail = path.split(start_location)
+    filename = tail.lower().replace("png", "txt").replace('jpg', 'txt').replace('jpeg', 'txt')
+    return os.path.join(save_dir, filename)
 
 
-def apply_on_all(model_path, step, radius):
+def apply_on_all(model_path, save_dir, step, radius, num_classes, jump):
     # locations = get_images_location_list("C:\Tomato_Classification_Project\Tomato_Classification_Project\Alon_misc/tomato_mark_AZ_20180803\mark/selected_file_list.txt")
     images = []
     locations = image_path
     for i in range(0, len(locations), jump):
         model = load_model(model_path)
-        last = min(i+jump, len(locations))
+        last = min(i + jump, len(locations))
         tmp_locations = locations[i:last]
-        images = segment_images(tmp_locations, model, step=step, radius=radius)
+        images = segment_images(tmp_locations, model, num_classes, step=step, radius=radius)
 
         for image, location in zip(images, tmp_locations):
-            cv2.imwrite(create_file_name(location), image)
+            with open(create_file_name(location, save_dir), 'w') as f:
+                f.write(json.dumps(image))
 
         model = None
 
 
-apply_on_all('../models/mobilenet/all_models/2018_09_01_0_4_500_epochs_rgb_size_128.model', 16, 64)
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-start_image_number', required=True, type=int)
+    parser.add_argument('-num_classes', required=True, type=int)
+    parser.add_argument('-jump', required=True, type=int)
+    parser.add_argument('-model_path', required=True)
+    parser.add_argument('-patches_path', required=True)
+    parser.add_argument('-save_dir', required=True)
+    args = parser.parse_args()
+    image_path = [path.join(args.patches_path, str(i) + '.png') for i in
+                  range(args.start_image_number, args.start_image_number + args.jump)]
+
+    apply_on_all(args.model_path, args.save_dir, 16, 64, args.num_classes, args.jump)
