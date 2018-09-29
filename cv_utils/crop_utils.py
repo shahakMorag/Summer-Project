@@ -1,5 +1,4 @@
 import cv2
-import keras
 import numpy as np
 import time
 
@@ -27,6 +26,7 @@ def apply_classification(images_list,
                          model_path='../models/mobilenet/2018_08_27_21_58_5_epochs_leaf_other.model',
                          model=None,
                          fix_function=None):
+    import keras
     from image_transformations import rgb2hsv, rgb2hls
     from keras.models import load_model
     from keras_preprocessing.image import ImageDataGenerator
@@ -101,6 +101,7 @@ def load_image(image_path):
 
 
 def segment_images(image_location_list, model, num_classes, step=step, radius=radius_x):
+    import keras
     scale_after = 1
 
     num_images = len(image_location_list)

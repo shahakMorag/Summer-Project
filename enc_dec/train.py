@@ -78,13 +78,13 @@ if __name__ == '__main__':
     parser.add_argument("-auto_encoder_training_epochs", type=int)
     parser.add_argument("-encoder_decoder_training_epochs", type=int)
     args = parser.parse_args()
-
-    if not path.exists(path.join("../models/encoder_decoder", args.classifier)):
-        os.mkdir(path.join("../models/encoder_decoder", args.classifier))
+    dir_to_save = path.join(*["models", "encoder_decoder", args.classifier])
+    if not path.exists(dir_to_save):
+        os.mkdir(dir_to_save)
 
     # Training autoencoder
     model = auto_encoder_avg_pooling((372, 372, 3))
-    model_path_auto = path.join(*["/models/encoder_decoder", args.classifier, "autoencoder_" + get_start_date() + ".model"])
+    model_path_auto = path.join(*[dir_to_save, "autoencoder_" + get_start_date() + ".model"])
     print("saving model to:", model_path_auto)
     start = 0
     step = 1500
@@ -105,7 +105,7 @@ if __name__ == '__main__':
 
     # Training encoder decoder
     model = ourSemanticSegmentation(model_path_auto)
-    model_path = path.join(*["/models/encoder_decoder", args.classifier, "sematnic_segmentation_" + get_start_date() + ".model"])
+    model_path = path.join(*[dir_to_save, "sematnic_segmentation_" + get_start_date() + ".model"])
     print("saving model to:", model_path)
     start = 0
     step = 2500
@@ -113,7 +113,7 @@ if __name__ == '__main__':
     total_epochs = args.encoder_decoder_training_epochs if args.encoder_decoder_training_epochs is not None else 2 * args.encoder_decoder_n_max // step
     for i in range(total_epochs):
         print("number:", str(i))
-        features, labels = load_data2(ordered, start, step, args.crops_dir, args.ground_truth, load_labels=True)
+        features, labels = load_data2(ordered, start, step, args.crops_dir, args.ground_truth_dir, load_labels=True)
         generator = pipeline_generator(features, labels, 25, (372, 372), (24, 24, 5))
         model.fit_generator(generator, epochs=15, verbose=1, steps_per_epoch=100, workers=8)
         start += step

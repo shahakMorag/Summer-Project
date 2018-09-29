@@ -5,9 +5,9 @@ import subprocess
 import os
 import logging
 import time
+import json
 
 if __name__ == '__main__':
-    import json
     # size 128x128
 
     with open('trainConfigs.json') as fp:
@@ -38,16 +38,21 @@ if __name__ == '__main__':
     print('There are %d classes' % num_classes)
 
     # create crops
-    creating_crops_start_time = time.time()
-    logging.info('Creating crops for the encoder decoder')
-    print('Creating crops for the encoder decoder')
-    output = Popen(['python', 'cv_utils\create_patches_enc_dec.py', '-images_path=' + args['originalImagePath'], '-save_path=' + args['cropsSavePath']], stdout=subprocess.PIPE).stdout.read().decode(encoding='utf-8')
+    if args["skipCropsCreation"]:
+        logging.info("Configured to skip creation of crops")
+        print("Configured to skip creation of crops")
+    else:
+        creating_crops_start_time = time.time()
+        logging.info('Creating crops for the encoder decoder')
+        print('Creating crops for the encoder decoder')
+        output = Popen(['python', 'cv_utils\create_patches_enc_dec.py', '-images_path=' + args['originalImagePath'], '-save_path=' + args['cropsSavePath']], stdout=subprocess.PIPE).stdout.read().decode(encoding='utf-8')
+        logging.info('Crops created. Took %d seconds' % (time.time() - creating_crops_start_time))
+        print('Crops created. Took %d seconds' % (time.time() - creating_crops_start_time))
+
     path_500 = path.join(args['cropsSavePath'], 'crops_500')
     path_372 = path.join(args['cropsSavePath'], 'crops_372')
-    num_of_enc_dec_patches = int(re.search(r'number of crops (\d+)', output).group(1))
-    logging.info('Crops created. Took %d seconds' % (time.time() - creating_crops_start_time))
-    print('Crops created. Took %d seconds' % (time.time() - creating_crops_start_time))
 
+    num_of_enc_dec_patches = len([file for file in os.listdir(path_500)])
     # create mobile net ground truth
     ground_truth_start_time = time.time()
     logging.info('Creating encoder decoder ground truth from the crops')
@@ -56,7 +61,7 @@ if __name__ == '__main__':
     ground_truth_limit = min(int(args["limitGroundTruthCreation"]), num_of_enc_dec_patches)
     rest = ground_truth_limit % jump
     for start in range(0, ground_truth_limit - jump, jump):
-        print('Created %d out of %d' % (start, num_of_enc_dec_patches))
+        print('Created %d out of %d' % (start, ground_truth_limit))
         output = Popen(['python', 'cv_utils/run_on_several_images.py',
                         '-jump=' + str(jump),
                         '-start_image_number=' + str(start),
@@ -64,16 +69,16 @@ if __name__ == '__main__':
                         '-model_path=' + mobilenet_model_path,
                         '-patches_path=' + path_500,
                         '-save_dir=' + args["saveMobilenetGroundTruthDir"]],
-                        stdout=subprocess.PIPE).stdout.read().decode(encoding='utf-8')
+                       stdout=subprocess.PIPE).stdout.read().decode(encoding='utf-8')
     if rest:
         output = output = Popen(['python', 'cv_utils/run_on_several_images.py',
-                            '-jump=' + str(rest),
-                            '-start_image_number=' + str(start),
-                            '-num_classes=' + str(num_classes),
-                            '-model_path=' + mobilenet_model_path,
-                            '-patches_path=' + path_500,
-                            '-save_dir=' + args["saveMobilenetGroundTruthDir"]],
-                            stdout=subprocess.PIPE).stdout.read().decode(encoding='utf-8')
+                                 '-jump=' + str(rest),
+                                 '-start_image_number=' + str(start),
+                                 '-num_classes=' + str(num_classes),
+                                 '-model_path=' + mobilenet_model_path,
+                                 '-patches_path=' + path_500,
+                                 '-save_dir=' + args["saveMobilenetGroundTruthDir"]],
+                                stdout=subprocess.PIPE).stdout.read().decode(encoding='utf-8')
     logging.info('Ground truth created in %d seconds' % (time.time() - ground_truth_start_time))
     print('Ground truth created in %d seconds' % (time.time() - ground_truth_start_time))
 

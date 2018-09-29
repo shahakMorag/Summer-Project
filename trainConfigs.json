@@ -4,10 +4,11 @@
   "classifierValidationSetDir": "C:/Tomato_Classification_Project/Tomato_Classification_Project/Patches/Patches/validation_128",
   "originalImagePath": "C:/Tomato_Classification_Project/Tomato_Classification_Project/Data/Demonstration_greenhouse_tomato_Hazera/Demonstration_greenhouse_tomato_Hazera",
   "cropsSavePath": "D:/crops",
+  "skipCropsCreation": true,
   "mobilenetTrainingEpochs": "1" ,
   "encoderDecoderTrainingEpochs": "1",
   "mobilenetSegmentationJump": "40",
-  "limitGroundTruthCreation" : "100000",
+  "limitGroundTruthCreation" : "100",
   "autoEncoderTrainingEpochs": "1",
   "saveMobilenetGroundTruthDir": "D:/ground_truth",
   "logsDir": "C:/Users/eitan.k/PycharmProjects/Summer-Project/logs"
