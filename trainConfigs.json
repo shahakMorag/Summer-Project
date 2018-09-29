@@ -5,9 +5,10 @@
   "originalImagePath": "C:/Tomato_Classification_Project/Tomato_Classification_Project/Data/Demonstration_greenhouse_tomato_Hazera/Demonstration_greenhouse_tomato_Hazera",
   "cropsSavePath": "D:/crops",
   "mobilenetTrainingEpochs": "1" ,
-  "autoEncoderTrainingEpochs": "1",
   "encoderDecoderTrainingEpochs": "1",
   "mobilenetSegmentationJump": "40",
+  "limitGroundTruthCreation" : "100000",
+  "autoEncoderTrainingEpochs": "1",
   "saveMobilenetGroundTruthDir": "D:/ground_truth",
   "logsDir": "C:/Users/eitan.k/PycharmProjects/Summer-Project/logs"
 }

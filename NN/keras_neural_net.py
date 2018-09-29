@@ -13,8 +13,8 @@ def get_start_date():
         datetime.datetime.now().minute)
 
 
-def train(model_name, train_images_path, valid_images_path, input_shape, target_size,
-          reserve_layers=10, epochs=500, log_dir, preprocessing_function=None, log=None):
+def train(model_name, train_images_path, valid_images_path, input_shape, target_size, log_dir,
+          reserve_layers=10, epochs=500, preprocessing_function=None, log=None):
     start_time = time.time()
     model_path = path.join("C:/Users\eitan.k\PycharmProjects\Summer-Project\models\smaller_mobilenet",
                            get_start_date() + "_" + repr(epochs) + "_epochs_" + model_name + ".model")
@@ -68,7 +68,7 @@ if __name__ == '__main__':
     parser.add_argument('-train_path', required=True)
     parser.add_argument('-val_path', required=True)
     parser.add_argument('-epochs', required=True, type=int)
-    parser.add_argument('-log_dir', required=True, type=int)
+    parser.add_argument('-log_dir', required=True)
     args = parser.parse_args()
 
     train(model_name=args.name,
