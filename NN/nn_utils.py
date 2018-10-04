@@ -104,4 +104,8 @@ def get_callbacks(validate_freq, valid_generator, model, patience, save_freq, mo
                               embeddings_metadata=None,
                               embeddings_data=None)
 
-    return [valid_callback, early_stop, reduce_lr, tensorboard, checkpoint]
+    return [#valid_callback,
+            early_stop,
+            reduce_lr,
+            tensorboard,
+            checkpoint]

@@ -9,17 +9,17 @@ from keras_preprocessing.image import ImageDataGenerator
 from crop_utils import create_crops, calc_dim, keys2img
 from tqdm import tqdm
 import os
+import json
+import re
 
 
-def create_image(model_path, images, batch_size=1):
+def create_image(model_path, images, mapping, batch_size=1):
     output_size = 24
 
     crops = [create_crops(image, 372, 372, 372 // 2, 372 // 2) for image in images]
-    # cv2.imshow("", crops[0])
-    # cv2.waitKey(10000)
     crops = np.array(crops).reshape((-1, 372, 372, 3))
     height, width = calc_dim(images[0], 372, 372, 372 // 2, 372 // 2)
-    target = np.zeros((len(images), height * output_size, width * output_size, 3), dtype=np.uint8)
+    target = np.zeros((len(images), height * output_size, width * output_size, 1), dtype=np.uint8)
     model = load_model(model_path)
 
     test_generator = ImageDataGenerator().flow(x=np.array(crops), batch_size=batch_size, shuffle=False)
@@ -32,8 +32,8 @@ def create_image(model_path, images, batch_size=1):
 
     predicts = np.array(predicts).reshape((len(images), -1, output_size * output_size, 5))
     predicts = predicts.argmax(axis=-1).reshape((len(images), -1))
-    predicts = np.array([keys2img(predict, output_size, output_size, height * width) for predict in predicts])
-    predicts = predicts.reshape((len(images), height, width, output_size, output_size, 3))
+    # predicts = np.array([keys2img(predict, output_size, output_size, height * width, mapping) for predict in predicts])
+    predicts = predicts.reshape((len(images), height, width, output_size, output_size, 1))
 
     for image_index in range(len(images)):
         for y in range(height):
@@ -52,24 +52,41 @@ def check(image_path):
     return res
 
 
-def create(src):
+def create(src, model_path, save_path, mapping):
     paths = [image_path for image_path in glob.iglob(path.join(src, "*.JPG"))]
     print('There are', len(paths), 'paths')
-    n = 20
+    n = 1
     path_divides = [paths[i:min(i + n, len(paths))] for i in range(0, len(paths), n)]
     for path_list in path_divides:
         images = [check(image_path) for image_path in tqdm(path_list)]
-        res = create_image("../models/encoder_decoder/semantic_seg_2018_09_25_10_4.model", images)
+        res = create_image(model_path, images, mapping)
         for result_image, i in zip(res, range(len(res))):
             tmp_path = path_list[i].replace("/", "\\")
-            name = "\\".join(tmp_path.split('\\')[-3:])
-            full_name = path.join(results_dir, name)
-            cv2.imwrite(full_name, result_image)
+            name = "\\".join(tmp_path.split('\\')[-2:])
+            full_name = path.join(results_dir, name).replace("JPG", "txt")
+            with open(full_name, 'w') as f:
+                print(full_name)
+                json.dump(result_image.tolist(), f)
+            # cv2.imwrite(full_name, result_image)
+
+
+def parse_color_mapping(mapping_description):
+    res = {}
+    for k, v in mapping_description.items():
+        b, g, r = re.search(r'(\d+),(\d+),(\d+)', v).group(1, 2, 3)
+        res[int(k)] = np.array([b, g, r], dtype=np.uint8)
+
+    return res
 
 
 if __name__ == '__main__':
-    results_dir = 'D:/results_encoder_decoder_new'
-    main_dir = 'C:\Tomato_Classification_Project\Tomato_Classification_Project\Data\Demonstration_greenhouse_tomato_Hazera\Demonstration_greenhouse_tomato_Hazera'
+    with open('encDecCreateImageConfig.json') as fp:
+        args = json.load(fp)
+
+    results_dir = args["destPath"]
+    main_dir = args["sourcePath"]
+
+    mapping = parse_color_mapping(args["mappingColors"])
 
     if not path.exists(results_dir):
         os.mkdir(results_dir)
@@ -81,11 +98,13 @@ if __name__ == '__main__':
         if not path.exists(save_path):
             os.mkdir(save_path)
 
+        create(current_path, args["modelPath"], save_path, mapping)
+
+        '''
         for subdir2 in os.listdir(current_path):
             current_path2 = path.join(current_path, subdir2)
             save_path2 = path.join(save_path, subdir2)
 
             if not path.exists(save_path2):
                 os.mkdir(save_path2)
-
-            create(current_path2)
+        '''

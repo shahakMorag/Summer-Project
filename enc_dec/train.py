@@ -90,9 +90,8 @@ if __name__ == '__main__':
     step = 1500
     batch_size = 10
     ordered = np.random.permutation(args.auto_encoder_n_max)
-    total_epochs = args.auto_encoder_training_epochs if args.auto_encoder_training_epochs is not None else args.auto_encoder_n_max // step
+    total_epochs = args.auto_encoder_n_max // step
     for i in range(total_epochs):
-
         features, labels = load_data2(ordered, start, step, args.crops_dir)
         # features, labels = load_data(157, 158)
         generator = pipeline_generator(features, labels, batch_size, (372, 372), (372, 372, 3))
@@ -110,7 +109,7 @@ if __name__ == '__main__':
     start = 0
     step = 2500
     ordered = np.random.permutation(args.encoder_decoder_n_max)
-    total_epochs = args.encoder_decoder_training_epochs if args.encoder_decoder_training_epochs is not None else 2 * args.encoder_decoder_n_max // step
+    total_epochs = 2 * args.encoder_decoder_n_max // step
     for i in range(total_epochs):
         print("number:", str(i))
         features, labels = load_data2(ordered, start, step, args.crops_dir, args.ground_truth_dir, load_labels=True)

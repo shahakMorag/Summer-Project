@@ -33,8 +33,6 @@ def make_all_dirs(src, dest, size=500, stride=500):
             cv2.imwrite(path.join(path_372, file_name), crop_372)
             crop_number += 1
 
-    print('number of crops', crop_number)
-
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
@@ -42,4 +40,4 @@ if __name__ == '__main__':
     parser.add_argument('-save_path', required=True)
     args = parser.parse_args()
 
-    make_all_dirs(args.images_path, args.save_path, 500, 500)
+    make_all_dirs(args.images_path, args.save_path)

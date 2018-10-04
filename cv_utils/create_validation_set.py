@@ -21,14 +21,14 @@ def move_sub_dirs(source_root, destination_root, part, swap=False):
     if swap:
         source_root, destination_root = destination_root, source_root
 
-    partially_move_images(path.join(source_root, 'bad_leaf'), path.join(destination_root, 'bad_leaf'), part)
+    partially_move_images(path.join(source_root, 'flower'), path.join(destination_root, 'flower'), part)
     partially_move_images(path.join(source_root, 'fruit'), path.join(destination_root, 'fruit'), part)
     partially_move_images(path.join(source_root, 'leaf'), path.join(destination_root, 'leaf'), part)
     partially_move_images(path.join(source_root, 'other'), path.join(destination_root, 'other'), part)
     partially_move_images(path.join(source_root, 'stem'), path.join(destination_root, 'stem'), part)
 
 
-part = 0.2
-source_path = "C:\Tomato_Classification_Project\Tomato_Classification_Project\Patches\Patches\patches_size_128_skip_32_categories_5"
-destination_path = "C:\Tomato_Classification_Project\Tomato_Classification_Project\Patches\Patches/validation_128"
+part = 0.25
+source_path = "D:\cucumbers_project\cucumber_patches\patches_set_1"
+destination_path = "D:\cucumbers_project\cucumber_patches/validation"
 move_sub_dirs(source_path, destination_path, part, swap=False)

@@ -23,6 +23,7 @@ def train(model_name, train_images_path, valid_images_path, input_shape, target_
     train_generator = get_train_generator(train_images_path, batch_size=250, target_size=target_size,
                                           preprocessing_function=preprocessing_function)
     num_classes = len(train_generator.class_indices)
+    print('#class indices ' + str(train_generator.class_indices) + '#')
     print('num classes', num_classes)
     valid_generator = get_valid_generator(valid_images_path, target_size, preprocessing_function=preprocessing_function)
 
@@ -55,6 +56,7 @@ def train(model_name, train_images_path, valid_images_path, input_shape, target_
         verbose=1,
         workers=8,
     )
+    print('#val_acc: %f#' % (score_seg[1],))
 
     if log is not None:
         log.write(model_name + ':\nTraining time - %d seconds\nValidate Accuracy - %s\n\n\n' % (

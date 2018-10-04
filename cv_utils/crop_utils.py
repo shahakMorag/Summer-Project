@@ -1,3 +1,5 @@
+from os import path
+
 import cv2
 import numpy as np
 import time
@@ -76,23 +78,29 @@ def blend_two_images(neural_net_image, original_image, radius_x=radius_x, radius
     return dst
 
 
-def keys2img(tags, height, width, num_images=1):
+
+
+def get_default_map():
     # 0 - bad leaf - blue    - [255, 0, 0]
     # 1 - fruit    - red     - [35,28,229]
     # 2 - leaf     - green   - [0, 255, 0]
     # 3 - other    - brown   - [0,255,239]
     # 4 - stem - dark green  - [16,64,4]
-    keys = range(5)
+
+    # [0, 0, 255] - red
+    # [0, 255, 0] - green
+    # [255, 0, 0] - blue
+
     colors = np.array([[255, 0, 0],
                        [35, 28, 229],
                        [0, 255, 0],
                        [0, 255, 239],
                        [16, 64, 4]]).astype(np.uint8)
-    tags_to_colors_map = dict(zip(keys, colors))
-    # [0, 0, 255] - red
-    # [0, 255, 0] - green
-    # [255, 0, 0] - blue
-    res = [tags_to_colors_map.get(tag) for tag in tags]
+    return dict(zip(range(5), colors))
+
+
+def keys2img(tags, height, width, num_images=1, mapping=get_default_map()):
+    res = [mapping.get(tag) for tag in tags]
     return np.reshape(res, (num_images, int(height), int(width), 3))
 
 
@@ -112,7 +120,9 @@ def segment_images(image_location_list, model, num_classes, step=step, radius=ra
     crops_list = [np.array(create_crops(image, step, step, radius, radius)) for image in raw_images]
     crops_list = np.array(crops_list).reshape((-1, radius * 2, radius * 2, 3))
     classified = apply_classification(crops_list, model=model)
+    classified = classified.reshape((num_images, new_height, new_width, 1))
     return np.array(keras.utils.to_categorical(classified, num_classes=num_classes), dtype=np.int32).tolist()
     # recovered_image = keys2img(classified, new_height, new_width, num_images)
     # return [blend_two_images(recovered_image[i], raw_images[i], radius, radius, alpha=1)
     #         for i in range(len(recovered_image))]
+
