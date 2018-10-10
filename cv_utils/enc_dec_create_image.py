@@ -32,7 +32,6 @@ def create_image(model_path, images, mapping, batch_size=1):
 
     predicts = np.array(predicts).reshape((len(images), -1, output_size * output_size, 5))
     predicts = predicts.argmax(axis=-1).reshape((len(images), -1))
-    # predicts = np.array([keys2img(predict, output_size, output_size, height * width, mapping) for predict in predicts])
     predicts = predicts.reshape((len(images), height, width, output_size, output_size, 1))
 
     for image_index in range(len(images)):
@@ -61,13 +60,12 @@ def create(src, model_path, save_path, mapping):
         images = [check(image_path) for image_path in tqdm(path_list)]
         res = create_image(model_path, images, mapping)
         for result_image, i in zip(res, range(len(res))):
-            tmp_path = path_list[i].replace("/", "\\")
-            name = "\\".join(tmp_path.split('\\')[-2:])
-            full_name = path.join(results_dir, name).replace("JPG", "txt")
+            orig_dir, file_name = path.split(paths)
+            file_name, extension = path.splitext(file_name)
+
+            full_name = path.join(*[save_path, file_name + 'txt'])
             with open(full_name, 'w') as f:
-                print(full_name)
                 json.dump(result_image.tolist(), f)
-            # cv2.imwrite(full_name, result_image)
 
 
 def parse_color_mapping(mapping_description):
@@ -99,12 +97,3 @@ if __name__ == '__main__':
             os.mkdir(save_path)
 
         create(current_path, args["modelPath"], save_path, mapping)
-
-        '''
-        for subdir2 in os.listdir(current_path):
-            current_path2 = path.join(current_path, subdir2)
-            save_path2 = path.join(save_path, subdir2)
-
-            if not path.exists(save_path2):
-                os.mkdir(save_path2)
-        '''
