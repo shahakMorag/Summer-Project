@@ -103,7 +103,7 @@ if __name__ == '__main__':
     time.sleep(10)
 
     # Training encoder decoder
-    model = ourSemanticSegmentation(model_path_auto)
+    model = our_semantic_segmentation(model_path_auto)
     model_path = path.join(*[dir_to_save, "sematnic_segmentation_" + get_start_date() + ".model"])
     print("saving model to:", model_path)
     start = 0
