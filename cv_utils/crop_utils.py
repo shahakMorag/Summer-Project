@@ -1,5 +1,3 @@
-from os import path
-
 import cv2
 import numpy as np
 import time
@@ -25,11 +23,9 @@ def calc_dim(image, step_x=step, step_y=step, radius_x=radius_x, radius_y=radius
 
 
 def apply_classification(images_list,
-                         model_path='../models/mobilenet/2018_08_27_21_58_5_epochs_leaf_other.model',
+                         model_path=None,
                          model=None,
                          fix_function=None):
-    import keras
-    from image_transformations import rgb2hsv, rgb2hls
     from keras.models import load_model
     from keras_preprocessing.image import ImageDataGenerator
     import keras.applications
@@ -38,9 +34,10 @@ def apply_classification(images_list,
 
     # if the user doesn't pass a model
     if model is None:
+        if model_path is None:
+            print("must specify either model or model path")
+            exit(0)
         model = load_model(model_path)
-
-    # keras.applications.mobilenet.preprocess_input
 
     test_generator = ImageDataGenerator(preprocessing_function=keras.applications.mobilenet.preprocess_input) \
         .flow(x=np.array(images_list),
@@ -78,8 +75,6 @@ def blend_two_images(neural_net_image, original_image, radius_x=radius_x, radius
     return dst
 
 
-
-
 def get_default_map():
     # 0 - bad leaf - blue    - [255, 0, 0]
     # 1 - fruit    - red     - [35,28,229]
@@ -110,7 +105,6 @@ def load_image(image_path):
 
 def segment_images(image_location_list, model, num_classes, step=step, radius=radius_x):
     import keras
-    scale_after = 1
 
     num_images = len(image_location_list)
     raw_images = [load_image(image_location) for image_location in image_location_list]
@@ -122,7 +116,3 @@ def segment_images(image_location_list, model, num_classes, step=step, radius=ra
     classified = apply_classification(crops_list, model=model)
     classified = classified.reshape((num_images, new_height, new_width, 1))
     return np.array(keras.utils.to_categorical(classified, num_classes=num_classes), dtype=np.int32).tolist()
-    # recovered_image = keys2img(classified, new_height, new_width, num_images)
-    # return [blend_two_images(recovered_image[i], raw_images[i], radius, radius, alpha=1)
-    #         for i in range(len(recovered_image))]
-
