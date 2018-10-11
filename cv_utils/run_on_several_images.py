@@ -1,9 +1,8 @@
-import os
-from os import path
-import cv2
-from crop_utils import *
 import argparse
 import json
+import os
+from os import path
+from crop_utils import *
 
 os.environ["TF_CPP_MIN_LOG_LEVEL"] = "3"
 
@@ -22,14 +21,10 @@ def create_file_name(start_location, save_dir):
     return os.path.join(save_dir, filename)
 
 
-def apply_on_all(model_path, save_dir, step, radius, num_classes, jump):
-    # locations = get_images_location_list("C:\Tomato_Classification_Project\Tomato_Classification_Project\Alon_misc/tomato_mark_AZ_20180803\mark/selected_file_list.txt")
-    images = []
-    locations = image_path
+def apply_on_all(model_path, locations, save_dir, step, radius, num_classes, jump):
     for i in range(0, len(locations), jump):
         model = load_model(model_path)
-        last = min(i + jump, len(locations))
-        tmp_locations = locations[i:last]
+        tmp_locations = locations[i:i + jump]
         images = segment_images(tmp_locations, model, num_classes, step=step, radius=radius)
 
         for image, location in zip(images, tmp_locations):
@@ -48,7 +43,7 @@ if __name__ == '__main__':
     parser.add_argument('-patches_path', required=True)
     parser.add_argument('-save_dir', required=True)
     args = parser.parse_args()
-    image_path = [path.join(args.patches_path, str(i) + '.png') for i in
+    images_paths = [path.join(args.patches_path, str(i) + '.png') for i in
                   range(args.start_image_number, args.start_image_number + args.jump)]
 
-    apply_on_all(args.model_path, args.save_dir, 16, 64, args.num_classes, args.jump)
+    apply_on_all(args.model_path, images_paths, args.save_dir, 16, 64, args.num_classes, args.jump)

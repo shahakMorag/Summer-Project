@@ -1,13 +1,12 @@
 import datetime
 import json
-import os
 import time
-from os import path
-
+from os import path, mkdir
 import cv2
 import numpy as np
 from encoder_decoder import *
 import argparse
+
 
 def get_start_date():
     return str(datetime.date.today()).replace('-', '_') + "_" + str(datetime.datetime.now().hour) + "_" + str(
@@ -29,42 +28,17 @@ def load_data2(indexes, start, step, crops_dir, ground_truth_dir=None, load_labe
     return features, labels if load_labels else features
 
 
-def load_data(start, stop, load_labels=False):
-    features = np.zeros((stop - start, 372, 372, 3), dtype=np.float32)
-    labels = np.zeros((stop - start, 24, 24, 5), dtype=np.float32)
-    for i, j in zip(range(start, stop), range(stop - start)):
-        feature = cv2.imread(
-            'C:\Tomato_Classification_Project\Tomato_Classification_Project\cropped_data\sized_crop/' + str(
-                i) + '.png')
-        features[j] = feature
-        if load_labels:
-            with open('C:\Tomato_Classification_Project\Tomato_Classification_Project\encoder_decoder_train_set/' + str(
-                    i) + '.txt') as f:
-                label = json.loads(f.read())
-            # label = np.reshape(label, (24, 24, 5))
-            labels[j] = label
-    return features, labels if load_labels else features
-
-
 class Test(object):
     i = 0
 
 
-def pipeline_generator(input_features, input_labels, batch_size, image_size, label_shape):
+def pipeline_generator(input_features, input_labels, batch_size):
     while True:
-        features = np.zeros((batch_size, image_size[1], image_size[0], 3), dtype=np.float32)
-        labels = np.zeros((batch_size, label_shape[0], label_shape[1], label_shape[2]), dtype=np.float32)
-        # samples = range() # sample(range(len(input_features)), batch_size)
         features = input_features[Test.i:Test.i + batch_size]
         labels = input_labels[Test.i:Test.i + batch_size]
 
         Test.i += batch_size
         Test.i %= len(input_features)
-        '''
-        for i,j in zip(samples, range(batch_size)):
-            features[j] = input_features[i]
-            labels[j] = input_labels[i]
-        '''
         yield features, labels
 
 
@@ -80,7 +54,7 @@ if __name__ == '__main__':
     args = parser.parse_args()
     dir_to_save = path.join(*["models", "encoder_decoder", args.classifier])
     if not path.exists(dir_to_save):
-        os.mkdir(dir_to_save)
+        mkdir(dir_to_save)
 
     # Training autoencoder
     model = auto_encoder_avg_pooling((372, 372, 3))
@@ -93,8 +67,7 @@ if __name__ == '__main__':
     total_epochs = args.auto_encoder_n_max // step
     for i in range(total_epochs):
         features, labels = load_data2(ordered, start, step, args.crops_dir)
-        # features, labels = load_data(157, 158)
-        generator = pipeline_generator(features, labels, batch_size, (372, 372), (372, 372, 3))
+        generator = pipeline_generator(features, labels, batch_size)
         model.fit_generator(generator, epochs=10, verbose=1, steps_per_epoch=step // batch_size, workers=8)
         start += step
 
@@ -103,7 +76,7 @@ if __name__ == '__main__':
     time.sleep(10)
 
     # Training encoder decoder
-    model = ourSemanticSegmentation(model_path_auto)
+    model = our_semantic_segmentation(model_path_auto)
     model_path = path.join(*[dir_to_save, "sematnic_segmentation_" + get_start_date() + ".model"])
     print("saving model to:", model_path)
     start = 0
@@ -113,7 +86,7 @@ if __name__ == '__main__':
     for i in range(total_epochs):
         print("number:", str(i))
         features, labels = load_data2(ordered, start, step, args.crops_dir, args.ground_truth_dir, load_labels=True)
-        generator = pipeline_generator(features, labels, 25, (372, 372), (24, 24, 5))
+        generator = pipeline_generator(features, labels, 25)
         model.fit_generator(generator, epochs=15, verbose=1, steps_per_epoch=100, workers=8)
         start += step
         start %= args.encoder_decoder_n_max
