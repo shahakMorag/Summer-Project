@@ -126,3 +126,14 @@ def segment_images(image_location_list, model, num_classes, step=step, radius=ra
     # return [blend_two_images(recovered_image[i], raw_images[i], radius, radius, alpha=1)
     #         for i in range(len(recovered_image))]
 
+
+if __name__ == '__main__':
+    from keras.models import load_model
+    image_locations = [r"D:/cucumbers_project/cucumber_pics/2018_06_04_16_15_segmentation_task_26_nodes_on_stem_cucumber_BH/IMG_2085.JPG"]
+    img = np.array(segment_images(image_locations,
+                   load_model(r"C:\Users\eitan.k\PycharmProjects\Summer-Project\models\smaller_mobilenet/2018_09_30_0_54_500_epochs_Cucumber.model"),
+                   num_classes=5))[0].argmax(axis=-1)
+    height, width = img.shape[:2]
+    color_img = keys2img(img.flatten(), height, width)
+    cv2.imshow("", color_img[0])
+    cv2.waitKey(0)

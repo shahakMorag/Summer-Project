@@ -4,10 +4,10 @@
   "destPath": "D:/results_encoder_decoder_cucumbers",
   "modelPath": "C:/Users/eitan.k/PycharmProjects/Summer-Project/models/encoder_decoder/Cucumber/sematnic_segmentation_2018_10_03_18_13.model",
   "mappingColors" : {
-    "0" : "0,0,0",
-    "1" : "255,255,255",
-    "2" : "255,0,0",
-    "3" : "0,255,0",
-    "4" : "0,0,255"
+    "0" : "255,0,128",
+    "1" : "0,0,255",
+    "2" : "0,255,0",
+    "3" : "0,255,239",
+    "4" : "16,64,4"
   }
 }

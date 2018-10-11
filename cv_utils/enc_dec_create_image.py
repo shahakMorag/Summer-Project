@@ -17,9 +17,11 @@ def create_image(model_path, images, mapping, batch_size=1):
     output_size = 24
 
     crops = [create_crops(image, 372, 372, 372 // 2, 372 // 2) for image in images]
-    crops = np.array(crops).reshape((-1, 372, 372, 3))
+    crops = np.concatenate(crops).reshape((-1, 372, 372, 3))
     height, width = calc_dim(images[0], 372, 372, 372 // 2, 372 // 2)
-    target = np.zeros((len(images), height * output_size, width * output_size, 1), dtype=np.uint8)
+    dims = [calc_dim(image, 372, 372, 372 // 2, 372 // 2) for image in images]
+    target = []
+    # target = np.zeros((len(images), height * output_size, width * output_size, 1), dtype=np.uint8)
     model = load_model(model_path)
 
     test_generator = ImageDataGenerator().flow(x=np.array(crops), batch_size=batch_size, shuffle=False)
@@ -30,16 +32,27 @@ def create_image(model_path, images, mapping, batch_size=1):
                                        workers=8,
                                        use_multiprocessing=False)
 
-    predicts = np.array(predicts).reshape((len(images), -1, output_size * output_size, 5))
-    predicts = predicts.argmax(axis=-1).reshape((len(images), -1))
+    # predicts = np.array(predicts).reshape((len(images), -1, output_size * output_size, 5))
+    # predicts = predicts.argmax(axis=-1).reshape((len(images), -1))
     # predicts = np.array([keys2img(predict, output_size, output_size, height * width, mapping) for predict in predicts])
-    predicts = predicts.reshape((len(images), height, width, output_size, output_size, 1))
+    # predicts = predicts.reshape((len(images), height, width, output_size, output_size, 1))
+    predicts = np.array(predicts).argmax(axis=-1).reshape(-1, output_size, output_size)
 
+    # predicts = predicts.reshape((len(images) * height * width, output_size, output_size))
+
+    i = 0
     for image_index in range(len(images)):
+        height = dims[image_index][0]
+        width = dims[image_index][1]
+        tmp_img = np.zeros((height * output_size, width * output_size))
         for y in range(height):
             for x in range(width):
-                target[image_index, y * output_size:(y + 1) * output_size, x * output_size:(x + 1) * output_size] = \
-                predicts[image_index, y, x]
+                tmp_img[y * output_size:(y + 1) * output_size, x * output_size:(x + 1) * output_size] = predicts[i]
+                i += 1
+                # target[image_index, y * output_size:(y + 1) * output_size, x * output_size:(x + 1) * output_size] = \
+                # predicts[image_index, y, x]
+
+        target.append(tmp_img)
 
     return target
 
@@ -55,17 +68,18 @@ def check(image_path):
 def create(src, model_path, save_path, mapping):
     paths = [image_path for image_path in glob.iglob(path.join(src, "*.JPG"))]
     print('There are', len(paths), 'paths')
-    n = 1
+    n = 40
     path_divides = [paths[i:min(i + n, len(paths))] for i in range(0, len(paths), n)]
     for path_list in path_divides:
         images = [check(image_path) for image_path in tqdm(path_list)]
         res = create_image(model_path, images, mapping)
+
         for result_image, i in zip(res, range(len(res))):
             tmp_path = path_list[i].replace("/", "\\")
             name = "\\".join(tmp_path.split('\\')[-2:])
             full_name = path.join(results_dir, name).replace("JPG", "txt")
             with open(full_name, 'w') as f:
-                print(full_name)
+                # print(full_name)
                 json.dump(result_image.tolist(), f)
             # cv2.imwrite(full_name, result_image)
 
