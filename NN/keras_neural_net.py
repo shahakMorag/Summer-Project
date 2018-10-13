@@ -71,12 +71,14 @@ if __name__ == '__main__':
     parser.add_argument('-val_path', required=True)
     parser.add_argument('-epochs', required=True, type=int)
     parser.add_argument('-log_dir', required=True)
+    parser.add_argument('-patch_size', type=int) #[shahak] need to check
     args = parser.parse_args()
 
+    patch_size = args.patch_size if args.patch_size is not None else 128
     train(model_name=args.name,
           train_images_path=args.train_path,
           valid_images_path=args.val_path,
-          input_shape=(128, 128, 3),
-          target_size=(128, 128),
+          input_shape=(patch_size, patch_size, 3),
+          target_size=(patch_size, patch_size), #[shahak] check what target size is
           epochs=args.epochs,
           log_dir=args.log_dir)

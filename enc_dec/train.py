@@ -49,8 +49,8 @@ if __name__ == '__main__':
     parser.add_argument("-crops_dir", required=True)
     parser.add_argument("-auto_encoder_n_max", required=True, type=int)
     parser.add_argument("-encoder_decoder_n_max", required=True, type=int)
-    parser.add_argument("-auto_encoder_training_epochs", type=int)
-    parser.add_argument("-encoder_decoder_training_epochs", type=int)
+    # parser.add_argument("-auto_encoder_training_epochs", type=int)
+    # parser.add_argument("-encoder_decoder_training_epochs", type=int)
     args = parser.parse_args()
     dir_to_save = path.join(*["models", "encoder_decoder", args.classifier])
     if not path.exists(dir_to_save):
