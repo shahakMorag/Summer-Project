@@ -2,7 +2,7 @@
 ## In order to run the code you need the following libraries
 * tensorflow
 * keras
-* python-opencv
+* opencv-python
 * numpy
 
 ## Train mobilenet classifier
