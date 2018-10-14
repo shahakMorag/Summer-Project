@@ -13,7 +13,7 @@ import json
 import re
 
 
-def create_image(model_path, images, mapping, batch_size=1):
+def create_image(model_path, images, batch_size=1):
     output_size = 24
 
     crops = [create_crops(image, 372, 372, 372 // 2, 372 // 2) for image in images]
@@ -32,10 +32,6 @@ def create_image(model_path, images, mapping, batch_size=1):
                                        workers=8,
                                        use_multiprocessing=False)
 
-    # predicts = np.array(predicts).reshape((len(images), -1, output_size * output_size, 5))
-    # predicts = predicts.argmax(axis=-1).reshape((len(images), -1))
-    # predicts = np.array([keys2img(predict, output_size, output_size, height * width, mapping) for predict in predicts])
-    # predicts = predicts.reshape((len(images), height, width, output_size, output_size, 1))
     predicts = np.array(predicts).argmax(axis=-1).reshape(-1, output_size, output_size)
 
     # predicts = predicts.reshape((len(images) * height * width, output_size, output_size))
@@ -49,8 +45,6 @@ def create_image(model_path, images, mapping, batch_size=1):
             for x in range(width):
                 tmp_img[y * output_size:(y + 1) * output_size, x * output_size:(x + 1) * output_size] = predicts[i]
                 i += 1
-                # target[image_index, y * output_size:(y + 1) * output_size, x * output_size:(x + 1) * output_size] = \
-                # predicts[image_index, y, x]
 
         target.append(tmp_img)
 

@@ -78,28 +78,25 @@ def blend_two_images(neural_net_image, original_image, radius_x=radius_x, radius
     return dst
 
 
+# 0 - bad leaf - blue    - [255, 0, 0]
+# 1 - fruit    - red     - [35,28,229]
+# 2 - leaf     - green   - [0, 255, 0]
+# 3 - other    - brown   - [0,255,239]
+# 4 - stem - dark green  - [16,64,4]
 
+# [0, 0, 255] - red
+# [0, 255, 0] - green
+# [255, 0, 0] - blue
 
-def get_default_map():
-    # 0 - bad leaf - blue    - [255, 0, 0]
-    # 1 - fruit    - red     - [35,28,229]
-    # 2 - leaf     - green   - [0, 255, 0]
-    # 3 - other    - brown   - [0,255,239]
-    # 4 - stem - dark green  - [16,64,4]
-
-    # [0, 0, 255] - red
-    # [0, 255, 0] - green
-    # [255, 0, 0] - blue
-
-    colors = np.array([[255, 0, 0],
+default_colors = np.array([[255, 0, 0],
                        [35, 28, 229],
                        [0, 255, 0],
                        [0, 255, 239],
                        [16, 64, 4]]).astype(np.uint8)
-    return dict(zip(range(5), colors))
+default_map = dict(zip(range(5), default_colors))
 
 
-def keys2img(tags, height, width, num_images=1, mapping=get_default_map()):
+def keys2img(tags, height, width, num_images=1, mapping=default_map):
     res = [mapping.get(tag) for tag in tags]
     return np.reshape(res, (num_images, int(height), int(width), 3))
 

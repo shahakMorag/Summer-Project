@@ -4,7 +4,6 @@ import time
 import datetime
 from mobilenet import get_model
 from nn_utils import get_train_generator, get_valid_generator, get_callbacks
-from image_transformations import rgb2hsv, rgb2hls
 import argparse
 
 
@@ -14,10 +13,10 @@ def get_start_date():
 
 
 def train(model_name, train_images_path, valid_images_path, input_shape, target_size, log_dir,
+          save_dir="C:/Users\eitan.k\PycharmProjects\Summer-Project\models\smaller_mobilenet",
           reserve_layers=10, epochs=500, preprocessing_function=None, log=None):
     start_time = time.time()
-    model_path = path.join("C:/Users\eitan.k\PycharmProjects\Summer-Project\models\smaller_mobilenet",
-                           get_start_date() + "_" + repr(epochs) + "_epochs_" + model_name + ".model")
+    model_path = path.join(save_dir, get_start_date() + "_" + repr(epochs) + "_epochs_" + model_name + ".model")
     print('model path', '&' + model_path + '&')
 
     train_generator = get_train_generator(train_images_path, batch_size=250, target_size=target_size,
@@ -72,6 +71,7 @@ if __name__ == '__main__':
     parser.add_argument('-epochs', required=True, type=int)
     parser.add_argument('-log_dir', required=True)
     parser.add_argument('-patch_size', type=int) #[shahak] need to check
+    parser.add_argument('-save_dir')
     args = parser.parse_args()
 
     patch_size = args.patch_size if args.patch_size is not None else 128
@@ -81,4 +81,5 @@ if __name__ == '__main__':
           input_shape=(patch_size, patch_size, 3),
           target_size=(patch_size, patch_size), #[shahak] check what target size is
           epochs=args.epochs,
-          log_dir=args.log_dir)
+          log_dir=args.log_dir,
+          save_dir=args.save_dir)
