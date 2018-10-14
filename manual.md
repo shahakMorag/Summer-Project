@@ -5,18 +5,19 @@
 * opencv-python
 * numpy
 
-## Train mobilenet classifier
+## Train classifier
 You have to run the following:
 ```
-python -name="" -train_path="" -val_path="" -epochs="" -log_dir="" 
+python -name="" -train_path="" -val_path="" -epochs="" -log_dir="" -save_dir=""
 ```
 ### Parameters explanation
-* __name__ the model will be save in models/smaller_mobilenet/{start training date}\_{number of epochs}\_{name}.model
+* __name__ the name of the model
 * __train\_path__ path to folder which contains folder of images for each class the the model will be trained on
 * __val\_path__ path to folder which contains directory for each class the the model will be trained on and used for validation
 * __epochs__ number of epochs to train the mobilenet
 * __log\_dir__ where to save the logs from the training
 * __patch\_size__ the size of the patches to train the mobile net has default of 128
+* __save\_dir__ where to save the model
 
 ## Train the whole Encoder-Decoder
 
