@@ -13,8 +13,9 @@ def get_start_date():
 
 
 def train(model_name, train_images_path, valid_images_path, input_shape, target_size, log_dir,
-          save_dir="C:/Users\eitan.k\PycharmProjects\Summer-Project\models\smaller_mobilenet",
-          reserve_layers=10, epochs=500, preprocessing_function=None, log=None):
+          save_dir, reserve_layers=10, epochs=500, preprocessing_function=None, log=None):
+    if save_dir is None:
+        save_dir = "C:/Users\eitan.k\PycharmProjects\Summer-Project\models\smaller_mobilenet"
     start_time = time.time()
     model_path = path.join(save_dir, get_start_date() + "_" + repr(epochs) + "_epochs_" + model_name + ".model")
     print('model path', '&' + model_path + '&')
@@ -27,9 +28,6 @@ def train(model_name, train_images_path, valid_images_path, input_shape, target_
     valid_generator = get_valid_generator(valid_images_path, target_size, preprocessing_function=preprocessing_function)
 
     model = get_model(input_shape, num_classes=num_classes, reserve_layers=reserve_layers)
-
-    # print('Train indices: ' + str(train_generator.class_indices))
-    # print('Validate indices: ' + str(valid_generator.class_indices))
 
     callbacks = get_callbacks(validate_freq=10,
                               valid_generator=valid_generator,
